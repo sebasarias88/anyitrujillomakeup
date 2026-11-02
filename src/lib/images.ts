@@ -33,9 +33,9 @@ export const images = {
 /** One photograph per page: the mobile menu shows it beside each link. */
 export const pageCovers = {
   "/": glamFront,
-  "/novias": brideTerrace,
+  "/novias": brideDressWindow,
   "/servicios": studioVanity,
-  "/portafolio": brideDressWindow,
+  "/portafolio": glamProfile,
   "/cursos": workshop,
   "/sobre-anyi": anyiPortrait,
   "/contacto": studioSign,

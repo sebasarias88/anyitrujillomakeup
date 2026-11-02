@@ -1,5 +1,5 @@
 import Image, { type StaticImageData } from "next/image";
-import type { ReactNode } from "react";
+import { ViewTransition, type ReactNode } from "react";
 import { monumentStyle } from "@/lib/monument";
 
 type PageHeroProps = {
@@ -11,6 +11,8 @@ type PageHeroProps = {
   image: StaticImageData;
   imageAlt: string;
   actions?: ReactNode;
+  /** Matches a home "door" so its photograph morphs into this hero. */
+  transitionName?: string;
   children?: ReactNode;
 };
 
@@ -19,7 +21,7 @@ type PageHeroProps = {
  * a large photograph on the right, and the page name as a monument along the
  * bottom edge. The photograph is the page's LCP image, so it is preloaded.
  */
-export function PageHero({ monument, title, intro, image, imageAlt, actions, children }: PageHeroProps) {
+export function PageHero({ monument, title, intro, image, imageAlt, actions, transitionName, children }: PageHeroProps) {
   return (
     <section aria-labelledby="page-title" className="overflow-hidden pt-24 md:pt-28">
       <div className="container-page grid items-end gap-8 md:grid-cols-12 md:gap-6">
@@ -32,15 +34,17 @@ export function PageHero({ monument, title, intro, image, imageAlt, actions, chi
           {children}
         </div>
         <div className="relative aspect-[4/5] md:col-span-6 md:col-start-7 md:aspect-auto md:h-[min(68svh,44rem)]">
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            preload
-            placeholder="blur"
-            sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover"
-          />
+          <ViewTransition name={transitionName} share={transitionName ? "morph" : undefined} default="none">
+            <Image
+              src={image}
+              alt={imageAlt}
+              fill
+              preload
+              placeholder="blur"
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </ViewTransition>
         </div>
       </div>
       <p aria-hidden style={monumentStyle(monument)} className="text-monument container-page mt-3 whitespace-nowrap select-none md:mt-4">

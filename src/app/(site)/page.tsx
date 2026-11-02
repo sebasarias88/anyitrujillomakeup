@@ -1,7 +1,10 @@
-import { PageTransition } from "@/components/layout/page-transition";
+import { Doors } from "@/components/home/doors";
 import { Hero } from "@/components/home/hero";
+import { Intro } from "@/components/home/intro";
 import { LookQuiz } from "@/components/home/look-quiz";
+import { PriceStatement } from "@/components/home/price-statement";
 import { Reviews } from "@/components/home/reviews";
+import { PageTransition } from "@/components/layout/page-transition";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -15,6 +18,9 @@ export default function HomePage() {
   return (
     <PageTransition>
       <Hero />
+      <Intro />
+      <Doors />
+      <PriceStatement />
       <LookQuiz />
       <Reviews />
     </PageTransition>

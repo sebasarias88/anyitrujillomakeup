@@ -19,6 +19,7 @@ export default function ServicesPage() {
       <JsonLd data={breadcrumbJsonLd("/servicios")} />
       <PageHero
         monument="Servicios"
+        transitionName="cover-servicios"
         title="Maquillaje y peinado para cada evento"
         intro={<p>Quinceañeras, grados, fiestas y sesiones de fotos, en mi estudio o donde te arregles.</p>}
         image={images.studioVanity}

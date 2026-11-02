@@ -16,19 +16,19 @@ export function WhatsAppBar() {
   const [footerVisible, setFooterVisible] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setPastHero(window.scrollY > window.innerHeight * 0.7);
+    // The footer is sticky under <main>, so it is always "in view" behind the page.
+    // What matters is whether <main> has scrolled far enough to uncover it.
+    const main = document.getElementById("contenido");
+    const onScroll = () => {
+      setPastHero(window.scrollY > window.innerHeight * 0.7);
+      setFooterVisible(main ? main.getBoundingClientRect().bottom < window.innerHeight * 0.9 : false);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-
-    const footer = document.getElementById("site-footer");
-    const observer = new IntersectionObserver(([entry]) => setFooterVisible(entry.isIntersecting), {
-      rootMargin: "0px 0px -15% 0px",
-    });
-    if (footer) observer.observe(footer);
-
+    window.addEventListener("resize", onScroll);
     return () => {
       window.removeEventListener("scroll", onScroll);
-      observer.disconnect();
+      window.removeEventListener("resize", onScroll);
     };
   }, [pathname]);
 

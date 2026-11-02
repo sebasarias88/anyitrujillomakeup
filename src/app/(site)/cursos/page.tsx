@@ -27,6 +27,7 @@ export default function CoursesPage() {
       <JsonLd data={[breadcrumbJsonLd("/cursos"), course]} />
       <PageHero
         monument="Cursos"
+        transitionName="cover-cursos"
         title="Cursos de maquillaje en Armenia"
         intro={<p>Aprende conmigo en el estudio, en grupo o uno a uno, con las técnicas que uso con mis novias.</p>}
         image={images.workshop}

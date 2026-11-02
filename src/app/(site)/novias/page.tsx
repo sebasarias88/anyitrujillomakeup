@@ -36,10 +36,11 @@ export default function BridalPage() {
       <JsonLd data={[breadcrumbJsonLd("/novias"), bridalService, faqJsonLd(faqs)]} />
       <PageHero
         monument="Novias"
+        transitionName="cover-novias"
         title="Maquillaje de novia en Armenia"
         intro={<p>Tu prueba en el estudio, tu look el gran día y, si quieres, te acompaño durante las fotos.</p>}
-        image={images.brideTerrace}
-        imageAlt="Novia con recogido romántico y tiara en una terraza con vista al paisaje cafetero"
+        image={images.brideDressWindow}
+        imageAlt="Novia con bata de encaje contemplando su vestido antes de la ceremonia"
       />
       <BridalQuote />
       <Faq title="Lo que me preguntan las novias" items={faqs} />

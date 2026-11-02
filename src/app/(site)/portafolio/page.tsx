@@ -18,10 +18,11 @@ export default function PortfolioPage() {
       <JsonLd data={breadcrumbJsonLd("/portafolio")} />
       <PageHero
         monument="Portafolio"
+        transitionName="cover-portafolio"
         title="Portafolio de novias, XV y glam"
         intro={<p>Mi trabajo con clientas reales, sin filtros, y el estudio donde las recibo.</p>}
-        image={images.brideDressWindow}
-        imageAlt="Novia con bata de encaje contemplando su vestido antes de la ceremonia"
+        image={images.glamProfile}
+        imageAlt="Perfil de maquillaje con sombras rosadas, delineado suave y piel glow"
       />
       <Gallery />
     </PageTransition>

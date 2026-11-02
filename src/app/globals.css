@@ -13,6 +13,12 @@
   --color-gold: #ffd03a;
   --color-gold-deep: #f0bc12;
 
+  /* Pale grounds sampled from the hero portraits (one per photograph). */
+  --color-tint-sky: #edf1f4;
+  --color-tint-sage: #e8eee7;
+  --color-tint-rose: #f6e6e6;
+  --color-tint-wine: #f3e4e1;
+
   --font-display: var(--font-cormorant), "Times New Roman", serif;
   --font-sans: var(--font-manrope), system-ui, sans-serif;
 
@@ -110,8 +116,9 @@ body {
   transform: none;
 }
 
-/* Photographs are "sprayed on": sharpen out of a mist and unveil from the bottom. */
-.js .reveal-photo {
+/* Photographs are "sprayed on": sharpen out of a mist and unveil from the bottom.
+   The effect sits on the child: a fully clipped element is invisible to IntersectionObserver. */
+.js .reveal-photo > * {
   opacity: 0;
   filter: blur(12px);
   clip-path: inset(0 0 100% 0);
@@ -122,7 +129,7 @@ body {
   transition-delay: var(--reveal-delay, 0ms);
 }
 
-.js .reveal-photo[data-visible="true"] {
+.js .reveal-photo[data-visible="true"] > * {
   opacity: 1;
   filter: none;
   clip-path: inset(0 0 0 0);
@@ -185,7 +192,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .js .reveal,
-  .js .reveal-photo {
+  .js .reveal-photo > * {
     filter: none;
     transform: none;
     clip-path: none;
@@ -350,5 +357,69 @@ body {
   to {
     opacity: 0;
     transform: translateY(16px);
+  }
+}
+
+/* Home hero: portraits sharpen out of a mist as they take their turn. */
+.hero-portrait {
+  opacity: 0;
+  filter: blur(10px);
+  transform: scale(1.03);
+  transition:
+    opacity 700ms var(--ease-out),
+    filter 700ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+
+.hero-portrait[data-active="true"] {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait {
+    filter: none;
+    transform: none;
+    transition: opacity 300ms ease;
+  }
+}
+
+/* Gold block "painted" behind the price when its section scrolls in. */
+.price-paint {
+  clip-path: inset(0 0 0 0);
+}
+
+.js .reveal .price-paint {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 700ms var(--ease-in-out) 250ms;
+}
+
+.js .reveal[data-visible="true"] .price-paint {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Home doors: the hovered panel widens, the others give way (desktop only). */
+@media (min-width: 768px) {
+  .door {
+    flex-grow: var(--grow);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 768px) {
+  .door {
+    transition: flex-grow 500ms var(--ease-in-out);
+  }
+
+  .door:hover,
+  .door:focus-within {
+    flex-grow: 6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal .price-paint {
+    clip-path: none;
+    transition: none;
   }
 }

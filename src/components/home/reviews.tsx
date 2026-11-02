@@ -1,73 +1,48 @@
-import { StarIcon } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/reveal";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { business, photographers, reviews, venues } from "@/lib/site";
+import { business, reviews } from "@/lib/site";
 
-function Stars({ className = "size-4" }: { className?: string }) {
-  return (
-    <span className="flex gap-0.5 text-gold" aria-hidden>
-      {Array.from({ length: 5 }, (_, index) => (
-        <StarIcon key={index} className={className} />
-      ))}
-    </span>
-  );
-}
-
+/**
+ * One large voice and two small ones on a blush field. The three reviews are
+ * real Google reviews, quoted word for word; the heading carries the real rating.
+ */
 export function Reviews() {
-  return (
-    <section aria-labelledby="reviews-title" className="relative overflow-hidden py-24 md:py-36">
-      <div className="container-page">
-        <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-          <SectionHeading
-            id="reviews-title"
-            eyebrow="Clientas felices"
-            title={
-              <>
-                Lo que dicen quienes ya <em className="text-gradient-gold">vivieron la experiencia</em>
-              </>
-            }
-          />
-          <Reveal delay={120}>
-            <a
-              href={business.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-5 rounded-3xl border border-line bg-ink-2 px-6 py-5 transition hover:border-nude/50"
-              aria-label={`Calificación ${business.google.rating} de 5 en Google con ${business.google.reviews} reseñas. Ver en Google Maps`}
-            >
-              <span className="font-display text-6xl text-ivory">{business.google.rating.toFixed(1)}</span>
-              <span>
-                <Stars className="size-5" />
-                <span className="mt-1 block text-sm text-sand">{business.google.reviews} reseñas en Google</span>
-              </span>
-            </a>
-          </Reveal>
-        </div>
+  const [lead, ...corners] = reviews;
 
-        <ul className="mt-14 grid gap-4 md:grid-cols-3">
-          {reviews.map((review, index) => (
-            <Reveal as="li" key={review.author} delay={index * 100} className="flex flex-col rounded-3xl border border-line bg-ink-2 p-7">
-              <Stars />
-              <blockquote className="mt-5 flex-1 font-display text-2xl leading-snug text-ivory">“{review.text}”</blockquote>
-              <p className="mt-6 border-t border-line pt-4 text-sm">
-                <span className="block font-semibold text-ivory">{review.author}</span>
-                <span className="text-mute">{review.context} · Reseña de Google</span>
-              </p>
+  return (
+    <section aria-labelledby="reviews-title" className="bg-blush">
+      <div className="container-page grid min-h-svh grid-rows-[auto_1fr_auto] gap-y-16 py-24 md:py-28">
+        <Reveal className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
+          <h2 id="reviews-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+            {business.google.rating.toFixed(1)} en Google, {business.google.reviews} reseñas
+          </h2>
+          <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer" className="min-h-11 py-2 underline underline-offset-4">
+            Leer todas en Google
+          </a>
+        </Reveal>
+
+        <Reveal as="figure" delay={80} className="self-center md:mx-auto md:max-w-[62%] md:text-center">
+          <blockquote className="font-display text-[1.6rem] leading-[1.22] md:text-[2.1rem]">“{lead.text}”</blockquote>
+          <figcaption className="mt-6 text-[0.95rem]">
+            <span className="font-semibold">{lead.author}</span> · {lead.context} · Reseña de Google
+          </figcaption>
+        </Reveal>
+
+        <div className="grid gap-10 md:grid-cols-12">
+          {corners.map((review, index) => (
+            <Reveal
+              as="figure"
+              key={review.author}
+              delay={160 + index * 80}
+              className={index === 0 ? "md:col-span-4" : "max-md:ml-[25%] md:col-span-4 md:col-start-9"}
+            >
+              <blockquote className="text-[1.05rem] leading-relaxed">“{review.text}”</blockquote>
+              <figcaption className="mt-3 text-[0.95rem]">
+                <span className="block font-semibold">{review.author}</span>
+                <span className="text-ink-soft">{review.context} · Reseña de Google</span>
+              </figcaption>
             </Reveal>
           ))}
-        </ul>
-
-        <Reveal className="mt-16 flex flex-col items-center gap-5 text-center">
-          <p className="text-xs font-semibold tracking-[0.3em] text-mute uppercase">Fotógrafos y lugares que confían en su trabajo</p>
-          <p className="max-w-4xl font-display text-2xl leading-relaxed text-sand md:text-3xl">
-            {[...photographers, ...venues].map((name, index, all) => (
-              <span key={name}>
-                <span className="text-ivory">{name}</span>
-                {index < all.length - 1 ? <span className="mx-3 text-nude">✦</span> : null}
-              </span>
-            ))}
-          </p>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

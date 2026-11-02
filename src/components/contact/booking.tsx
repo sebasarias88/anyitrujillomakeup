@@ -27,10 +27,10 @@ function buildMonth(year: number, month: number) {
 function CalendarSkeleton() {
   return (
     <SkeletonRegion label="Cargando calendario…" className="mt-4">
-      <Skeleton className="mb-4 h-7 w-44" />
+      <Skeleton className="mb-4 h-7 w-44 rounded-lg" />
       <div className="grid grid-cols-7 gap-1.5">
         {Array.from({ length: 35 }, (_, index) => (
-          <Skeleton key={index} className="aspect-square" />
+          <Skeleton key={index} className="aspect-square rounded-full" />
         ))}
       </div>
     </SkeletonRegion>

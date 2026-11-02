@@ -1,5 +1,5 @@
 import { PageSkeleton } from "@/components/layout/page-skeleton";
 
 export default function Loading() {
-  return <PageSkeleton block="split" label="los servicios" />;
+  return <PageSkeleton block="rows" label="los servicios" />;
 }

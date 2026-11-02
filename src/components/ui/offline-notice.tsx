@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 function subscribe(callback: () => void) {
   window.addEventListener("online", callback);
@@ -11,6 +11,12 @@ function subscribe(callback: () => void) {
   };
 }
 
+/**
+ * Global "no connection" notice. While offline it also blocks internal
+ * navigation: a client-side route change would fail halfway and leave the
+ * visitor on a broken screen, so links stay put until the connection returns.
+ * External links (WhatsApp) are left alone.
+ */
 export function OfflineNotice() {
   const online = useSyncExternalStore(
     subscribe,
@@ -18,14 +24,25 @@ export function OfflineNotice() {
     () => true,
   );
 
+  useEffect(() => {
+    if (online) return;
+    const onClick = (event: MouseEvent) => {
+      const link = (event.target as Element | null)?.closest?.("a[href]");
+      if (!(link instanceof HTMLAnchorElement)) return;
+      if (link.origin === window.location.origin && link.pathname !== window.location.pathname) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
+  }, [online]);
+
   if (online) return null;
 
   return (
-    <div
-      role="status"
-      className="fixed inset-x-0 top-0 z-70 bg-nude px-4 py-2 text-center text-sm font-semibold text-ink"
-    >
-      Sin conexión a internet. Algunas imágenes o enlaces pueden no cargar hasta que vuelvas a conectarte.
+    <div role="status" className="fixed inset-x-0 top-0 z-[70] bg-ink px-4 py-2.5 text-center text-sm font-semibold text-paper">
+      Sin conexión a internet. Puedes seguir viendo esta página; para agendar, vuelve a conectarte.
     </div>
   );
 }

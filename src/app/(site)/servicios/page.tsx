@@ -1,3 +1,4 @@
+import { PageTransition } from "@/components/layout/page-transition";
 import { PageHero } from "@/components/layout/page-hero";
 import { Airbrush } from "@/components/services/airbrush";
 import { Services } from "@/components/services/services";
@@ -14,7 +15,7 @@ export const metadata = pageMetadata({
 
 export default function ServicesPage() {
   return (
-    <>
+    <PageTransition>
       <JsonLd data={breadcrumbJsonLd("/servicios")} />
       <PageHero
         monument="Servicios"
@@ -25,6 +26,6 @@ export default function ServicesPage() {
       />
       <Services />
       <Airbrush />
-    </>
+    </PageTransition>
   );
 }

@@ -49,3 +49,7 @@ Desktop.ini
 .Trashes
 .AppleDouble
 .LSOverride
+
+# local tool output (Playwright MCP screenshots, design inspector)
+/.playwright-mcp/
+/.taste-skill/

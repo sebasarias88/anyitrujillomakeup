@@ -1,3 +1,4 @@
+import { PageTransition } from "@/components/layout/page-transition";
 import { Courses } from "@/components/courses/courses";
 import { PageHero } from "@/components/layout/page-hero";
 import { JsonLd } from "@/components/ui/json-ld";
@@ -22,7 +23,7 @@ const course = {
 
 export default function CoursesPage() {
   return (
-    <>
+    <PageTransition>
       <JsonLd data={[breadcrumbJsonLd("/cursos"), course]} />
       <PageHero
         monument="Cursos"
@@ -32,6 +33,6 @@ export default function CoursesPage() {
         imageAlt="Anyi Trujillo ajustando el tocado de una novia en el Workshop Internacional de Novias de Cristina Cuéllar"
       />
       <Courses />
-    </>
+    </PageTransition>
   );
 }

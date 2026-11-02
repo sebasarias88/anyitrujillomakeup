@@ -1,3 +1,4 @@
+import { PageTransition } from "@/components/layout/page-transition";
 import { About } from "@/components/about/about";
 import { PageHero } from "@/components/layout/page-hero";
 import { JsonLd } from "@/components/ui/json-ld";
@@ -22,7 +23,7 @@ const person = {
 
 export default function AboutPage() {
   return (
-    <>
+    <PageTransition>
       <JsonLd data={[breadcrumbJsonLd("/sobre-anyi"), person]} />
       <PageHero
         monument="Anyi"
@@ -32,6 +33,6 @@ export default function AboutPage() {
         imageAlt="Retrato de Anyi Trujillo sonriendo, con blusa blanca"
       />
       <About />
-    </>
+    </PageTransition>
   );
 }

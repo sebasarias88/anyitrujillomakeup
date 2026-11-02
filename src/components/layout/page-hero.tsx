@@ -1,5 +1,6 @@
 import Image, { type StaticImageData } from "next/image";
 import type { ReactNode } from "react";
+import { monumentStyle } from "@/lib/monument";
 
 type PageHeroProps = {
   /** The page name set as a monument across the full width (decorative). */
@@ -30,7 +31,7 @@ export function PageHero({ monument, title, intro, image, imageAlt, actions, chi
           {actions ? <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">{actions}</div> : null}
           {children}
         </div>
-        <div className="relative aspect-[4/5] md:col-span-6 md:col-start-7 md:aspect-[5/6]">
+        <div className="relative aspect-[4/5] md:col-span-6 md:col-start-7 md:aspect-auto md:h-[min(68svh,44rem)]">
           <Image
             src={image}
             alt={imageAlt}
@@ -42,7 +43,7 @@ export function PageHero({ monument, title, intro, image, imageAlt, actions, chi
           />
         </div>
       </div>
-      <p aria-hidden className="text-monument container-page -mt-[0.18em] whitespace-nowrap select-none">
+      <p aria-hidden style={monumentStyle(monument)} className="text-monument container-page mt-3 whitespace-nowrap select-none md:mt-4">
         {monument}
       </p>
     </section>

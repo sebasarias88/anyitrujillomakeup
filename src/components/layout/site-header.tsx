@@ -1,103 +1,104 @@
 "use client";
 
+import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { CloseIcon, MenuIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/ui/logo";
-import { navLinks, whatsappUrl } from "@/lib/site";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { isSitePath, navLinks, pageWhatsappMessage } from "@/lib/site";
+import { MobileMenu } from "./mobile-menu";
 
+/**
+ * Plain white bar: logo, page links, one gold action. The active page carries
+ * a short gold stroke that glides between links. The bar slides away while
+ * reading down and returns as soon as the visitor scrolls up.
+ */
 export function SiteHeader() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setHidden(y > 160 && y > lastY.current);
+        lastY.current = y;
+      });
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
+  // A new page always starts with the bar visible.
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    if (!open) return;
-    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset on route change
+    setHidden(false);
+  }, [pathname]);
+
+  const message = isSitePath(pathname) ? pageWhatsappMessage[pathname] : pageWhatsappMessage["/"];
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled || open ? "border-b border-line bg-ink/80 backdrop-blur-xl" : "bg-transparent"
+      style={{ viewTransitionName: "site-header" }}
+      className={`fixed inset-x-0 top-0 z-50 bg-paper transition-transform duration-200 ease-[var(--ease-out)] ${
+        hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      <div className="container-page flex h-18 items-center justify-between gap-6">
-        <Link href="/" aria-label="Ir al inicio" className="shrink-0 focus-visible:outline-2 focus-visible:outline-nude">
-          <Logo className="h-12 text-nude md:h-14" />
+      <a
+        href="#contenido"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-10 focus:bg-gold focus:px-4 focus:py-2 focus:font-semibold"
+      >
+        Saltar al contenido
+      </a>
+      <div className="container-page flex h-[4.5rem] items-center justify-between gap-6">
+        <Link href="/" aria-label="Anyi Trujillo Beauty Studio, ir al inicio" className="shrink-0">
+          <Logo className="h-12 text-ink md:h-[3.25rem]" />
         </Link>
 
         <nav aria-label="Principal" className="hidden lg:block">
-          <ul className="flex items-center gap-8 text-sm text-sand">
-            {navLinks.map((link) => (
-              <li key={link.path}>
-                <Link href={link.path} className="transition hover:text-ivory">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+          <ul className="flex items-center gap-8">
+            {navLinks.map((link) => {
+              const active = pathname === link.path;
+              return (
+                <li key={link.path} className="relative">
+                  <Link
+                    href={link.path}
+                    aria-current={active ? "page" : undefined}
+                    className={`block py-2 text-[0.95rem] transition-colors duration-200 ${
+                      active ? "font-semibold text-ink" : "text-ink-soft hover:text-ink"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                  {active ? (
+                    <motion.span
+                      layoutId="nav-active"
+                      aria-hidden
+                      transition={reduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
+                      className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-gold"
+                    />
+                  ) : null}
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <a
-            href={whatsappUrl("Hola Anyi ✨ Quiero agendar una cita. ¿Me ayudas con la disponibilidad?")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden min-h-11 items-center gap-2 rounded-full bg-nude px-5 text-sm font-semibold text-ink transition hover:bg-champagne sm:inline-flex"
-          >
-            <WhatsAppIcon className="size-4" />
-            Agendar
-          </a>
-          <button
-            type="button"
-            onClick={() => setOpen((value) => !value)}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
-            className="inline-flex size-11 items-center justify-center rounded-full border border-line text-ivory lg:hidden"
-          >
-            {open ? <CloseIcon className="size-5" /> : <MenuIcon className="size-5" />}
-          </button>
+        <div className="flex items-center gap-3">
+          {/* Phones get the bottom WhatsApp bar instead. */}
+          <div className="hidden sm:block">
+            <WhatsAppButton message={message}>Agendar</WhatsAppButton>
+          </div>
+          <MobileMenu pathname={pathname} message={message} />
         </div>
-      </div>
-
-      <div
-        id="mobile-menu"
-        hidden={!open}
-        className="h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-line bg-ink lg:hidden"
-      >
-        <nav aria-label="Menú móvil" className="container-page flex flex-col py-8">
-          {navLinks.map((link, index) => (
-            <Link
-              key={link.path}
-              href={link.path}
-              onClick={() => setOpen(false)}
-              className="flex items-baseline gap-4 border-b border-line py-5 font-display text-4xl font-light text-ivory"
-            >
-              <span className="font-sans text-xs text-nude">0{index + 1}</span>
-              {link.label}
-            </Link>
-          ))}
-          <a
-            href={whatsappUrl("Hola Anyi ✨ Quiero agendar una cita. ¿Me ayudas con la disponibilidad?")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-10 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-nude px-6 font-semibold text-ink"
-          >
-            <WhatsAppIcon className="size-5" />
-            Agendar por WhatsApp
-          </a>
-        </nav>
       </div>
     </header>
   );

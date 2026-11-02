@@ -70,8 +70,21 @@ export const pages = [
   { path: "/contacto", label: "Contacto", priority: 0.8 },
 ] as const satisfies readonly { path: SitePath; label: string; priority: number }[];
 
-/** Desktop header links; /contacto is the header action instead. */
-export const navLinks = pages.filter((page) => page.path !== "/" && page.path !== "/contacto");
+/** Header links: every page except home (the logo goes home). */
+export const navLinks = pages.filter((page) => page.path !== "/");
+
+/** The WhatsApp message behind the always-visible action, per page. */
+export const pageWhatsappMessage: Record<SitePath, string> = {
+  "/": "Hola Anyi ✨ Vi tu página y quiero agendar una cita. ¿Me ayudas con la disponibilidad?",
+  "/novias": "Hola Anyi ✨ Me voy a casar y quiero información de tus paquetes de novia.",
+  "/servicios": "Hola Anyi ✨ Quiero información sobre tus servicios de maquillaje y peinado.",
+  "/portafolio": "Hola Anyi ✨ Vi tu portafolio y quiero agendar un maquillaje.",
+  "/cursos": "Hola Anyi ✨ Quiero información sobre tus cursos de maquillaje.",
+  "/sobre-anyi": "Hola Anyi ✨ Quiero agendar una cita contigo.",
+  "/contacto": "Hola Anyi ✨ Quiero agendar una cita. ¿Me ayudas con la disponibilidad?",
+};
+
+export const isSitePath = (path: string): path is SitePath => path in pageWhatsappMessage;
 
 export type BridalPackage = {
   id: string;

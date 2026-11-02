@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Logo } from "@/components/ui/logo";
+import { SystemScreen } from "@/components/layout/system-screen";
 import { business, whatsappUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -7,20 +7,24 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/** Served by the service worker when a page is not cached and there is no network. No client code. */
 export default function OfflinePage() {
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center px-6 text-center">
-      <Logo className="h-28 text-nude" />
-      <h1 className="mt-8 font-display text-4xl font-light text-ivory">Parece que no tienes conexión</h1>
-      <p className="mt-3 max-w-md text-sand">
+    <SystemScreen
+      monument="Sin red"
+      title="Parece que no tienes conexión"
+      actions={
+        <a
+          href={whatsappUrl("Hola Anyi ✨ Quiero agendar una cita.")}
+          className="pressable inline-flex min-h-12 items-center bg-gold px-6 font-semibold text-ink hover:bg-gold-deep"
+        >
+          Escribir por WhatsApp
+        </a>
+      }
+    >
+      <p>
         Revisa tu internet e inténtalo de nuevo. Si quieres agendar, escríbeme por WhatsApp al {business.phoneDisplay}.
       </p>
-      <a
-        href={whatsappUrl("Hola Anyi ✨ Quiero agendar una cita.")}
-        className="mt-8 inline-flex min-h-12 items-center rounded-full bg-nude px-7 font-semibold text-ink"
-      >
-        Escribir por WhatsApp
-      </a>
-    </main>
+    </SystemScreen>
   );
 }

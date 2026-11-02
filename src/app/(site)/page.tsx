@@ -1,3 +1,4 @@
+import { PageTransition } from "@/components/layout/page-transition";
 import { Hero } from "@/components/home/hero";
 import { LookQuiz } from "@/components/home/look-quiz";
 import { Reviews } from "@/components/home/reviews";
@@ -12,10 +13,10 @@ export const metadata = pageMetadata({
 
 export default function HomePage() {
   return (
-    <>
+    <PageTransition>
       <Hero />
       <LookQuiz />
       <Reviews />
-    </>
+    </PageTransition>
   );
 }

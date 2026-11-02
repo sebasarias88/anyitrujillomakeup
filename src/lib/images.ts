@@ -30,6 +30,17 @@ export const images = {
   workshop,
 };
 
+/** One photograph per page: the mobile menu shows it beside each link. */
+export const pageCovers = {
+  "/": glamFront,
+  "/novias": brideTerrace,
+  "/servicios": studioVanity,
+  "/portafolio": brideDressWindow,
+  "/cursos": workshop,
+  "/sobre-anyi": anyiPortrait,
+  "/contacto": studioSign,
+} as const;
+
 export type GalleryCategory = "novias" | "quinceaneras" | "glam" | "estudio";
 
 export const galleryCategories: { id: GalleryCategory | "todas"; label: string }[] = [

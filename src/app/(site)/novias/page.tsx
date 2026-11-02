@@ -1,3 +1,4 @@
+import { PageTransition } from "@/components/layout/page-transition";
 import { BridalQuote } from "@/components/bridal/bridal-quote";
 import { PageHero } from "@/components/layout/page-hero";
 import { Faq } from "@/components/ui/faq";
@@ -31,7 +32,7 @@ const bridalService = {
 
 export default function BridalPage() {
   return (
-    <>
+    <PageTransition>
       <JsonLd data={[breadcrumbJsonLd("/novias"), bridalService, faqJsonLd(faqs)]} />
       <PageHero
         monument="Novias"
@@ -42,6 +43,6 @@ export default function BridalPage() {
       />
       <BridalQuote />
       <Faq title="Lo que me preguntan las novias" items={faqs} />
-    </>
+    </PageTransition>
   );
 }

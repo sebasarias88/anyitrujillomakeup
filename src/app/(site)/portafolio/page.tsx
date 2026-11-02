@@ -1,3 +1,4 @@
+import { PageTransition } from "@/components/layout/page-transition";
 import { PageHero } from "@/components/layout/page-hero";
 import { Gallery } from "@/components/portfolio/gallery";
 import { JsonLd } from "@/components/ui/json-ld";
@@ -13,7 +14,7 @@ export const metadata = pageMetadata({
 
 export default function PortfolioPage() {
   return (
-    <>
+    <PageTransition>
       <JsonLd data={breadcrumbJsonLd("/portafolio")} />
       <PageHero
         monument="Portafolio"
@@ -23,6 +24,6 @@ export default function PortfolioPage() {
         imageAlt="Novia con bata de encaje contemplando su vestido antes de la ceremonia"
       />
       <Gallery />
-    </>
+    </PageTransition>
   );
 }

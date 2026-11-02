@@ -1,3 +1,4 @@
+import { PageTransition } from "@/components/layout/page-transition";
 import { Booking } from "@/components/contact/booking";
 import { Location } from "@/components/contact/location";
 import { PageHero } from "@/components/layout/page-hero";
@@ -17,7 +18,7 @@ const faqs = faqsFor("contacto");
 
 export default function ContactPage() {
   return (
-    <>
+    <PageTransition>
       <JsonLd data={[breadcrumbJsonLd("/contacto"), faqJsonLd(faqs)]} />
       <PageHero
         monument="Agenda"
@@ -29,6 +30,6 @@ export default function ContactPage() {
       <Booking />
       <Location />
       <Faq title="Antes de reservar" items={faqs} />
-    </>
+    </PageTransition>
   );
 }

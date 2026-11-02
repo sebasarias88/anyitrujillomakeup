@@ -1,73 +1,90 @@
 import Link from "next/link";
-import { ButtonLink } from "@/components/ui/button-link";
-import { InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
-import { Logo } from "@/components/ui/logo";
-import { Reveal } from "@/components/ui/reveal";
-import { business, navLinks, whatsappUrl } from "@/lib/site";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { business, pages, pageWhatsappMessage } from "@/lib/site";
 
+/**
+ * The close of every page: a nude field that the last section lifts off
+ * (sticky footer under the main content), four short columns, and the name
+ * returning as a monument from margin to margin.
+ */
 export function SiteFooter() {
   return (
-    <footer className="relative overflow-hidden border-t border-line">
-      {/* Closing call to action */}
-      <div className="container-page py-24 text-center md:py-32">
-        <Reveal>
-          <Logo className="mx-auto h-28 text-nude md:h-36" />
-          <p className="mx-auto mt-8 max-w-3xl font-display text-4xl leading-tight font-light text-ivory md:text-6xl">
-            Tu fecha se aparta con tu reserva. <em className="text-gradient-gold">Hablemos de tu look.</em>
-          </p>
-          <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-            <ButtonLink href={whatsappUrl("Hola Anyi ✨ Quiero agendar una cita. ¿Me ayudas con la disponibilidad?")}>
-              <WhatsAppIcon className="size-4" />
+    <footer id="site-footer" className="sticky bottom-0 z-0 bg-nude-field text-ink">
+      <div className="container-page flex min-h-[100svh] flex-col pt-14 pb-6 md:pt-20">
+        <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="max-w-[18ch] font-display text-[2rem] leading-[1.05]">Tu fecha se aparta con tu reserva.</p>
+            <WhatsAppButton message={pageWhatsappMessage["/"]} variant="ink" className="mt-6">
               Escríbeme por WhatsApp
-            </ButtonLink>
-            <ButtonLink href={business.instagram} variant="text">
-              <InstagramIcon className="size-4" />
-              {business.instagramHandle}
-            </ButtonLink>
+            </WhatsAppButton>
           </div>
-        </Reveal>
-      </div>
 
-      <div className="border-t border-line">
-        <div className="container-page grid gap-10 py-14 md:grid-cols-3">
-          <div>
-            <p className="font-display text-2xl text-ivory">{business.name}</p>
-            <p className="mt-2 text-sm text-sand">{business.tagline}. Armenia, Quindío.</p>
+          <div className="lg:col-span-3 lg:col-start-5">
+            <h2 className="font-semibold">El estudio</h2>
+            <p className="mt-2 leading-relaxed">
+              {business.address.street}
+              <br />
+              {business.address.city}, {business.address.region}
+            </p>
+            <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block underline underline-offset-4">
+              Cómo llegar
+            </a>
           </div>
-          <nav aria-label="Pie de página">
-            <ul className="grid grid-cols-2 gap-2 text-sm text-sand">
-              {navLinks.map((link) => (
-                <li key={link.path}>
-                  <Link href={link.path} className="transition hover:text-nude">
-                    {link.label}
+
+          <nav aria-label="Pie de página" className="lg:col-span-2">
+            <h2 className="font-semibold">Páginas</h2>
+            <ul className="mt-2 space-y-1.5">
+              {pages.map((page) => (
+                <li key={page.path}>
+                  <Link href={page.path} className="hover:underline hover:underline-offset-4">
+                    {page.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <ul className="space-y-2 text-sm text-sand">
-            <li>
-              <a href={whatsappUrl("Hola Anyi ✨")} target="_blank" rel="noopener noreferrer" className="hover:text-nude">
-                WhatsApp {business.phoneDisplay}
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${business.email}`} className="hover:text-nude">
-                {business.email}
-              </a>
-            </li>
-            <li>
-              {business.address.street}, {business.address.city}
-            </li>
-          </ul>
+
+          <div className="lg:col-span-3">
+            <h2 className="font-semibold">Horario</h2>
+            <ul className="mt-2 space-y-1.5">
+              {business.hours.map((item) => (
+                <li key={item.days}>
+                  {item.days}: {item.time}
+                </li>
+              ))}
+            </ul>
+            <h2 className="mt-6 font-semibold">Redes</h2>
+            <ul className="mt-2 space-y-1.5">
+              <li>
+                <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="hover:underline hover:underline-offset-4">
+                  Instagram {business.instagramHandle}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${business.email}`} className="hover:underline hover:underline-offset-4">
+                  {business.email}
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="container-page flex flex-col justify-between gap-2 border-t border-line py-6 text-xs text-mute sm:flex-row">
-          <p>© {business.name}. Todos los derechos reservados.</p>
-          <p>
-            Diseño y desarrollo por{" "}
-            <a href="https://sebastianarias.dev" target="_blank" rel="noopener noreferrer" className="text-sand hover:text-nude">
-              Sebastián Arias
-            </a>
+
+        <div className="mt-auto pt-16">
+          {/* textLength fits the name to the exact width by adjusting only the spacing, so it never wraps or overflows. */}
+          <svg viewBox="0 0 1000 200" role="img" aria-label={business.name} className="block w-full">
+            <text
+              x="0"
+              y="150"
+              textLength="1000"
+              lengthAdjust="spacing"
+              className="fill-ink font-display"
+              style={{ fontSize: 190, fontWeight: 300 }}
+            >
+              Anyi Trujillo
+            </text>
+          </svg>
+          <p className="mt-4 text-sm">
+            {business.name} · Maquilladora profesional en {business.address.city}, {business.address.region}
           </p>
         </div>
       </div>

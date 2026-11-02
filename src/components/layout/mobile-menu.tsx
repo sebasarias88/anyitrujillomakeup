@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { pageCovers } from "@/lib/images";
-import { business, pages } from "@/lib/site";
+import { business, navLinks as pages } from "@/lib/site";
 
 type MobileMenuProps = { pathname: string; message: string };
 

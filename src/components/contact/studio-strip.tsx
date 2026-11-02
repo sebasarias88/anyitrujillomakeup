@@ -20,7 +20,7 @@ export function StudioStrip() {
       <div className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-12 md:gap-6">
         {photos.map((photo, index) => (
           <Reveal key={photo.alt} variant="photo" delay={index * 80} className={`relative aspect-[3/4] ${index === 0 ? "max-md:col-span-2" : ""} ${photo.className}`}>
-            <Image src={photo.src} alt={photo.alt} fill placeholder="blur" sizes="(min-width: 768px) 40vw, 50vw" className="object-cover" />
+            <Image src={photo.src} alt={photo.alt} fill placeholder="blur" sizes="(min-width: 768px) 40vw, 50vw" className="rounded-[1.25rem] object-cover" />
           </Reveal>
         ))}
       </div>

@@ -87,7 +87,7 @@ export function HomeVisitMap() {
                         } ${isSelected ? "scale-150" : "group-hover:scale-125"}`}
                       />
                       <span
-                        className={`text-[0.95rem] ${isSelected ? "font-semibold underline decoration-nude decoration-2 underline-offset-4" : ""}`}
+                        className={`text-[0.95rem] ${isSelected ? "font-medium underline decoration-nude decoration-2 underline-offset-4" : ""}`}
                       >
                         {town.name}
                         {isStudio ? <span className="text-ink-soft"> · estudio</span> : null}

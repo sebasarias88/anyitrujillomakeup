@@ -41,7 +41,7 @@ export function OfflineNotice() {
   if (online) return null;
 
   return (
-    <div role="status" className="fixed inset-x-0 top-0 z-[70] bg-ink px-4 py-2.5 text-center text-[0.95rem] font-semibold text-paper">
+    <div role="status" className="fixed inset-x-0 top-0 z-[70] bg-ink px-4 py-2.5 text-center text-[0.95rem] font-medium text-paper">
       Sin conexión a internet. Puedes seguir viendo esta página; para agendar, vuelve a conectarte.
     </div>
   );

@@ -106,7 +106,7 @@ export function Gallery() {
 
       <p className="mt-14 text-[1.05rem]">
         {items.length} fotos aquí y muchas más en{" "}
-        <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="font-semibold underline decoration-nude decoration-2 underline-offset-[6px]">
+        <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="font-medium underline decoration-nude decoration-2 underline-offset-[6px]">
           Instagram {business.instagramHandle}
         </a>
       </p>
@@ -128,7 +128,7 @@ export function Gallery() {
               <p className="text-[0.95rem]">
                 {current.caption} · {(openIndex ?? 0) + 1} de {items.length}
               </p>
-              <button type="button" onClick={close} className="pressable min-h-11 px-1 font-semibold underline decoration-nude decoration-2 underline-offset-[6px]">
+              <button type="button" onClick={close} className="pressable min-h-11 px-1 font-medium underline decoration-nude decoration-2 underline-offset-[6px]">
                 Cerrar
               </button>
             </div>

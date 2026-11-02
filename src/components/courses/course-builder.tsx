@@ -61,7 +61,7 @@ export function CourseBuilder() {
 
         <div className="space-y-10 md:col-span-7 md:col-start-6">
           <fieldset>
-            <legend className="font-semibold">Modalidad</legend>
+            <legend className="font-medium">Modalidad</legend>
             <div className="mt-3 grid gap-2 sm:grid-cols-2">
               {courses.formats.map((item) => {
                 const active = format === item.id;
@@ -82,7 +82,7 @@ export function CourseBuilder() {
           </fieldset>
 
           <fieldset>
-            <legend className="font-semibold">Nivel</legend>
+            <legend className="font-medium">Nivel</legend>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {courses.levels.map((item) => {
                 const active = level === item.id;
@@ -94,7 +94,7 @@ export function CourseBuilder() {
                     }`}
                   >
                     <input type="radio" name="course-level" checked={active} onChange={() => setLevel(item.id)} className="sr-only" />
-                    <span className="block font-semibold">{item.label}</span>
+                    <span className="block font-medium">{item.label}</span>
                     <span className={`block text-[0.95rem] ${active ? "text-paper/80" : "text-ink-soft"}`}>{item.hint}</span>
                   </label>
                 );
@@ -103,7 +103,7 @@ export function CourseBuilder() {
           </fieldset>
 
           <fieldset>
-            <legend className="font-semibold">
+            <legend className="font-medium">
               Lo que quieres aprender <span className="font-normal text-ink-soft">(opcional)</span>
             </legend>
             <div className="mt-3 flex flex-wrap gap-2">

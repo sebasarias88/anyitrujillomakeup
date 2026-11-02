@@ -9,13 +9,13 @@ Demo web para Anyi Trujillo, maquilladora profesional en Armenia, Quindío (@any
 Dirección: Calle 23 #37-25, edificio Tesalónica local 5, Armenia. WhatsApp: 320 5299186.
 
 ## Dirección visual
-- TEMA CLARO casi blanco (#FDFCFA), luminoso, elegante y femenino. Nada oscuro.
-- Marca (de sus archivos de logo): negro #040606 para texto y botones, nude/rose gold #D09A73 para líneas y acentos, y el amarillo #FFD03A solo como toque mínimo (el subrayado del titular del inicio). Campos alternos en nude muy claro.
-- Diseño propio, innovador y de alto nivel, nada genérico. Debe impresionar porque ella puede recomendar más clientes.
+- Estilo CONVENCIONAL premium: blanco y crema claro, secciones bien separadas, tarjetas ordenadas, fotos redondeadas con sombra suave, botones negros tipo píldora. Nada oscuro.
+- Acento de marca: nude profundo #9A6340 en etiquetas y palabras en itálica; negro tinta #1E1A18 para texto y botones.
+- Sin negrillas pesadas: los títulos pequeños van en Bodoni, no en texto grueso.
 - Referencia que le gusta: https://valeriariosmakeup.com, SOLO como guía de contenido y estructura. Nunca copiar su diseño.
 
 ## Alcance del demo
-- Solo frontend, multipágina (5 rutas, ver "Architecture"). El agendamiento redirige a WhatsApp con mensaje prellenado.
+- Solo frontend, multipágina (9 rutas, ver "Architecture"). El agendamiento redirige a WhatsApp con mensaje prellenado.
 - Secciones aprobadas: cotizador de novia, antes/después, quiz de look, sección aerógrafo, cursos, reseñas reales de clientas, detalles premium.
 - Fase 2 (si ella acepta): panel admin donde ella actualiza horarios y las clientas agendan desde la web.
 
@@ -55,13 +55,15 @@ There is no test suite. Lighthouse runs from the browser console panel (Cmd+Opti
 
   | Route | Content |
   |---|---|
-  | `/` | Hero, work mosaic, bridal packages, reviews, more services, look quiz, about Anyi (`#sobre-mi`), closing CTA |
-  | `/novias` | Packages, quote calculator, process, bridal FAQ |
-  | `/servicios` | Social, XV, companions, airbrush, home visits with zones, courses (`#cursos`) |
+  | `/` | Hero, trust bar, about teaser, service cards, booking, portfolio carousel, testimonials carousel, closing banner |
+  | `/servicios` | Service cards, companions, airbrush, home visits with zones, look quiz |
+  | `/novias` | Included, package cards + quote calculator, process, photos, bridal FAQ |
+  | `/quinceaneras`, `/social`, `/cursos` | Shared `ServicePage` (included, price cards, photos); `/cursos` adds the course builder |
   | `/portafolio` | Gallery and before/after |
+  | `/sobre-mi` | Story, certifications, how she works, the studio |
   | `/contacto` | Booking, studio, general FAQ |
 
-  `/cursos` and `/sobre-anyi` redirect (301, `next.config.ts`) to `/servicios#cursos` and `/#sobre-mi`.
+  `/sobre-anyi` redirects (301, `next.config.ts`) to `/sobre-mi`. Service data (titles, "desde" prices, options) lives in `services` in `site.ts`; prices marked `samplePrice` are examples for the demo.
 
   `offline/` sits outside the group (no shell). The route list lives in `pages` in `site.ts`; the header, sitemap and breadcrumbs read from it, so add a page there first.
 - **Components by page.** `src/components/<page>/` (`home`, `bridal`, `services`, `portfolio`, `courses`, `contact`), shared pieces in `layout/` (header, footer, `page-hero`) and `ui/`. Every inner page opens with `<PageHero>`, which holds its only `h1`.
@@ -82,11 +84,11 @@ There is no test suite. Lighthouse runs from the browser console panel (Cmd+Opti
 
 ## Styling implementation
 
-The "Dirección visual" section above is the target: an almost-white, editorial look (inspired in tone by the reference site, never copied), arched photo frames like a vanity mirror, black pill buttons. `DESIGN.md` will document the finished system.
+The "Dirección visual" section above is the target: conventional, structured and premium (approved after several rounds; avoid experimental layouts).
 
 - Design tokens live in the `@theme` block of `src/app/globals.css` (`paper`, `white`, `marble` = light nude field, `line`, `ink`, `ink-soft`, `nude`, `nude-deep`, `nude-field`, `blush`, `gold`). Change colors there, not as hard-coded values in components. No black backgrounds; gold/yellow only as tiny accents (`highlight` utility).
 - Fonts: `font-display` (Bodoni Moda) and `font-sans` (Jost).
 - Custom utilities: `container-page`, `bg-marble` (flat light nude field), `eyebrow` (small uppercase label), `highlight` (yellow underline for one or two words), `pressable`, `no-scrollbar`.
-- House rules: rounded photos (`rounded-3xl`, arched `rounded-t-full` for hero frames), pill buttons (`ButtonLink` primary = black, `ink` = outline), section titles with one word in italic `text-nude-deep`.
+- House rules: rounded photos (`rounded-[1.25rem]`–`[1.75rem]`), soft shadows (`shadow-soft`, `shadow-lift`), pill buttons (`ButtonLink` primary = black, `ink` = outline), section titles via `SectionHeading` with one phrase in italic `text-nude-deep`. Shared blocks live in `src/components/shared/`.
 - Motion: `--ease-out`, `--ease-in-out`, `--ease-drawer`. `<Reveal>` (variants `text` and `photo`) handles scroll-in; its hidden state only applies under `html.js`, so content stays visible without JS. UI animations stay under 300 ms. `motion/react` animations must check `useReducedMotion`, and the CSS honors `prefers-reduced-motion`.
 - UI kit in `src/components/ui/`: `WhatsAppButton` (loading state while WhatsApp opens), `Select` (custom combobox; never a native `<select>`), `Skeleton`, `Faq`, `JsonLd`.

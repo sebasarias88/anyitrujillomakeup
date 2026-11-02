@@ -7,6 +7,7 @@ import brideMirror from "@/assets/images/bride-mirror.webp";
 import brideTerrace from "@/assets/images/bride-terrace.webp";
 import glamFront from "@/assets/images/glam-front.webp";
 import glamProfile from "@/assets/images/glam-profile.webp";
+import glamRoseHero from "@/assets/images/glam-rose-hero.webp";
 import quinceEmerald from "@/assets/images/quince-emerald.webp";
 import quinceRuby from "@/assets/images/quince-ruby.webp";
 import quinceRubyPortrait from "@/assets/images/quince-ruby-portrait.webp";
@@ -23,6 +24,7 @@ export const images = {
   brideTerrace,
   glamFront,
   glamProfile,
+  glamRoseHero,
   quinceEmerald,
   quinceRuby,
   quinceRubyPortrait,
@@ -33,11 +35,23 @@ export const images = {
 
 /** One photograph per page: the mobile menu shows it beside each link. */
 export const pageCovers = {
-  "/": glamFront,
-  "/novias": brideDressWindow,
+  "/": glamRoseHero,
   "/servicios": studioVanity,
-  "/portafolio": glamProfile,
+  "/novias": brideDressWindow,
+  "/quinceaneras": quinceRuby,
+  "/social": glamProfile,
+  "/cursos": workshop,
+  "/portafolio": brideTerrace,
+  "/sobre-mi": anyiAgenda,
   "/contacto": studioSign,
+} as const;
+
+/** Card photograph for each service. */
+export const serviceImages = {
+  "/novias": { src: brideDressWindow, alt: "Novia con bata de encaje contemplando su vestido antes de la ceremonia" },
+  "/quinceaneras": { src: quinceRuby, alt: "Quinceañera con bata roja junto a su vestido de gala" },
+  "/social": { src: glamProfile, alt: "Maquillaje social con sombras rosadas y piel glow" },
+  "/cursos": { src: workshop, alt: "Anyi Trujillo peinando a una novia en un taller de maquillaje" },
 } as const;
 
 export type GalleryCategory = "novias" | "quinceaneras" | "glam" | "estudio";
@@ -52,6 +66,7 @@ export const galleryCategories: { id: GalleryCategory | "todas"; label: string }
 
 export const gallery = [
   { id: "bride-terrace", src: brideTerrace, caption: "Novia en terraza", alt: "Novia con recogido romántico y tiara en una terraza con vista al paisaje cafetero", category: "novias" },
+  { id: "glam-rose", src: glamRoseHero, caption: "Glam rosé", alt: "Maquillaje glam rosé con piel luminosa y labios gloss", category: "glam" },
   { id: "glam-front", src: glamFront, caption: "Glam suave rosé", alt: "Maquillaje glam suave en tonos rosa con piel luminosa y labios gloss", category: "glam" },
   { id: "quince-emerald", src: quinceEmerald, caption: "XV esmeralda", alt: "Quinceañera con vestido esmeralda, ondas definidas y maquillaje luminoso", category: "quinceaneras" },
   { id: "bride-dress-window", src: brideDressWindow, caption: "Antes de la ceremonia", alt: "Novia con bata de encaje contemplando su vestido antes de la ceremonia", category: "novias" },

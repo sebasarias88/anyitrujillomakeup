@@ -15,7 +15,7 @@ export function Faq({ title, items }: FaqProps) {
   return (
     <section aria-labelledby="faq-title" className="container-page py-28 md:py-44">
       <Reveal>
-        <h2 id="faq-title" className="max-w-[16ch] font-display text-[2.4rem] leading-[1] font-normal tracking-[-0.02em] md:text-[4.6rem]">
+        <h2 id="faq-title" className="max-w-[16ch] font-display text-[2.2rem] leading-[1.1] md:text-[3rem]">
           {title}
         </h2>
       </Reveal>

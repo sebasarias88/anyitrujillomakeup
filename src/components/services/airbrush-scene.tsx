@@ -47,7 +47,7 @@ export function AirbrushScene() {
             <ul className="mt-8 space-y-6">
               {statements.map((item) => (
                 <li key={item.title}>
-                  <h3 className="text-[1.25rem] font-semibold">{item.title}</h3>
+                  <h3 className="text-[1.25rem] font-medium">{item.title}</h3>
                   <p className="mt-1 text-[1.05rem] leading-relaxed">{item.text}</p>
                 </li>
               ))}
@@ -88,7 +88,7 @@ export function AirbrushScene() {
                     index === active ? "opacity-100 blur-0" : "invisible translate-y-3 opacity-0 blur-[3px]"
                   }`}
                 >
-                  <h3 className="text-[1.3rem] font-semibold md:text-[1.5rem]">{item.title}</h3>
+                  <h3 className="text-[1.3rem] font-medium md:text-[1.5rem]">{item.title}</h3>
                   <p className="mt-2 max-w-[40ch] text-[1.05rem] leading-relaxed md:text-[1.15rem]">{item.text}</p>
                 </div>
               ))}

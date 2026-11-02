@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/ui/logo";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
-import { isSitePath, navLinks, pageWhatsappMessage } from "@/lib/site";
+import { business, isSitePath, navLinks, pageWhatsappMessage, services } from "@/lib/site";
 import { MobileMenu } from "./mobile-menu";
 
 /**
@@ -54,10 +54,20 @@ export function SiteHeader() {
     >
       <a
         href="#contenido"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-10 focus:bg-nude-field focus:px-4 focus:py-2 focus:font-semibold"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-10 focus:bg-nude-field focus:px-4 focus:py-2 focus:font-medium"
       >
         Saltar al contenido
       </a>
+      <div className="hidden bg-nude-field text-[0.8rem] text-ink-soft lg:block">
+        <div className="container-page flex h-9 items-center justify-between gap-6">
+          <span>
+            {business.address.street} · {business.address.city}, {business.address.region}
+          </span>
+          <span>
+            {business.hours[0].days} · {business.hours[0].time} · WhatsApp {business.phoneDisplay}
+          </span>
+        </div>
+      </div>
       <div className="container-page flex h-[4.5rem] items-center justify-between gap-6">
         <Link href="/" aria-label="Anyi Trujillo Beauty Studio, ir al inicio" className="shrink-0">
           <Logo className="h-11 text-ink md:h-12" />
@@ -66,7 +76,8 @@ export function SiteHeader() {
         <nav aria-label="Principal" className="hidden lg:block">
           <ul className="flex items-center gap-9">
             {navLinks.map((link) => {
-              const active = pathname === link.path;
+              const active =
+                pathname === link.path || (link.path === "/servicios" && services.some((service) => service.path === pathname));
               return (
                 <li key={link.path} className="relative">
                   <Link
@@ -95,7 +106,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-3">
           {/* Phones get the bottom WhatsApp bar instead. */}
           <div className="hidden sm:block">
-            <WhatsAppButton message={message}>Agendar</WhatsAppButton>
+            <WhatsAppButton message={message}>Agendar cita</WhatsAppButton>
           </div>
           <MobileMenu pathname={pathname} message={message} />
         </div>

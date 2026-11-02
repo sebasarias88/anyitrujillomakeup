@@ -37,12 +37,19 @@ function CalendarSkeleton() {
   );
 }
 
+const steps = [
+  { title: "Elige tu servicio", text: "Novia, quinceañera, social o curso." },
+  { title: "Escoge fecha y hora", text: "En el estudio o a domicilio." },
+  { title: "Confirma por WhatsApp", text: "Te respondo con la disponibilidad." },
+];
+
 /**
  * Booking: service, day, time, place and name become a complete WhatsApp
  * message (never "[fecha]"). Today only exists in the browser, so the
  * calendar resolves it after mount and shows a skeleton meanwhile.
+ * `tone` sets the section ground so it alternates with its neighbours.
  */
-export function Booking() {
+export function Booking({ tone = "white" }: { tone?: "white" | "cream" }) {
   const nameId = useId();
   const [today, setToday] = useState<Date | null>(null);
   const [visibleMonth, setVisibleMonth] = useState<{ year: number; month: number } | null>(null);
@@ -99,20 +106,47 @@ export function Booking() {
         "¿Me confirmas la disponibilidad?",
       ].join("\n");
 
+  const summary = [service, date ? capitalize(longDateFormat.format(date)) : null, time, place === "studio" ? "En el estudio" : municipality ? `Domicilio · ${municipality}` : "A domicilio"]
+    .filter(Boolean)
+    .join(" · ");
+
+  const chip = (active: boolean) =>
+    `pressable flex min-h-11 items-center justify-center rounded-full border text-[0.92rem] tabular-nums transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
+      active ? "border-ink bg-ink text-paper" : "border-line bg-white hover:border-ink"
+    }`;
+
   return (
-    <section id="agenda" aria-labelledby="booking-title" className="scroll-mt-24 bg-marble py-28 md:py-40">
-      <div className="container-page">
-        <Reveal className="grid gap-6 md:grid-cols-12 md:items-end">
-          <h2 id="booking-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:col-span-6 md:text-[2.2rem] lg:text-[2.75rem]">
-            Reserva tu cita
+    <section id="agenda" aria-labelledby="booking-title" className={`scroll-mt-28 py-24 md:py-28 ${tone === "cream" ? "bg-marble" : "bg-white"}`}>
+      <div className="container-page grid items-center gap-12 lg:grid-cols-[5fr_7fr] lg:gap-16">
+        <Reveal>
+          <p className="eyebrow">Agenda en línea</p>
+          <h2 id="booking-title" className="mt-4 font-display text-[2.3rem] leading-[1.1] md:text-[3rem]">
+            Tu cita, lista en <em className="text-nude-deep">menos de un minuto</em>
           </h2>
-          <p className="max-w-[44ch] text-[1.05rem] leading-relaxed md:col-span-5 md:col-start-8">
-            Elige el servicio, el día y la hora. Te llevo a WhatsApp con tu solicitud lista y te confirmo la disponibilidad.
+          <p className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed font-light text-ink-soft">
+            Sin llamadas ni esperas: eliges y me llega tu solicitud completa por WhatsApp.
           </p>
+          <ol className="mt-8 ml-5 border-l border-line-strong">
+            {steps.map((step, index) => (
+              <li key={step.title} className="relative -ml-[21px] flex gap-4 pb-6 last:pb-0">
+                <span
+                  className={`flex size-[42px] shrink-0 items-center justify-center rounded-full font-display text-[1.05rem] ${
+                    index === 0 ? "bg-ink text-paper" : "border border-line-strong bg-white text-nude-deep"
+                  }`}
+                >
+                  {index + 1}
+                </span>
+                <span className="pt-1.5">
+                  <span className="block font-display text-[1.25rem] leading-snug">{step.title}</span>
+                  <span className="block text-[0.95rem] text-ink-soft">{step.text}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
         </Reveal>
 
-        <div className="mt-14 grid gap-10 md:grid-cols-12 md:gap-6">
-          <div className="space-y-8 md:col-span-4">
+        <Reveal delay={100} className="rounded-[1.5rem] border border-line bg-white p-5 shadow-lift sm:p-8">
+          <div className="grid gap-5 sm:grid-cols-2">
             <Select
               label="Servicio"
               options={bookingServices.map((item) => ({ value: item, label: item }))}
@@ -120,22 +154,125 @@ export function Booking() {
               onChange={setService}
               placeholder="Elige el servicio…"
             />
+            <div>
+              <label htmlFor={nameId} className="mb-2 block text-[0.75rem] tracking-[0.16em] text-ink-soft uppercase">
+                Tu nombre
+              </label>
+              <input
+                id={nameId}
+                type="text"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                autoComplete="given-name"
+                maxLength={60}
+                placeholder="¿Cómo te llamas?"
+                className="min-h-12 w-full rounded-xl border border-line-strong bg-blush px-4 text-base"
+              />
+            </div>
+          </div>
 
+          <div className="mt-6 grid gap-6 md:grid-cols-[1.25fr_1fr]">
+            <div>
+              <p className="text-[0.75rem] tracking-[0.16em] text-ink-soft uppercase">Día</p>
+              {!today || !visibleMonth ? (
+                <CalendarSkeleton />
+              ) : (
+                <div className="mt-2">
+                  <div className="mb-2 flex items-center justify-between">
+                    <p className="font-display text-[1.25rem]" aria-live="polite">
+                      {capitalize(monthFormat.format(new Date(visibleMonth.year, visibleMonth.month, 1)))}
+                    </p>
+                    <div className="flex gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => moveMonth(-1)}
+                        disabled={!canGoBack}
+                        aria-label="Mes anterior"
+                        className="pressable flex size-10 items-center justify-center rounded-full border border-line hover:border-ink disabled:opacity-30"
+                      >
+                        <ChevronIcon className="size-4 rotate-180" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => moveMonth(1)}
+                        aria-label="Mes siguiente"
+                        className="pressable flex size-10 items-center justify-center rounded-full border border-line hover:border-ink"
+                      >
+                        <ChevronIcon className="size-4" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-7 gap-1 text-center">
+                    {weekDays.map((day, index) => (
+                      <span key={index} aria-hidden className="pb-1 text-[0.8rem] text-ink-soft">
+                        {day}
+                      </span>
+                    ))}
+                    {days.map((day, index) => {
+                      if (!day) return <span key={`empty-${index}`} />;
+                      const isSunday = day.getDay() === 0;
+                      const disabled = day < today || isSunday;
+                      const selected = date?.getTime() === day.getTime();
+                      const isToday = day.getTime() === today.getTime();
+                      return (
+                        <button
+                          key={day.toISOString()}
+                          type="button"
+                          disabled={disabled}
+                          onClick={() => {
+                            setDate(day);
+                            setTime(null);
+                          }}
+                          aria-pressed={selected}
+                          aria-label={`${longDateFormat.format(day)}${isSunday ? ", cerrado" : ""}${isToday ? ", hoy" : ""}`}
+                          className={`pressable aspect-square rounded-full text-[0.9rem] tabular-nums ${
+                            selected ? "bg-ink text-paper" : disabled ? "text-ink-soft/40" : "bg-marble hover:bg-marble-deep"
+                          } ${isToday && !selected ? "ring-1 ring-nude-deep" : ""}`}
+                        >
+                          {day.getDate()}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-2 text-[0.85rem] text-ink-soft">Domingos cerrado. Si tu boda es en domingo, escríbeme.</p>
+                </div>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-5">
+              <fieldset>
+                <legend className="mb-2 text-[0.75rem] tracking-[0.16em] text-ink-soft uppercase">Hora</legend>
+                <div className="grid grid-cols-2 gap-2">
+                  {timeSlots.map((slot) => (
+                    <label key={slot} className={`${chip(time === slot)} ${!date ? "cursor-not-allowed opacity-40" : "cursor-pointer"}`}>
+                      <input
+                        type="radio"
+                        name="booking-time"
+                        checked={time === slot}
+                        disabled={!date}
+                        onChange={() => setTime(slot)}
+                        className="sr-only"
+                      />
+                      {slot}
+                    </label>
+                  ))}
+                </div>
+                {!date ? <p className="mt-2 text-[0.85rem] text-ink-soft">Primero elige un día.</p> : null}
+              </fieldset>
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-5 sm:grid-cols-2">
             <fieldset>
-              <legend className="mb-2 font-semibold">Lugar</legend>
+              <legend className="mb-2 text-[0.75rem] tracking-[0.16em] text-ink-soft uppercase">Lugar</legend>
               <div className="grid grid-cols-2 gap-2">
                 {(
                   [
-                    ["studio", "Estudio"],
-                    ["home", "Domicilio"],
+                    ["studio", "En el estudio"],
+                    ["home", "A domicilio"],
                   ] as const
                 ).map(([value, label]) => (
-                  <label
-                    key={value}
-                    className={`pressable flex min-h-12 cursor-pointer items-center justify-center font-semibold has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
-                      place === value ? "bg-ink text-paper" : "bg-paper hover:bg-marble-deep"
-                    }`}
-                  >
+                  <label key={value} className={`${chip(place === value)} cursor-pointer`}>
                     <input type="radio" name="booking-place" checked={place === value} onChange={() => setPlace(value)} className="sr-only" />
                     {label}
                   </label>
@@ -154,43 +291,25 @@ export function Booking() {
             </fieldset>
 
             <div>
-              <label htmlFor={nameId} className="mb-2 block font-semibold">
-                Tu nombre
-              </label>
-              <input
-                id={nameId}
-                type="text"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                autoComplete="given-name"
-                maxLength={60}
-                className="min-h-13 w-full bg-paper px-4 text-base"
-              />
-            </div>
-
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="font-semibold">Acompañantes</p>
-                <p className="text-[0.95rem] text-ink-soft">Opcional</p>
-              </div>
-              <div className="flex items-center bg-paper">
+              <p className="mb-2 text-[0.75rem] tracking-[0.16em] text-ink-soft uppercase">Acompañantes (opcional)</p>
+              <div className="flex w-fit items-center rounded-full border border-line">
                 <button
                   type="button"
                   onClick={() => setCompanions((value) => Math.max(0, value - 1))}
                   disabled={companions === 0}
                   aria-label="Quitar un acompañante"
-                  className="pressable flex size-11 items-center justify-center hover:bg-marble-deep disabled:opacity-30"
+                  className="pressable flex size-11 items-center justify-center rounded-full hover:bg-marble disabled:opacity-30"
                 >
                   <MinusIcon className="size-4" />
                 </button>
-                <output aria-live="polite" aria-label={`Acompañantes: ${companions}`} className="w-8 text-center font-semibold tabular-nums">
+                <output aria-live="polite" aria-label={`Acompañantes: ${companions}`} className="w-8 text-center tabular-nums">
                   {companions}
                 </output>
                 <button
                   type="button"
                   onClick={() => setCompanions((value) => Math.min(20, value + 1))}
                   aria-label="Agregar un acompañante"
-                  className="pressable flex size-11 items-center justify-center hover:bg-marble-deep"
+                  className="pressable flex size-11 items-center justify-center rounded-full hover:bg-marble"
                 >
                   <PlusIcon className="size-4" />
                 </button>
@@ -198,110 +317,15 @@ export function Booking() {
             </div>
           </div>
 
-          <div className="md:col-span-4">
-            <p className="font-semibold">Día</p>
-            {!today || !visibleMonth ? (
-              <CalendarSkeleton />
-            ) : (
-              <div className="mt-2">
-                <div className="mb-3 flex items-center justify-between">
-                  <p className="font-display text-[1.6rem]" aria-live="polite">
-                    {capitalize(monthFormat.format(new Date(visibleMonth.year, visibleMonth.month, 1)))}
-                  </p>
-                  <div className="flex gap-1">
-                    <button
-                      type="button"
-                      onClick={() => moveMonth(-1)}
-                      disabled={!canGoBack}
-                      aria-label="Mes anterior"
-                      className="pressable flex size-11 items-center justify-center bg-paper hover:bg-marble-deep disabled:opacity-30"
-                    >
-                      <ChevronIcon className="size-4 rotate-180" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => moveMonth(1)}
-                      aria-label="Mes siguiente"
-                      className="pressable flex size-11 items-center justify-center bg-paper hover:bg-marble-deep"
-                    >
-                      <ChevronIcon className="size-4" />
-                    </button>
-                  </div>
-                </div>
-                <div className="grid grid-cols-7 gap-1.5 text-center">
-                  {weekDays.map((day, index) => (
-                    <span key={index} aria-hidden className="pb-1 text-[0.95rem] text-ink-soft">
-                      {day}
-                    </span>
-                  ))}
-                  {days.map((day, index) => {
-                    if (!day) return <span key={`empty-${index}`} />;
-                    const isSunday = day.getDay() === 0;
-                    const disabled = day < today || isSunday;
-                    const selected = date?.getTime() === day.getTime();
-                    const isToday = day.getTime() === today.getTime();
-                    return (
-                      <button
-                        key={day.toISOString()}
-                        type="button"
-                        disabled={disabled}
-                        onClick={() => {
-                          setDate(day);
-                          setTime(null);
-                        }}
-                        aria-pressed={selected}
-                        aria-label={`${longDateFormat.format(day)}${isSunday ? ", cerrado" : ""}${isToday ? ", hoy" : ""}`}
-                        className={`pressable aspect-square text-[0.95rem] tabular-nums ${
-                          selected
-                            ? "bg-ink text-paper"
-                            : disabled
-                              ? "text-ink-soft/50 line-through"
-                              : "bg-paper hover:bg-marble-deep"
-                        } ${isToday && !selected ? "font-semibold underline underline-offset-4" : ""}`}
-                      >
-                        {day.getDate()}
-                      </button>
-                    );
-                  })}
-                </div>
-                <p className="mt-3 text-[0.95rem] text-ink-soft">Domingos cerrado. Si tu boda es en domingo, escríbeme.</p>
-              </div>
-            )}
+          <div className="mt-6 rounded-2xl bg-marble px-5 py-4" aria-live="polite">
+            <p className="text-[0.72rem] tracking-[0.16em] text-ink-soft uppercase">Tu cita</p>
+            <p className="font-display text-[1.1rem] leading-snug">{summary || "Elige servicio, día y hora"}</p>
           </div>
 
-          <div className="flex flex-col md:col-span-4">
-            <fieldset>
-              <legend className="mb-2 font-semibold">Hora</legend>
-              <div className="grid grid-cols-2 gap-2">
-                {timeSlots.map((slot) => (
-                  <label
-                    key={slot}
-                    className={`pressable flex min-h-11 items-center justify-center text-[0.95rem] tabular-nums has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
-                      !date ? "cursor-not-allowed opacity-40" : "cursor-pointer"
-                    } ${time === slot ? "bg-ink text-paper" : "bg-paper hover:bg-marble-deep"}`}
-                  >
-                    <input
-                      type="radio"
-                      name="booking-time"
-                      checked={time === slot}
-                      disabled={!date}
-                      onChange={() => setTime(slot)}
-                      className="sr-only"
-                    />
-                    {slot}
-                  </label>
-                ))}
-              </div>
-              {!date ? <p className="mt-2 text-[0.95rem] text-ink-soft">Primero elige un día.</p> : null}
-            </fieldset>
-
-            <div className="mt-auto pt-10">
-              <WhatsAppButton message={message} disabled={Boolean(missing)} disabledLabel={missing ?? undefined} className="w-full">
-                Solicitar cita por WhatsApp
-              </WhatsAppButton>
-            </div>
-          </div>
-        </div>
+          <WhatsAppButton message={message} disabled={Boolean(missing)} disabledLabel={missing ?? undefined} className="mt-5 w-full">
+            Confirmar por WhatsApp
+          </WhatsAppButton>
+        </Reveal>
       </div>
     </section>
   );

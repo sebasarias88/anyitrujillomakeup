@@ -199,7 +199,7 @@ export function Select({
 
   return (
     <div className={className}>
-      <span id={`${id}-label`} className={hideLabel ? "sr-only" : "mb-2 block text-[0.95rem] font-semibold"}>
+      <span id={`${id}-label`} className={hideLabel ? "sr-only" : "mb-2 block text-[0.75rem] tracking-[0.16em] text-ink-soft uppercase"}>
         {label}
       </span>
       <button
@@ -215,7 +215,7 @@ export function Select({
         disabled={loading}
         onClick={() => (open ? hide() : show())}
         onKeyDown={onKeyDown}
-        className="pressable flex min-h-13 w-full items-center justify-between gap-3 bg-marble px-4 text-left text-base hover:bg-marble-deep disabled:cursor-progress"
+        className="pressable flex min-h-12 w-full items-center justify-between gap-3 rounded-xl border border-line-strong bg-blush px-4 text-left text-base hover:border-ink disabled:cursor-progress"
       >
         <span id={`${id}-value`} className={selected ? "text-ink" : "text-ink-soft"}>
           {loading ? "Cargando…" : (selected?.label ?? placeholder)}
@@ -230,7 +230,7 @@ export function Select({
       <div
         ref={popoverRef}
         popover="auto"
-        className="select-popover fixed m-0 max-h-80 overflow-auto bg-paper p-1.5 text-ink"
+        className="select-popover fixed m-0 max-h-80 overflow-auto rounded-xl bg-white p-1.5 text-ink"
       >
         {searchable ? (
           <input
@@ -246,7 +246,7 @@ export function Select({
             aria-label={`Buscar en ${label}`}
             aria-controls={listboxId}
             aria-activedescendant={activeId}
-            className="mb-1.5 min-h-11 w-full bg-marble px-3 text-base outline-none focus-visible:outline-2"
+            className="mb-1.5 min-h-11 w-full rounded-lg bg-marble px-3 text-base outline-none focus-visible:outline-2"
           />
         ) : null}
         <ul id={listboxId} role="listbox" aria-labelledby={`${id}-label`}>

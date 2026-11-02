@@ -211,7 +211,7 @@ export function LookQuiz() {
                             className="object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.03]"
                           />
                         </span>
-                        <span className="mt-2 block font-semibold">{option.label}</span>
+                        <span className="mt-2 block font-medium">{option.label}</span>
                         <span className="block text-[0.95rem] text-ink-soft max-sm:hidden">{option.hint}</span>
                       </button>
                     ) : (
@@ -247,7 +247,7 @@ export function LookQuiz() {
                     Tu look: {result.name}
                   </h3>
                   <p className="mt-3 leading-relaxed">{result.description}</p>
-                  <p className="mt-3 leading-relaxed font-semibold">{result.recommendation}</p>
+                  <p className="mt-3 leading-relaxed font-medium">{result.recommendation}</p>
                   <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
                     <WhatsAppButton message={result.message}>Quiero este look</WhatsAppButton>
                     <button

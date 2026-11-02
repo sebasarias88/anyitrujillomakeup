@@ -59,26 +59,43 @@ export function formatCOP(value: number) {
   return `$${value.toLocaleString("es-CO")}`;
 }
 
-export type SitePath = "/" | "/novias" | "/servicios" | "/portafolio" | "/contacto";
+export type SitePath =
+  | "/"
+  | "/servicios"
+  | "/novias"
+  | "/quinceaneras"
+  | "/social"
+  | "/cursos"
+  | "/portafolio"
+  | "/sobre-mi"
+  | "/contacto";
 
-/** Every public page: header/menu labels, sitemap and breadcrumbs read from here. */
+/** Every public page: menu (when `nav`), sitemap and breadcrumbs read from here. */
 export const pages = [
-  { path: "/", label: "Inicio", priority: 1 },
-  { path: "/novias", label: "Novias", priority: 0.9 },
-  { path: "/servicios", label: "Servicios", priority: 0.8 },
-  { path: "/portafolio", label: "Portafolio", priority: 0.7 },
-  { path: "/contacto", label: "Contacto", priority: 0.8 },
-] as const satisfies readonly { path: SitePath; label: string; priority: number }[];
+  { path: "/", label: "Inicio", priority: 1, nav: true },
+  { path: "/servicios", label: "Servicios", priority: 0.9, nav: true },
+  { path: "/novias", label: "Novias", priority: 0.9, nav: false },
+  { path: "/quinceaneras", label: "Quinceañeras", priority: 0.8, nav: false },
+  { path: "/social", label: "Social", priority: 0.8, nav: false },
+  { path: "/cursos", label: "Cursos", priority: 0.7, nav: false },
+  { path: "/portafolio", label: "Portafolio", priority: 0.7, nav: true },
+  { path: "/sobre-mi", label: "Sobre mí", priority: 0.6, nav: true },
+  { path: "/contacto", label: "Contacto", priority: 0.8, nav: true },
+] as const satisfies readonly { path: SitePath; label: string; priority: number; nav: boolean }[];
 
-/** Header links: every page except home (the logo goes home). */
-export const navLinks = pages.filter((page) => page.path !== "/");
+/** Header and mobile menu links. */
+export const navLinks = pages.filter((page) => page.nav);
 
 /** The WhatsApp message behind the always-visible action, per page. */
 export const pageWhatsappMessage: Record<SitePath, string> = {
   "/": `${whatsappGreeting} Vi tu página y quiero agendar una cita. ¿Me ayudas con la disponibilidad?`,
-  "/novias": `${whatsappGreeting} Me voy a casar y quiero información de tus paquetes de novia.`,
   "/servicios": `${whatsappGreeting} Quiero información sobre tus servicios de maquillaje y peinado.`,
+  "/novias": `${whatsappGreeting} Me voy a casar y quiero información de tus paquetes de novia.`,
+  "/quinceaneras": `${whatsappGreeting} Quiero información sobre maquillaje y peinado para XV años.`,
+  "/social": `${whatsappGreeting} Quiero agendar un maquillaje social o de grado.`,
+  "/cursos": `${whatsappGreeting} Quiero información sobre tus cursos de maquillaje.`,
   "/portafolio": `${whatsappGreeting} Vi tu portafolio y quiero agendar un maquillaje.`,
+  "/sobre-mi": `${whatsappGreeting} Quiero agendar una cita contigo.`,
   "/contacto": `${whatsappGreeting} Quiero agendar una cita. ¿Me ayudas con la disponibilidad?`,
 };
 
@@ -311,3 +328,106 @@ export const faqs: { q: string; a: string; pages: readonly FaqPage[] }[] = [
 ];
 
 export const faqsFor = (page: FaqPage) => faqs.filter((faq) => faq.pages.includes(page));
+
+
+export type ServicePath = "/novias" | "/quinceaneras" | "/social" | "/cursos";
+
+export type ServiceOption = { name: string; detail: string; price: number };
+
+export type Service = {
+  path: ServicePath;
+  title: string;
+  /** Lowest price, shown as "Desde $X". */
+  fromPrice: number;
+  /** SAMPLE prices: shown so Anyi sees the layout; replace with her real prices. */
+  samplePrice: boolean;
+  summary: string;
+  badge?: string;
+  /** Detail page copy. */
+  heroTitle: string;
+  heroAccent: string;
+  intro: string;
+  includes: { title: string; text: string }[];
+  options: ServiceOption[];
+};
+
+export const services: Service[] = [
+  {
+    path: "/novias",
+    title: "Novias",
+    fromPrice: 800_000,
+    samplePrice: false,
+    badge: "Mi especialidad",
+    summary: "Prueba, maquillaje y peinado para el día que soñaste.",
+    heroTitle: "Tu boda,",
+    heroAccent: "como siempre la soñaste",
+    intro: "Prueba en el estudio, maquillaje con aerógrafo y peinado, y si quieres, te acompaño durante tus fotos.",
+    includes: [],
+    options: [],
+  },
+  {
+    path: "/quinceaneras",
+    title: "Quinceañeras",
+    fromPrice: 350_000,
+    samplePrice: true,
+    summary: "Que la protagonista brille, y su familia también.",
+    heroTitle: "Tus XV años,",
+    heroAccent: "una noche para brillar",
+    intro: "Maquillaje y peinado para la quinceañera, y mi equipo para arreglar a su mamá y a la familia el mismo día.",
+    includes: [
+      { title: "Asesoría de look", text: "Elegimos juntas el estilo según su vestido y su personalidad." },
+      { title: "Maquillaje con aerógrafo", text: "Luminoso, ligero y firme durante toda la fiesta." },
+      { title: "Peinado", text: "Ondas, recogido o semirecogido para lucir la corona." },
+      { title: "Equipo para la familia", text: "Mamá, hermanas y damas, atendidas por mi equipo." },
+    ],
+    options: [
+      { name: "XV · Maquillaje", detail: "Solo maquillaje, en el estudio", price: 350_000 },
+      { name: "XV · Maquillaje y peinado", detail: "El look completo", price: 480_000 },
+      { name: "XV · Experiencia completa", detail: "Look completo y retoque antes de la fiesta", price: 620_000 },
+    ],
+  },
+  {
+    path: "/social",
+    title: "Social",
+    fromPrice: 170_000,
+    samplePrice: true,
+    summary: "Grados, fiestas y eventos: elegante toda la noche.",
+    heroTitle: "Un look elegante",
+    heroAccent: "para cada evento",
+    intro: "Grados, cumpleaños, matrimonios como invitada y sesiones de fotos, en el estudio o a domicilio.",
+    includes: [
+      { title: "Piel impecable", text: "Preparación de piel y base de larga duración." },
+      { title: "Ojos y pestañas", text: "Del natural al glam, según tu evento." },
+      { title: "Pensado para fotos", text: "Un acabado que se ve perfecto en cámara." },
+      { title: "Estudio o domicilio", text: "Voy a donde te arregles en el Quindío." },
+    ],
+    options: [
+      { name: "Maquillaje social", detail: "Natural o glam", price: 170_000 },
+      { name: "Maquillaje y ondas", detail: "Look completo para tu evento", price: 250_000 },
+      { name: "Sesión de fotos", detail: "Maternidad, retrato o marca", price: 220_000 },
+    ],
+  },
+  {
+    path: "/cursos",
+    title: "Cursos",
+    fromPrice: 450_000,
+    samplePrice: true,
+    summary: "Aprende mis técnicas, para ti o para trabajar.",
+    heroTitle: "Aprende a maquillar",
+    heroAccent: "como una profesional",
+    intro: "Cursos presenciales en el estudio y personalizados uno a uno, con las técnicas que uso con mis novias.",
+    includes: [
+      { title: "Clases prácticas", text: "Practicas en el estudio, con acompañamiento paso a paso." },
+      { title: "Técnica profesional", text: "Preparación de piel, ojos, pestañas y acabados duraderos." },
+      { title: "A tu ritmo", text: "En grupo o uno a uno, según lo que quieras dominar." },
+      { title: "Certificado", text: "Al terminar recibes tu certificado del curso." },
+    ],
+    options: [
+      { name: "Automaquillaje", detail: "Para maquillarte tú misma · 1 sesión", price: 450_000 },
+      { name: "Curso personalizado", detail: "Uno a uno, a tu ritmo · 3 sesiones", price: 950_000 },
+      { name: "Curso profesional", detail: "Para trabajar como maquilladora", price: 1_800_000 },
+    ],
+  },
+];
+
+export const serviceFor = (path: ServicePath) => services.find((service) => service.path === path)!;

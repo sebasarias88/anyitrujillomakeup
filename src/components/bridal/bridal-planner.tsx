@@ -34,20 +34,20 @@ function Stepper({ label, hint, value, onChange, max = 20 }: { label: string; hi
   return (
     <div className="flex items-center justify-between gap-4 py-3">
       <div>
-        <p className="font-semibold">{label}</p>
+        <p className="font-medium">{label}</p>
         <p className="text-[0.95rem] text-ink-soft">{hint}</p>
       </div>
-      <div className="flex items-center bg-marble">
+      <div className="flex items-center rounded-full border border-line">
         <button
           type="button"
           onClick={() => onChange(Math.max(0, value - 1))}
           disabled={value === 0}
           aria-label={`Quitar uno: ${label}`}
-          className="pressable flex size-11 items-center justify-center hover:bg-marble-deep disabled:opacity-30"
+          className="pressable flex size-11 items-center justify-center rounded-full hover:bg-marble disabled:opacity-30"
         >
           <MinusIcon className="size-4" />
         </button>
-        <output aria-live="polite" aria-label={`${label}: ${value}`} className="w-8 text-center font-semibold tabular-nums">
+        <output aria-live="polite" aria-label={`${label}: ${value}`} className="w-8 text-center font-medium tabular-nums">
           {value}
         </output>
         <button
@@ -55,7 +55,7 @@ function Stepper({ label, hint, value, onChange, max = 20 }: { label: string; hi
           onClick={() => onChange(Math.min(max, value + 1))}
           disabled={value === max}
           aria-label={`Agregar uno: ${label}`}
-          className="pressable flex size-11 items-center justify-center hover:bg-marble-deep disabled:opacity-30"
+          className="pressable flex size-11 items-center justify-center rounded-full hover:bg-marble disabled:opacity-30"
         >
           <PlusIcon className="size-4" />
         </button>
@@ -127,12 +127,13 @@ export function BridalPlanner() {
     <>
       <PackagesTable selectedId={packageId} onSelect={setPackageId} />
 
-      <section id="cotizador" aria-labelledby="quote-title" className="scroll-mt-24 bg-marble py-28 md:py-40">
+      <section id="cotizador" aria-labelledby="quote-title" className="scroll-mt-28 bg-white py-24 md:py-28">
         <div className="container-page grid gap-14 md:grid-cols-12 md:gap-6">
           <div className="md:col-span-6 lg:col-span-5">
             <Reveal>
-              <h2 id="quote-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
-                Cotiza tu boda
+              <p className="eyebrow">Cotizador</p>
+              <h2 id="quote-title" className="mt-4 font-display text-[2.2rem] leading-[1.1] md:text-[2.8rem]">
+                Cotiza tu boda <em className="text-nude-deep">en segundos</em>
               </h2>
               <p className="mt-4 max-w-[40ch] text-[1.05rem] leading-relaxed">
                 Elige tu paquete, suma a tus acompañantes y envíame la cotización armada por WhatsApp.
@@ -140,15 +141,15 @@ export function BridalPlanner() {
             </Reveal>
 
             <fieldset className="mt-10">
-              <legend className="font-semibold">Paquete</legend>
+              <legend className="font-medium">Paquete</legend>
               <div className="mt-3 space-y-2">
                 {bridalPackages.map((pkg) => {
                   const active = pkg.id === packageId;
                   return (
                     <label
                       key={pkg.id}
-                      className={`pressable flex cursor-pointer items-center justify-between gap-4 px-5 py-4 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
-                        active ? "bg-paper" : "bg-marble-deep/60 hover:bg-marble-deep"
+                      className={`pressable flex cursor-pointer items-center justify-between gap-4 rounded-xl border px-5 py-4 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
+                        active ? "border-ink bg-white" : "border-line bg-blush hover:border-ink"
                       }`}
                     >
                       <input
@@ -162,7 +163,7 @@ export function BridalPlanner() {
                       <span className="flex items-center gap-3">
                         <span aria-hidden className={`size-3 shrink-0 rounded-full border border-ink ${active ? "bg-ink" : "bg-paper"}`} />
                         <span>
-                          <span className="block font-semibold">{pkg.name}</span>
+                          <span className="block font-medium">{pkg.name}</span>
                           <span className="block text-[0.95rem] text-ink-soft">{pkg.subtitle}</span>
                         </span>
                       </span>
@@ -196,7 +197,7 @@ export function BridalPlanner() {
             </AnimatePresence>
 
             <fieldset className="mt-8">
-              <legend className="font-semibold">Acompañantes</legend>
+              <legend className="font-medium">Acompañantes</legend>
               <p className="text-[0.95rem] text-ink-soft">Mamá, damas o invitadas, atendidas por mi equipo.</p>
               <div className="mt-2">
                 {companionServices.map((service) => (
@@ -213,7 +214,7 @@ export function BridalPlanner() {
 
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               <div>
-                <label htmlFor={dateId} className="mb-2 block font-semibold">
+                <label htmlFor={dateId} className="mb-2 block font-medium">
                   Fecha de la boda
                 </label>
                 <input
@@ -222,11 +223,11 @@ export function BridalPlanner() {
                   value={date}
                   min={minDate}
                   onChange={(event) => setDate(event.target.value)}
-                  className="min-h-13 w-full bg-paper px-4 text-base"
+                  className="min-h-12 w-full rounded-xl border border-line-strong bg-blush px-4 text-base"
                 />
               </div>
               <div>
-                <label htmlFor={nameId} className="mb-2 block font-semibold">
+                <label htmlFor={nameId} className="mb-2 block font-medium">
                   Tu nombre <span className="font-normal text-ink-soft">(opcional)</span>
                 </label>
                 <input
@@ -236,13 +237,13 @@ export function BridalPlanner() {
                   onChange={(event) => setName(event.target.value)}
                   autoComplete="given-name"
                   maxLength={60}
-                  className="min-h-13 w-full bg-paper px-4 text-base"
+                  className="min-h-12 w-full rounded-xl border border-line-strong bg-blush px-4 text-base"
                 />
               </div>
             </div>
 
             <fieldset className="mt-8">
-              <legend className="mb-3 font-semibold">¿Dónde te arreglas?</legend>
+              <legend className="mb-3 font-medium">¿Dónde te arreglas?</legend>
               <div className="grid grid-cols-2 gap-2">
                 {(
                   [
@@ -252,8 +253,8 @@ export function BridalPlanner() {
                 ).map(([value, label]) => (
                   <label
                     key={value}
-                    className={`pressable flex min-h-12 cursor-pointer items-center justify-center font-semibold has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
-                      place === value ? "bg-ink text-paper" : "bg-paper hover:bg-marble-deep"
+                    className={`pressable flex min-h-12 cursor-pointer items-center justify-center rounded-full border text-[0.92rem] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
+                      place === value ? "border-ink bg-ink text-paper" : "border-line bg-white hover:border-ink"
                     }`}
                   >
                     <input
@@ -288,7 +289,7 @@ export function BridalPlanner() {
           {/* The invitation: the quote printed on paper, sticky beside the controls. */}
           <div className="md:col-span-6 md:col-start-7 lg:col-span-6 lg:col-start-7">
             <div data-hide-whatsapp-bar className="md:sticky md:top-24">
-              <article aria-labelledby="invitation-title" className="bg-paper px-6 py-10 text-center md:px-12 md:py-14">
+              <article aria-labelledby="invitation-title" className="rounded-[1.5rem] border border-line bg-blush px-6 py-10 text-center shadow-lift md:px-12 md:py-14">
                 <Logo className="mx-auto h-16 text-ink" />
                 <h3 id="invitation-title" className="mt-6 font-display text-[1.9rem] leading-tight">
                   {name.trim() ? `La boda de ${name.trim()}` : "Tu cotización de novia"}

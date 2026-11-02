@@ -1,5 +1,4 @@
 import { Booking } from "@/components/contact/booking";
-import { PhoneDisplay } from "@/components/contact/phone-display";
 import { StudioStrip } from "@/components/contact/studio-strip";
 import { PageHero } from "@/components/layout/page-hero";
 import { PageTransition } from "@/components/layout/page-transition";
@@ -23,8 +22,9 @@ export default function ContactPage() {
     <PageTransition>
       <JsonLd data={[breadcrumbJsonLd("/contacto"), faqJsonLd(faqs)]} />
       <PageHero
+        crumbs={[{ href: "/contacto", label: "Contacto" }]}
         eyebrow="Contacto · Agenda"
-        title={<>Agenda tu cita <em className="text-nude-deep">en minutos</em></>}
+        title={<>Reserva tu cita <em className="text-nude-deep">en menos de un minuto</em></>}
         intro={<p>Elige el servicio, el día y la hora. Te llevo a WhatsApp con tu solicitud lista.</p>}
         image={images.studioSign}
         imageAlt="Fachada de Anyi Trujillo Beauty Studio con su letrero dorado"
@@ -32,7 +32,6 @@ export default function ContactPage() {
       />
       <Booking />
       <StudioStrip />
-      <PhoneDisplay />
       <Faq title="Antes de reservar" items={faqs} />
     </PageTransition>
   );

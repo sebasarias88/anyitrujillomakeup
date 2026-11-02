@@ -1,47 +1,69 @@
 import Image, { type StaticImageData } from "next/image";
+import Link from "next/link";
 import { ViewTransition, type ReactNode } from "react";
 
 type PageHeroProps = {
-  /** Small uppercase label above the title. */
   eyebrow: string;
-  /** The real, descriptive title of the page: its only h1. */
+  /** The page's only h1. */
   title: ReactNode;
   intro: ReactNode;
   image: StaticImageData;
   imageAlt: string;
   actions?: ReactNode;
-  /** CSS object-position for the photograph crop, e.g. "50% 15%" to keep a face in frame. */
   imagePosition?: string;
-  /** Shared view-transition name so a photograph from the home page morphs into this hero. */
   transitionName?: string;
+  /** Label of the current page for the breadcrumb (omitted on top-level pages). */
+  crumbs?: { href: string; label: string }[];
   children?: ReactNode;
 };
 
 /**
- * Shared opening of every inner page, in the same language as the home hero:
- * eyebrow, h1, one sentence and the actions on the left; the photograph in an
- * arched frame (like a vanity mirror) with a soft nude circle behind it on the
- * right. The photograph is the page's LCP image, so it is preloaded.
+ * Shared opening of every inner page: breadcrumb, label, title, sentence and
+ * actions on the left; a large rounded photograph with a soft shadow on the right.
  */
-export function PageHero({ eyebrow, title, intro, image, imageAlt, actions, imagePosition, transitionName, children }: PageHeroProps) {
+export function PageHero({ eyebrow, title, intro, image, imageAlt, actions, imagePosition, transitionName, crumbs, children }: PageHeroProps) {
   return (
-    <section aria-labelledby="page-title" className="border-b border-line bg-gradient-to-b from-paper to-blush pt-28 pb-16 md:pt-32 md:pb-20">
-      <div className="container-page grid max-w-[78rem] items-center gap-12 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-6">
-          <p className="eyebrow flex items-center gap-3">
-            <span aria-hidden className="h-px w-9 bg-nude" />
-            {eyebrow}
-          </p>
-          <h1 id="page-title" className="mt-5 font-display text-[2.5rem] leading-[1.08] text-balance md:text-[3.5rem] lg:text-[3.9rem]">
-            {title}
-          </h1>
-          <div className="mt-6 max-w-[42ch] text-[1.08rem] leading-relaxed font-light text-ink-soft">{intro}</div>
-          {actions ? <div className="mt-8 flex flex-wrap items-center gap-3">{actions}</div> : null}
-          {children}
-        </div>
-        <div className="relative mx-auto w-full max-w-[26rem] lg:col-span-5 lg:col-start-8">
-          <span aria-hidden className="absolute -top-6 -right-6 size-56 rounded-full bg-nude/25 md:size-64" />
-          <div className="relative aspect-[4/5] overflow-hidden rounded-t-full rounded-b-3xl">
+    <section aria-labelledby="page-title" className="bg-gradient-to-b from-blush to-nude-field">
+      <div className="container-page pt-28 pb-16 md:pt-36 md:pb-24">
+        {crumbs ? (
+          <nav aria-label="Ruta" className="mb-8 text-[0.85rem] text-ink-soft">
+            <ol className="flex flex-wrap gap-2">
+              <li>
+                <Link href="/" className="hover:text-ink">
+                  Inicio
+                </Link>
+              </li>
+              {crumbs.map((crumb, index) => (
+                <li key={crumb.href} className="flex gap-2">
+                  <span aria-hidden>/</span>
+                  {index === crumbs.length - 1 ? (
+                    <span aria-current="page" className="text-ink">
+                      {crumb.label}
+                    </span>
+                  ) : (
+                    <Link href={crumb.href} className="hover:text-ink">
+                      {crumb.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        ) : null}
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <p className="eyebrow flex items-center gap-3">
+              <span aria-hidden className="h-px w-9 bg-nude-deep" />
+              {eyebrow}
+            </p>
+            <h1 id="page-title" className="mt-5 font-display text-[2.5rem] leading-[1.08] text-balance md:text-[3.4rem]">
+              {title}
+            </h1>
+            <div className="mt-6 max-w-[46ch] text-[1.08rem] leading-relaxed font-light text-ink-soft">{intro}</div>
+            {actions ? <div className="mt-8 flex flex-wrap items-center gap-3">{actions}</div> : null}
+            {children}
+          </div>
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-lift sm:aspect-[5/4] lg:aspect-[4/5] lg:max-h-[34rem]">
             <ViewTransition name={transitionName} share={transitionName ? "morph" : undefined} default="none">
               <Image
                 src={image}
@@ -49,7 +71,7 @@ export function PageHero({ eyebrow, title, intro, image, imageAlt, actions, imag
                 fill
                 preload
                 placeholder="blur"
-                sizes="(min-width: 1024px) 26rem, 90vw"
+                sizes="(min-width: 1024px) 36rem, 92vw"
                 className="object-cover"
                 style={imagePosition ? { objectPosition: imagePosition } : undefined}
               />

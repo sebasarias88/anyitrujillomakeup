@@ -1,14 +1,16 @@
-import { AirbrushNote } from "@/components/bridal/airbrush-note";
 import { BridalPlanner } from "@/components/bridal/bridal-planner";
 import { Process } from "@/components/bridal/process";
 import { PageHero } from "@/components/layout/page-hero";
 import { PageTransition } from "@/components/layout/page-transition";
+import { CtaBanner } from "@/components/shared/cta-banner";
+import { IncludedGrid } from "@/components/shared/included-grid";
+import { ServiceGallery } from "@/components/shared/service-gallery";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Faq } from "@/components/ui/faq";
 import { JsonLd } from "@/components/ui/json-ld";
 import { images } from "@/lib/images";
 import { breadcrumbJsonLd, businessRef, faqJsonLd, pageMetadata } from "@/lib/seo";
-import { bridalPackages, faqsFor, formatCOP } from "@/lib/site";
+import { bridalPackages, faqsFor, formatCOP, pageWhatsappMessage } from "@/lib/site";
 
 export const metadata = pageMetadata({
   path: "/novias",
@@ -17,6 +19,13 @@ export const metadata = pageMetadata({
 });
 
 const faqs = faqsFor("novias");
+
+const included = [
+  { title: "Prueba en el estudio", text: "Definimos juntas tu maquillaje y peinado antes de la boda." },
+  { title: "Maquillaje con aerógrafo", text: "Ligero, natural y resistente al calor y las lágrimas." },
+  { title: "Peinado", text: "Recogido, semirecogido u ondas, según tu vestido." },
+  { title: "Lista a tiempo", text: "Te entrego completamente lista para la ceremonia." },
+];
 
 const bridalService = {
   "@context": "https://schema.org",
@@ -38,18 +47,34 @@ export default function BridalPage() {
     <PageTransition>
       <JsonLd data={[breadcrumbJsonLd("/novias"), bridalService, faqJsonLd(faqs)]} />
       <PageHero
-        eyebrow="Novias · Armenia, Quindío"
-        transitionName="cover-novias"
-        title={<>Maquillaje de novia en Armenia, <em className="text-nude-deep">como lo soñaste</em></>}
-        intro={<p>Tu prueba en el estudio, tu look el gran día y, si quieres, te acompaño durante las fotos.</p>}
+        crumbs={[
+          { href: "/servicios", label: "Servicios" },
+          { href: "/novias", label: "Novias" },
+        ]}
+        eyebrow={`Maquillaje de novia en Armenia · desde ${formatCOP(800_000)}`}
+        title={
+          <>
+            Tu boda, <em className="text-nude-deep">como siempre la soñaste</em>
+          </>
+        }
+        intro={<p>Prueba en el estudio, maquillaje con aerógrafo y peinado, y si quieres, te acompaño durante tus fotos.</p>}
         image={images.brideDressWindow}
         imageAlt="Novia con bata de encaje contemplando su vestido antes de la ceremonia"
-        actions={<><ButtonLink href="#cotizador">Cotizar mi boda</ButtonLink><ButtonLink href="#proceso" variant="ink">Cómo trabajamos</ButtonLink></>}
+        actions={
+          <>
+            <ButtonLink href="#cotizador">Cotizar mi boda</ButtonLink>
+            <ButtonLink href="#paquetes" variant="ink" className="bg-white">
+              Ver paquetes
+            </ButtonLink>
+          </>
+        }
       />
+      <IncludedGrid items={included} title="Todo para tu día" />
       <BridalPlanner />
       <Process />
-      <AirbrushNote />
+      <ServiceGallery category="novias" title="Novias que he maquillado" />
       <Faq title="Lo que me preguntan las novias" items={faqs} />
+      <CtaBanner message={pageWhatsappMessage["/novias"]} />
     </PageTransition>
   );
 }

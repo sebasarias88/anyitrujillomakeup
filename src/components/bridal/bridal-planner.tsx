@@ -279,7 +279,7 @@ export function BridalPlanner() {
                 <div className="mt-4">
                   <Select
                     label="Municipio"
-                    options={homeVisitZones.municipalities.map((item) => ({ value: item, label: item }))}
+                    options={homeVisitZones.municipalities.map((item) => ({ value: item.name, label: item.name }))}
                     value={municipality}
                     onChange={setMunicipality}
                     placeholder="Elige el municipio…"

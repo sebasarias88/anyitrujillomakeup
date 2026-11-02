@@ -1,10 +1,14 @@
-import { PageTransition } from "@/components/layout/page-transition";
 import { PageHero } from "@/components/layout/page-hero";
-import { Airbrush } from "@/components/services/airbrush";
-import { Services } from "@/components/services/services";
+import { PageTransition } from "@/components/layout/page-transition";
+import { AirbrushScene } from "@/components/services/airbrush-scene";
+import { Companions } from "@/components/services/companions";
+import { HomeVisitMap } from "@/components/services/home-visit-map";
+import { ServiceMenu } from "@/components/services/service-menu";
+import { ButtonLink } from "@/components/ui/button-link";
 import { JsonLd } from "@/components/ui/json-ld";
 import { images } from "@/lib/images";
-import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, businessRef, pageMetadata } from "@/lib/seo";
+import { occasionServices } from "@/lib/site";
 
 export const metadata = pageMetadata({
   path: "/servicios",
@@ -13,10 +17,20 @@ export const metadata = pageMetadata({
     "Maquillaje y peinado para quinceañeras, grados, eventos y sesiones de fotos en Armenia, Quindío. Aerógrafo, equipo para grupos y servicio a domicilio.",
 });
 
+const serviceList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: occasionServices.map((service, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: { "@type": "Service", name: service.title, description: service.text, provider: businessRef, areaServed: "Quindío" },
+  })),
+};
+
 export default function ServicesPage() {
   return (
     <PageTransition>
-      <JsonLd data={breadcrumbJsonLd("/servicios")} />
+      <JsonLd data={[breadcrumbJsonLd("/servicios"), serviceList]} />
       <PageHero
         monument="Servicios"
         transitionName="cover-servicios"
@@ -24,9 +38,19 @@ export default function ServicesPage() {
         intro={<p>Quinceañeras, grados, fiestas y sesiones de fotos, en mi estudio o donde te arregles.</p>}
         image={images.studioVanity}
         imageAlt="Tocador del estudio con espejo de luces, brochas y paletas profesionales"
+        actions={
+          <>
+            <ButtonLink href="#domicilio">Ver zonas a domicilio</ButtonLink>
+            <ButtonLink href="#aerografo" variant="text">
+              ¿Qué es el aerógrafo?
+            </ButtonLink>
+          </>
+        }
       />
-      <Services />
-      <Airbrush />
+      <ServiceMenu />
+      <Companions />
+      <AirbrushScene />
+      <HomeVisitMap />
     </PageTransition>
   );
 }

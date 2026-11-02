@@ -155,23 +155,57 @@ export type CompanionServiceId = (typeof companionServices)[number]["id"];
  */
 export const homeVisitZones = {
   sample: true,
+  // Approximate town-centre coordinates, used to place each town on the home-visit map.
   municipalities: [
-    "Armenia",
-    "Calarcá",
-    "Circasia",
-    "Córdoba",
-    "Filandia",
-    "Génova",
-    "La Tebaida",
-    "Montenegro",
-    "Pijao",
-    "Quimbaya",
-    "Salento",
-    "Buenavista",
+    { name: "Armenia", lat: 4.534, lng: -75.681 },
+    { name: "Calarcá", lat: 4.531, lng: -75.643 },
+    { name: "Circasia", lat: 4.619, lng: -75.636 },
+    { name: "Córdoba", lat: 4.392, lng: -75.688 },
+    { name: "Filandia", lat: 4.674, lng: -75.658 },
+    { name: "Génova", lat: 4.207, lng: -75.79 },
+    { name: "La Tebaida", lat: 4.453, lng: -75.788 },
+    { name: "Montenegro", lat: 4.566, lng: -75.751 },
+    { name: "Pijao", lat: 4.334, lng: -75.705 },
+    { name: "Quimbaya", lat: 4.623, lng: -75.763 },
+    { name: "Salento", lat: 4.637, lng: -75.57 },
+    { name: "Buenavista", lat: 4.36, lng: -75.739 },
   ],
 } as const;
 
-export type Municipality = (typeof homeVisitZones.municipalities)[number];
+export type Municipality = (typeof homeVisitZones.municipalities)[number]["name"];
+
+/**
+ * Services beyond bridal for /servicios. Prices are not confirmed yet, so the
+ * page shows "Precio de ejemplo · por confirmar" instead of a figure.
+ */
+export const occasionServices = [
+  {
+    id: "quince",
+    title: "Quinceañeras",
+    text: "Maquillaje y peinado para que la quinceañera sea la protagonista, y mi equipo para arreglar a su mamá y a la familia.",
+    whatsapp: "Hola Anyi ✨ Quiero información sobre maquillaje y peinado para XV años.",
+  },
+  {
+    id: "social",
+    title: "Social y grados",
+    text: "Para cumpleaños, grados, matrimonios como invitada y fiestas: un acabado impecable que dura toda la noche.",
+    whatsapp: "Hola Anyi ✨ Quiero agendar un maquillaje social o de grado.",
+  },
+  {
+    id: "photos",
+    title: "Sesiones de fotos",
+    text: "Maquillaje pensado para la cámara en sesiones de maternidad, retratos y fotos de marca.",
+    whatsapp: "Hola Anyi ✨ Quiero un maquillaje para una sesión de fotos.",
+  },
+  {
+    id: "hair",
+    title: "Peinados",
+    text: "Ondas definidas, recogidos y peinados para cualquier evento, solos o junto con el maquillaje.",
+    whatsapp: "Hola Anyi ✨ Quiero agendar un peinado.",
+  },
+] as const;
+
+export type OccasionServiceId = (typeof occasionServices)[number]["id"];
 
 export const bookingServices = [
   "Maquillaje de novia",

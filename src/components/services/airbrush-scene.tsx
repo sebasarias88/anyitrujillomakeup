@@ -68,7 +68,8 @@ export function AirbrushScene() {
             <Image src={photo.src} alt={photo.alt} fill placeholder="blur" sizes="(min-width: 768px) 40vw, 100vw" className="object-cover" />
             {/* The mist: a blurred, veiled copy that fades away with the scroll. */}
             <motion.div aria-hidden style={{ opacity: mistOpacity }} className="absolute inset-0">
-              <Image src={photo.src} alt="" fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover blur-xl" />
+              {/* Blurred anyway, so a small file is enough. */}
+              <Image src={photo.src} alt="" fill sizes="(min-width: 768px) 12vw, 30vw" className="object-cover blur-xl" />
               <div className="absolute inset-0 bg-paper/45" />
             </motion.div>
           </div>

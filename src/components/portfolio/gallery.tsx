@@ -97,7 +97,8 @@ export function Gallery() {
                     src={item.src}
                     alt={item.alt}
                     placeholder="blur"
-                    sizes="(min-width: 768px) 42vw, (min-width: 0px) 50vw"
+                    // Real rendered widths: up to 6 of 12 columns on desktop; full or half width on phones.
+                    sizes={index % 3 === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 42vw, 50vw"}
                     className="h-auto w-full"
                   />
                 </ViewTransition>

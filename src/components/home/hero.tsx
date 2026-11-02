@@ -84,7 +84,9 @@ export function Hero() {
                 src={portrait.src}
                 alt={portrait.alt}
                 fill
+                // Only the first portrait is the LCP; the others wait their turn.
                 preload={index === 0}
+                fetchPriority={index === 0 ? undefined : "low"}
                 placeholder="blur"
                 sizes="(min-width: 768px) 34vw, 100vw"
                 aria-hidden={index !== current}

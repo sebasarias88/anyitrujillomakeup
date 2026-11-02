@@ -401,3 +401,15 @@ body {
     transform: scale(1.08);
   }
 }
+
+/* Admin demo panel */
+@keyframes admin-fade { from { opacity: 0; } }
+@keyframes admin-rise { from { opacity: 0; transform: translateY(10px) scale(0.98); } }
+@keyframes admin-slide { from { transform: translateX(-100%); } }
+.admin-fade { animation: admin-fade 200ms var(--ease-out); }
+.admin-rise { animation: admin-rise 240ms var(--ease-out); }
+.admin-slide { animation: admin-slide 280ms var(--ease-drawer); }
+.admin-page { animation: admin-fade 280ms var(--ease-out); }
+@media (prefers-reduced-motion: reduce) {
+  .admin-fade, .admin-rise, .admin-slide, .admin-page { animation: none; }
+}

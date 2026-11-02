@@ -18,6 +18,7 @@ Dirección: Calle 23 #37-25, edificio Tesalónica local 5, Armenia. WhatsApp: 32
 - Solo frontend, multipágina (9 rutas, ver "Architecture"). El agendamiento redirige a WhatsApp con mensaje prellenado.
 - Secciones aprobadas: cotizador de novia, antes/después, quiz de look, sección aerógrafo, cursos, reseñas reales de clientas, detalles premium.
 - Fase 2 (si ella acepta): panel admin donde ella actualiza horarios y las clientas agendan desde la web.
+- Rama `feat/admin-demo`: demo del panel en `/admin` (solo front, datos de ejemplo en `src/components/admin/store.tsx`, guardados en localStorage). Rutas: resumen, agenda, citas, ventas, clientas, servicios, horarios, portafolio, cursos, equipo. `noindex` y bloqueado en robots.
 
 ## Precios
 - Novia Especial en estudio: $800.000

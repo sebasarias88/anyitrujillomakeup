@@ -70,7 +70,37 @@ export function SalesView() {
       <Card className="mt-4">
         <CardTitle title={tab === "saldos" ? "Saldos por cobrar" : "Pagos recibidos"} action={<Segmented label="Vista" value={tab} onChange={setTab} options={[{ value: "saldos", label: "Saldos" }, { value: "pagos", label: "Pagos" }]} />} />
         {list.length ? (
-          <div className="-mx-5 overflow-x-auto sm:-mx-6">
+          <>
+          {/* Phones: one card per appointment; the table needs room it does not have there. */}
+          <ul className="space-y-3 md:hidden">
+            {list.map((item) => (
+              <li key={item.id} className="rounded-2xl border border-line bg-blush p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-ink">{clientName(data, item.clientId)}</p>
+                    <p className="truncate text-[0.8rem] text-ink-soft">
+                      {formatDay(item.date)} · {item.service}
+                    </p>
+                  </div>
+                  <p className={`shrink-0 font-display text-[1.15rem] tabular-nums ${balance(item) ? "text-nude-deep" : "text-[#2f6b45]"}`}>
+                    {balance(item) ? formatCOP(balance(item)) : "Pagado"}
+                  </p>
+                </div>
+                <div className="mt-3 h-1.5 rounded-full bg-marble-deep">
+                  <div className="h-full rounded-full bg-[#2f6b45]" style={{ width: `${Math.round((item.paid / item.price) * 100)}%` }} />
+                </div>
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  <p className="text-[0.78rem] text-ink-soft">
+                    Abonado <span className="text-[#2f6b45] tabular-nums">{formatCOP(item.paid)}</span> de <span className="tabular-nums">{formatCOP(item.price)}</span>
+                  </p>
+                  <ActionButton size="sm" variant={tab === "saldos" ? "primary" : "outline"} onClick={() => setDetail(item.id)}>
+                    {tab === "saldos" ? "Abonar" : "Ver"}
+                  </ActionButton>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="-mx-5 hidden overflow-x-auto sm:-mx-6 md:block">
             <table className="w-full min-w-[40rem] text-left text-[0.88rem]">
               <thead>
                 <tr className="border-y border-line bg-blush text-ink-soft">
@@ -100,6 +130,7 @@ export function SalesView() {
               </tbody>
             </table>
           </div>
+          </>
         ) : (
           <EmptyState title="Sin saldos pendientes" text="Todas tus clientas están al día 🎉" />
         )}

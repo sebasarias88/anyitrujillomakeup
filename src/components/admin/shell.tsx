@@ -66,16 +66,30 @@ function SignIn() {
           <p className="mt-2 text-[0.9rem] text-ink-soft">Agenda, abonos, clientas y precios en un solo lugar.</p>
         </div>
       </div>
-      <div className="flex flex-col justify-center px-6 py-12 sm:px-14">
+      <div className="flex flex-col justify-center bg-gradient-to-b from-blush to-nude-field px-4 py-10 sm:px-14 lg:bg-none lg:py-12">
         <div className="mx-auto w-full max-w-sm">
-          <Logo className="h-14 text-ink" />
-          <p className="eyebrow mt-10 text-nude-deep">Panel administrativo</p>
-          <h1 className="mt-2 font-display text-[2.3rem] leading-[1.1] text-ink">
-            Hola, <em className="text-nude-deep">Anyi</em>
-          </h1>
-          <p className="mt-3 text-[0.95rem] text-ink-soft">Entra para ver tu agenda de hoy.</p>
+          <div className="text-center lg:text-left">
+            <Logo className="mx-auto h-13 text-ink lg:mx-0 lg:h-14" />
+            {/* Phones: a small collage of her work stands in for the big photo. */}
+            <div aria-hidden className="mt-7 flex items-center justify-center gap-2.5 lg:hidden">
+              {[
+                { src: images.brideTerrace, className: "h-[7.6rem] w-[5.75rem] translate-y-2.5 -rotate-6" },
+                { src: images.glamRoseHero, className: "z-10 h-[9.1rem] w-[6.9rem]" },
+                { src: images.quinceEmerald, className: "h-[7.6rem] w-[5.75rem] translate-y-2.5 rotate-6" },
+              ].map((photo, index) => (
+                <span key={index} className={`relative shrink-0 overflow-hidden rounded-2xl shadow-lift ${photo.className}`}>
+                  <Image src={photo.src} alt="" fill sizes="7rem" placeholder="blur" className="object-cover" priority />
+                </span>
+              ))}
+            </div>
+            <p className="eyebrow mt-10 hidden text-nude-deep lg:block">Panel administrativo</p>
+            <h1 className="mt-7 font-display text-[2.1rem] leading-[1.1] text-ink lg:mt-2 lg:text-[2.3rem]">
+              Hola, <em className="text-nude-deep">Anyi</em>
+            </h1>
+            <p className="mt-2 text-[0.95rem] text-ink-soft lg:mt-3">Entra para ver tu agenda de hoy.</p>
+          </div>
           <form
-            className="mt-8 space-y-4"
+            className="mt-6 space-y-4 rounded-3xl bg-paper p-5 shadow-lift lg:mt-8 lg:rounded-none lg:bg-transparent lg:p-0 lg:shadow-none"
             onSubmit={(event) => {
               event.preventDefault();
             }}
@@ -96,10 +110,10 @@ function SignIn() {
               Entrar al panel
             </ActionButton>
           </form>
-          <p className="mt-6 rounded-xl bg-nude-field px-4 py-3 text-[0.82rem] text-nude-deep">
+          <p className="mt-5 rounded-xl bg-paper/70 px-4 py-3 text-center text-[0.82rem] text-nude-deep lg:mt-6 lg:bg-nude-field lg:text-left">
             Esto es un demo: los datos son de ejemplo y se guardan solo en este navegador.
           </p>
-          <Link href="/" className="mt-6 inline-block text-[0.85rem] text-ink-soft underline underline-offset-4 hover:text-ink">
+          <Link href="/" className="mt-5 block text-center text-[0.85rem] lg:mt-6 lg:inline-block lg:text-left text-ink-soft underline underline-offset-4 hover:text-ink">
             ← Volver al sitio web
           </Link>
         </div>

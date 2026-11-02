@@ -15,11 +15,11 @@ export function SiteFooter() {
             Tu fecha se aparta con tu reserva. <em className="text-gradient-gold">Hablemos de tu look.</em>
           </p>
           <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-            <ButtonLink href={whatsappUrl("Hola Anyi ✨ Quiero agendar una cita. ¿Me ayudas con la disponibilidad?")} external>
+            <ButtonLink href={whatsappUrl("Hola Anyi ✨ Quiero agendar una cita. ¿Me ayudas con la disponibilidad?")}>
               <WhatsAppIcon className="size-4" />
               Escríbeme por WhatsApp
             </ButtonLink>
-            <ButtonLink href={business.instagram} external variant="outline">
+            <ButtonLink href={business.instagram} variant="text">
               <InstagramIcon className="size-4" />
               {business.instagramHandle}
             </ButtonLink>

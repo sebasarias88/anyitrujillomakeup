@@ -91,7 +91,6 @@ export function Airbrush() {
           <Reveal delay={200} className="mt-8">
             <ButtonLink
               href={whatsappUrl("Hola Anyi ✨ Quiero saber más sobre el maquillaje con aerógrafo.")}
-              external
             >
               <WhatsAppIcon className="size-4" />
               Quiero probar el aerógrafo

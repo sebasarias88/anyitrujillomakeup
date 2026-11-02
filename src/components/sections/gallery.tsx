@@ -93,7 +93,7 @@ export function Gallery() {
         </ul>
 
         <div className="mt-12 flex justify-center">
-          <ButtonLink href={business.instagram} external variant="outline">
+          <ButtonLink href={business.instagram} variant="text">
             <InstagramIcon className="size-4" />
             Ver más en {business.instagramHandle}
           </ButtonLink>

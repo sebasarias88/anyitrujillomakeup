@@ -44,11 +44,11 @@ export function Location() {
           </Reveal>
 
           <Reveal delay={180} className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href={business.mapsUrl} external>
+            <ButtonLink href={business.mapsUrl}>
               <PinIcon className="size-4" />
               Cómo llegar
             </ButtonLink>
-            <ButtonLink href={whatsappUrl("Hola Anyi ✨ Quiero cotizar un servicio a domicilio.")} external variant="outline">
+            <ButtonLink href={whatsappUrl("Hola Anyi ✨ Quiero cotizar un servicio a domicilio.")} variant="text">
               <WhatsAppIcon className="size-4" />
               Cotizar domicilio
             </ButtonLink>

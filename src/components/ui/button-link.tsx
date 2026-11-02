@@ -1,28 +1,29 @@
-import type { AnchorHTMLAttributes, ReactNode } from "react";
+import Link from "next/link";
+import type { ComponentProps, ReactNode } from "react";
 
-type Variant = "primary" | "ghost" | "outline";
+export type ButtonVariant = "primary" | "ink" | "text";
 
-const variants: Record<Variant, string> = {
-  primary:
-    "bg-nude text-ink hover:bg-champagne shadow-[0_10px_40px_-12px_rgb(208_154_115/0.7)]",
-  outline: "border border-nude/50 text-ivory hover:border-nude hover:bg-nude/10",
-  ghost: "text-ivory hover:text-nude",
+export const buttonStyles: Record<ButtonVariant, string> = {
+  // Gold is reserved for the main action: dark text on gold, never white.
+  primary: "min-h-12 px-6 bg-gold text-ink hover:bg-gold-deep",
+  ink: "min-h-12 px-6 bg-ink text-paper hover:bg-ink-soft",
+  text: "min-h-11 text-ink underline decoration-1 underline-offset-[6px] hover:decoration-2",
 };
 
-type ButtonLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  variant?: Variant;
+export const buttonBase =
+  "pressable inline-flex items-center justify-center gap-2.5 text-[0.95rem] font-semibold select-none";
+
+type ButtonLinkProps = Omit<ComponentProps<typeof Link>, "className"> & {
+  variant?: ButtonVariant;
+  className?: string;
   children: ReactNode;
-  external?: boolean;
 };
 
-export function ButtonLink({ variant = "primary", external, className = "", children, ...props }: ButtonLinkProps) {
+/** Internal navigation styled as a button. External WhatsApp links use WhatsAppButton. */
+export function ButtonLink({ variant = "primary", className = "", children, ...props }: ButtonLinkProps) {
   return (
-    <a
-      {...props}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className={`group inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-7 text-sm font-semibold tracking-wide transition duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-nude ${variants[variant]} ${className}`}
-    >
+    <Link {...props} className={`${buttonBase} ${buttonStyles[variant]} ${className}`}>
       {children}
-    </a>
+    </Link>
   );
 }

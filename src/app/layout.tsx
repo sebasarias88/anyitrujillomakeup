@@ -58,8 +58,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0d0a09",
-  colorScheme: "dark",
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 const jsonLd = {
@@ -100,8 +100,10 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es-CO" className={`${cormorant.variable} ${manrope.variable} antialiased`}>
+    <html lang="es-CO" className={`${cormorant.variable} ${manrope.variable} antialiased`} suppressHydrationWarning>
       <body className="min-h-dvh overflow-x-clip">
+        {/* Marks JS as available so reveal animations may hide content until it scrolls in. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

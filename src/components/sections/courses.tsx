@@ -64,7 +64,7 @@ export function Courses() {
           </Reveal>
 
           <Reveal delay={200} className="mt-10">
-            <ButtonLink href={whatsappUrl("Hola Anyi ✨ Quiero información sobre tus cursos de maquillaje: fechas, valores y modalidades.")} external>
+            <ButtonLink href={whatsappUrl("Hola Anyi ✨ Quiero información sobre tus cursos de maquillaje: fechas, valores y modalidades.")}>
               <WhatsAppIcon className="size-4" />
               Quiero información del curso
             </ButtonLink>

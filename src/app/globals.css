@@ -1,124 +1,241 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #0d0a09;
-  --color-ink-2: #15100e;
-  --color-ink-3: #1d1714;
-  --color-ivory: #f5ede5;
-  --color-sand: #b9a796;
-  --color-mute: #8a7b6e;
+  /* Brand palette — light theme. Black is for text and accents only. */
+  --color-paper: #ffffff;
+  --color-marble: #f4f2ef;
+  --color-marble-deep: #e8e4df;
+  --color-ink: #040606;
+  --color-ink-soft: #4b4744;
   --color-nude: #d09a73;
-  --color-nude-soft: #e6c2a6;
-  --color-champagne: #f1d9bd;
+  --color-nude-field: #ecd3bf;
+  --color-blush: #f7e9e2;
   --color-gold: #ffd03a;
-  --color-line: rgb(241 217 189 / 0.12);
+  --color-gold-deep: #f0bc12;
 
   --font-display: var(--font-cormorant), "Times New Roman", serif;
   --font-sans: var(--font-manrope), system-ui, sans-serif;
 
-  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Motion curves (emil-design-eng) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
-  --animate-marquee: marquee 40s linear infinite;
-  --animate-shimmer: shimmer 2.4s linear infinite;
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  @keyframes mist {
-    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-    50% { transform: translate(4%, -3%) scale(1.08); opacity: 1; }
-  }
-  @keyframes scroll-cue {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(200%); }
-  }
-  @keyframes shimmer {
-    from { background-position: -200% 0; }
-    to { background-position: 200% 0; }
-  }
+  --animate-spin-fast: spin 0.6s linear infinite;
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+  /* Hand-drawn cool marble: soft veins from fractal noise, tinted with the palette. */
+  --marble-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='m' x='0' y='0'><feTurbulence type='fractalNoise' baseFrequency='.0035 .011' numOctaves='5' seed='7'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .52  0 0 0 0 .5  0 0 0 -1.6 1.15'/></filter><rect width='100%' height='100%' fill='%23f4f2ef'/><rect width='100%' height='100%' filter='url(%23m)' opacity='.28'/></svg>");
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
-  background: var(--color-ink);
+  scroll-padding-top: 6rem;
+  background: var(--color-paper);
 }
 
 body {
-  background: var(--color-ink);
-  color: var(--color-ivory);
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: var(--color-nude);
+  background: var(--color-gold);
   color: var(--color-ink);
 }
 
-/* Subtle film grain over the whole page for an editorial feel */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 60;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
-
-@utility text-gradient-gold {
-  background: linear-gradient(100deg, #f1d9bd 0%, #d09a73 45%, #f1d9bd 70%, #b97d55 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
 }
 
 @utility container-page {
   width: 100%;
-  max-width: 80rem;
+  max-width: 90rem;
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: 1rem;
   @media (width >= 48rem) {
-    padding-inline: 2.5rem;
+    padding-inline: 2rem;
   }
 }
 
-/* Scroll reveal (Reveal component toggles data-visible) */
-.reveal {
+@utility bg-marble {
+  background-color: var(--color-marble);
+  background-image: var(--marble-texture);
+  background-size: 900px 900px;
+}
+
+/* The name as a monument: sized to the viewport, never wraps. */
+@utility text-monument {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  font-size: clamp(4rem, 16vw, 18rem);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Pressable feedback: every button and button-like link. */
+@utility pressable {
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease;
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* "Airbrush mist" reveal: Reveal toggles data-visible. Content stays visible without JS. */
+.js .reveal {
   opacity: 0;
-  transform: translateY(28px);
+  filter: blur(8px);
+  transform: translateY(20px);
   transition:
-    opacity 0.9s var(--ease-soft),
-    transform 0.9s var(--ease-soft);
+    opacity 700ms var(--ease-out),
+    filter 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
 }
-.reveal[data-visible="true"] {
+
+.js .reveal[data-visible="true"] {
   opacity: 1;
+  filter: none;
   transform: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+/* Photographs are "sprayed on": sharpen out of a mist and unveil from the bottom. */
+.js .reveal-photo {
+  opacity: 0;
+  filter: blur(12px);
+  clip-path: inset(0 0 100% 0);
+  transition:
+    opacity 900ms var(--ease-out),
+    filter 900ms var(--ease-out),
+    clip-path 900ms var(--ease-in-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js .reveal-photo[data-visible="true"] {
+  opacity: 1;
+  filter: none;
+  clip-path: inset(0 0 0 0);
+}
+
+/* Page transitions: a fine mist between routes (React <ViewTransition>). */
+::view-transition-old(.page-mist) {
+  animation: mist-out 180ms var(--ease-out) both;
+}
+
+::view-transition-new(.page-mist) {
+  animation: mist-in 320ms var(--ease-out) both;
+}
+
+::view-transition-group(.morph) {
+  animation-duration: 420ms;
+  animation-timing-function: var(--ease-in-out);
+}
+
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+
+@keyframes mist-out {
+  to {
+    opacity: 0;
+    filter: blur(4px);
   }
 }
 
-/* Hide scrollbar on horizontal chip rows */
-.no-scrollbar {
-  scrollbar-width: none;
+@keyframes mist-in {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(12px);
+  }
 }
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+
+@keyframes via-blur {
+  35% {
+    filter: blur(3px);
+  }
+}
+
+@keyframes skeleton-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.skeleton {
+  background: var(--color-marble-deep);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton {
+    animation: skeleton-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal,
+  .js .reveal-photo {
+    filter: none;
+    transform: none;
+    clip-path: none;
+    transition: opacity 300ms ease;
+  }
+
+  ::view-transition-old(.page-mist) {
+    animation: fade-out-only 160ms ease both;
+  }
+
+  ::view-transition-new(.page-mist) {
+    animation: fade-in-only 160ms ease both;
+  }
+
+  ::view-transition-group(*) {
+    animation-duration: 0s;
+  }
+}
+
+@keyframes fade-out-only {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in-only {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Custom select listbox (top layer). Scales from the trigger side. */
+.select-popover {
+  inset: auto;
+  border: 0;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 150ms var(--ease-out),
+    transform 150ms var(--ease-out),
+    display 150ms allow-discrete,
+    overlay 150ms allow-discrete;
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+.select-popover:not(:popover-open) {
+  opacity: 0;
+  transform: scale(0.97);
 }

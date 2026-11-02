@@ -78,7 +78,7 @@ export function Hero() {
               Agenda tu cita
               <ArrowIcon className="size-4 transition group-hover:translate-x-1" />
             </ButtonLink>
-            <ButtonLink href="#cotizador" variant="outline">
+            <ButtonLink href="#cotizador" variant="text">
               Cotiza tu boda
             </ButtonLink>
           </motion.div>

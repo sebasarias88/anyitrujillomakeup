@@ -423,3 +423,12 @@ body {
     transition: none;
   }
 }
+
+/* Portfolio filter: photographs leave and arrive through a light mist. */
+::view-transition-old(.gallery-out) {
+  animation: fade-out-only 160ms var(--ease-out) both;
+}
+
+::view-transition-new(.gallery-in) {
+  animation: mist-in 260ms var(--ease-out) both;
+}

@@ -1,5 +1,6 @@
-import { PageTransition } from "@/components/layout/page-transition";
 import { PageHero } from "@/components/layout/page-hero";
+import { PageTransition } from "@/components/layout/page-transition";
+import { BeforeAfter } from "@/components/portfolio/before-after";
 import { Gallery } from "@/components/portfolio/gallery";
 import { JsonLd } from "@/components/ui/json-ld";
 import { images } from "@/lib/images";
@@ -25,6 +26,7 @@ export default function PortfolioPage() {
         imageAlt="Perfil de maquillaje con sombras rosadas, delineado suave y piel glow"
       />
       <Gallery />
+      <BeforeAfter />
     </PageTransition>
   );
 }

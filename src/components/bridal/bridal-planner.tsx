@@ -8,14 +8,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { RollingNumber } from "@/components/ui/rolling-number";
 import { Select } from "@/components/ui/select";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
-import {
-  bridalPackages,
-  companionServices,
-  extraHourPrice,
-  formatCOP,
-  homeVisitZones,
-  type CompanionServiceId,
-} from "@/lib/site";
+import { bridalPackages, companionServices, extraHourPrice, formatCOP, homeVisitZones, type CompanionServiceId, whatsappGreeting } from "@/lib/site";
 import { PackagesTable } from "./packages-table";
 
 type Place = "studio" | "home";
@@ -116,7 +109,7 @@ export function BridalPlanner() {
   const ready = Boolean(date) && (place === "studio" || Boolean(municipality));
 
   const message = [
-    "Hola Anyi ✨ Armé mi cotización de novia en tu página:",
+    `${whatsappGreeting} Armé mi cotización de novia en tu página:`,
     "",
     ...lines.map((line) => `• ${line.label}: ${formatCOP(line.amount)}`),
     `• Fecha de la boda: ${dateText}`,
@@ -138,7 +131,7 @@ export function BridalPlanner() {
         <div className="container-page grid gap-14 md:grid-cols-12 md:gap-6">
           <div className="md:col-span-6 lg:col-span-5">
             <Reveal>
-              <h2 id="quote-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+              <h2 id="quote-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
                 Cotiza tu boda
               </h2>
               <p className="mt-4 max-w-[40ch] text-[1.05rem] leading-relaxed">
@@ -303,6 +296,11 @@ export function BridalPlanner() {
                 <p className="mt-2 min-h-6 text-[1.05rem] first-letter:uppercase">{dateText ?? "Elige la fecha de tu boda"}</p>
                 <p className="text-[0.95rem] text-ink-soft">{placeText}</p>
 
+                <p className="mt-20 font-display text-[3rem] leading-none md:mt-10" aria-live="polite">
+                  <RollingNumber value={formatCOP(total)} />
+                </p>
+                <p className="mt-2 text-[0.95rem]">es tu total estimado</p>
+                {place === "home" ? <p className="mt-2 text-[0.95rem] text-ink-soft">+ domicilio según el lugar</p> : null}
                 <ul className="mx-auto mt-8 max-w-sm space-y-2 text-left text-[0.95rem]">
                   {lines.map((line) => (
                     <li key={line.label} className="flex justify-between gap-4">
@@ -311,12 +309,6 @@ export function BridalPlanner() {
                     </li>
                   ))}
                 </ul>
-
-                <p className="mt-8 text-[0.95rem]">Total estimado</p>
-                <p className="font-display text-[3rem] leading-none" aria-live="polite">
-                  <RollingNumber value={formatCOP(total)} />
-                </p>
-                {place === "home" ? <p className="mt-2 text-[0.95rem] text-ink-soft">+ domicilio según el lugar</p> : null}
 
                 <div className="mt-8">
                   <WhatsAppButton message={message} disabled={!ready} disabledLabel={missing} className="w-full max-w-sm">

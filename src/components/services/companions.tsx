@@ -20,7 +20,7 @@ export function Companions() {
         </Reveal>
         <div className="md:col-span-5 md:col-start-8">
           <Reveal>
-            <h2 id="companions-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+            <h2 id="companions-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
               Para tu mamá, tus damas y tu familia
             </h2>
             <p className="mt-5 max-w-[40ch] text-[1.05rem] leading-relaxed">

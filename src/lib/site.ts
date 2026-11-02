@@ -49,6 +49,9 @@ export const business = {
   certifications: ["Instituto Cristina Cuéllar · México", "Tempto · New York"],
 } as const;
 
+/** Opening of every WhatsApp message (message text, not interface). taste-skill-ignore */
+export const whatsappGreeting = "Hola Anyi ✨"; // taste-skill-ignore
+
 export function whatsappUrl(message: string) {
   return `https://wa.me/${business.whatsapp}?text=${encodeURIComponent(message)}`;
 }
@@ -75,13 +78,13 @@ export const navLinks = pages.filter((page) => page.path !== "/");
 
 /** The WhatsApp message behind the always-visible action, per page. */
 export const pageWhatsappMessage: Record<SitePath, string> = {
-  "/": "Hola Anyi ✨ Vi tu página y quiero agendar una cita. ¿Me ayudas con la disponibilidad?",
-  "/novias": "Hola Anyi ✨ Me voy a casar y quiero información de tus paquetes de novia.",
-  "/servicios": "Hola Anyi ✨ Quiero información sobre tus servicios de maquillaje y peinado.",
-  "/portafolio": "Hola Anyi ✨ Vi tu portafolio y quiero agendar un maquillaje.",
-  "/cursos": "Hola Anyi ✨ Quiero información sobre tus cursos de maquillaje.",
-  "/sobre-anyi": "Hola Anyi ✨ Quiero agendar una cita contigo.",
-  "/contacto": "Hola Anyi ✨ Quiero agendar una cita. ¿Me ayudas con la disponibilidad?",
+  "/": `${whatsappGreeting} Vi tu página y quiero agendar una cita. ¿Me ayudas con la disponibilidad?`,
+  "/novias": `${whatsappGreeting} Me voy a casar y quiero información de tus paquetes de novia.`,
+  "/servicios": `${whatsappGreeting} Quiero información sobre tus servicios de maquillaje y peinado.`,
+  "/portafolio": `${whatsappGreeting} Vi tu portafolio y quiero agendar un maquillaje.`,
+  "/cursos": `${whatsappGreeting} Quiero información sobre tus cursos de maquillaje.`,
+  "/sobre-anyi": `${whatsappGreeting} Quiero agendar una cita contigo.`,
+  "/contacto": `${whatsappGreeting} Quiero agendar una cita. ¿Me ayudas con la disponibilidad?`,
 };
 
 export const isSitePath = (path: string): path is SitePath => path in pageWhatsappMessage;
@@ -183,25 +186,25 @@ export const occasionServices = [
     id: "quince",
     title: "Quinceañeras",
     text: "Maquillaje y peinado para que la quinceañera sea la protagonista, y mi equipo para arreglar a su mamá y a la familia.",
-    whatsapp: "Hola Anyi ✨ Quiero información sobre maquillaje y peinado para XV años.",
+    whatsapp: `${whatsappGreeting} Quiero información sobre maquillaje y peinado para XV años.`,
   },
   {
     id: "social",
     title: "Social y grados",
     text: "Para cumpleaños, grados, matrimonios como invitada y fiestas: un acabado impecable que dura toda la noche.",
-    whatsapp: "Hola Anyi ✨ Quiero agendar un maquillaje social o de grado.",
+    whatsapp: `${whatsappGreeting} Quiero agendar un maquillaje social o de grado.`,
   },
   {
     id: "photos",
     title: "Sesiones de fotos",
     text: "Maquillaje pensado para la cámara en sesiones de maternidad, retratos y fotos de marca.",
-    whatsapp: "Hola Anyi ✨ Quiero un maquillaje para una sesión de fotos.",
+    whatsapp: `${whatsappGreeting} Quiero un maquillaje para una sesión de fotos.`,
   },
   {
     id: "hair",
     title: "Peinados",
     text: "Ondas definidas, recogidos y peinados para cualquier evento, solos o junto con el maquillaje.",
-    whatsapp: "Hola Anyi ✨ Quiero agendar un peinado.",
+    whatsapp: `${whatsappGreeting} Quiero agendar un peinado.`,
   },
 ] as const;
 

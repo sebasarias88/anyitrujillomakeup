@@ -6,7 +6,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { Select } from "@/components/ui/select";
 import { Skeleton, SkeletonRegion } from "@/components/ui/skeleton";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
-import { bookingServices, homeVisitZones } from "@/lib/site";
+import { bookingServices, homeVisitZones, whatsappGreeting } from "@/lib/site";
 
 const weekDays = ["L", "M", "M", "J", "V", "S", "D"];
 const timeSlots = ["8:00 a. m.", "9:00 a. m.", "10:00 a. m.", "11:00 a. m.", "12:00 m.", "1:00 p. m.", "2:00 p. m.", "3:00 p. m.", "4:00 p. m.", "5:00 p. m."];
@@ -87,7 +87,7 @@ export function Booking() {
   const message = missing
     ? ""
     : [
-        "Hola Anyi ✨ Quiero agendar una cita:",
+        `${whatsappGreeting} Quiero agendar una cita:`,
         "",
         `• Servicio: ${service}`,
         `• Fecha: ${longDateFormat.format(date!)}`,
@@ -103,7 +103,7 @@ export function Booking() {
     <section id="agenda" aria-labelledby="booking-title" className="scroll-mt-24 bg-marble py-28 md:py-40">
       <div className="container-page">
         <Reveal className="grid gap-6 md:grid-cols-12 md:items-end">
-          <h2 id="booking-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:col-span-6 md:text-[2.75rem]">
+          <h2 id="booking-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:col-span-6 md:text-[2.2rem] lg:text-[2.75rem]">
             Reserva tu cita
           </h2>
           <p className="max-w-[44ch] text-[1.05rem] leading-relaxed md:col-span-5 md:col-start-8">

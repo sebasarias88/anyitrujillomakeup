@@ -26,7 +26,7 @@ export function Process() {
               Así te acompaño
             </h2>
           </Reveal>
-          <Reveal as="p" delay={80} className="mt-8 max-w-[40ch] text-[1.1rem] leading-relaxed">
+          <Reveal as="p" delay={80} className="mt-8 max-w-[40ch] text-[1.05rem] leading-relaxed">
             <strong>En la prueba,</strong> nos vemos en el estudio para probar maquillaje y peinado. Definimos juntas el
             look según tu vestido, tu piel y lo que sueñas para ese día.
           </Reveal>
@@ -42,12 +42,12 @@ export function Process() {
             className="object-cover"
           />
         </Reveal>
-        <Reveal as="p" className="max-w-[36ch] text-[1.1rem] leading-relaxed max-md:ml-auto max-md:w-[62%] md:col-span-3 md:col-start-9 md:row-start-2 md:mt-[220px]">
+        <Reveal as="p" className="max-w-[36ch] text-[1.05rem] leading-relaxed max-md:ml-auto max-md:w-[62%] md:col-span-3 md:col-start-9 md:row-start-2 md:mt-[220px]">
           <strong>El día de tu boda,</strong> te maquillo y te peino para que llegues lista a la ceremonia, en el estudio o
           donde te arregles.
         </Reveal>
 
-        <Reveal as="p" className="max-w-[36ch] text-[1.1rem] leading-relaxed max-md:order-1 md:col-span-3 md:col-start-4 md:row-start-3 md:mt-[180px] md:self-start">
+        <Reveal as="p" className="max-w-[36ch] text-[1.05rem] leading-relaxed max-md:order-1 md:col-span-3 md:col-start-4 md:row-start-3 md:mt-[180px] md:self-start">
           <strong>Durante las fotos,</strong> con el paquete Rubí te acompaño hasta 3 horas en la sesión previa a la
           ceremonia, con retoque de maquillaje, retoque final y cambio de peinado.
         </Reveal>

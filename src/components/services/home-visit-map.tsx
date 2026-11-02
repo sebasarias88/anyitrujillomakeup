@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Reveal } from "@/components/ui/reveal";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
-import { business, homeVisitZones } from "@/lib/site";
+import { business, homeVisitZones, whatsappGreeting } from "@/lib/site";
 
 const towns = homeVisitZones.municipalities;
 const lats = towns.map((town) => town.lat);
@@ -34,7 +34,7 @@ export function HomeVisitMap() {
       <div className="grid gap-12 md:grid-cols-12 md:gap-6">
         <div className="md:col-span-5">
           <Reveal>
-            <h2 id="home-visit-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+            <h2 id="home-visit-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
               Voy hasta donde te arregles
             </h2>
             <p className="mt-5 max-w-[40ch] text-[1.05rem] leading-relaxed">
@@ -52,7 +52,7 @@ export function HomeVisitMap() {
                   {selected === "Armenia" ? "Aquí está el estudio; también voy a domicilio." : "Costo del domicilio según el lugar."}
                 </p>
                 <WhatsAppButton
-                  message={`Hola Anyi ✨ Quiero maquillaje a domicilio en ${selected}. ¿Cuánto cuesta el domicilio hasta allá?`}
+                  message={`${whatsappGreeting} Quiero maquillaje a domicilio en ${selected}. ¿Cuánto cuesta el domicilio hasta allá?`}
                   className="mt-5"
                 >
                   Cotizar domicilio en {selected}

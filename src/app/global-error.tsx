@@ -3,6 +3,7 @@
 import { SystemScreen } from "@/components/layout/system-screen";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import "./globals.css";
+import { whatsappGreeting } from "@/lib/site";
 
 /** Last resort when the root layout itself fails: renders its own html and body. */
 export default function GlobalError({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
@@ -17,7 +18,7 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
               <button type="button" onClick={reset} className="pressable min-h-12 bg-gold px-6 font-semibold text-ink hover:bg-gold-deep">
                 Reintentar
               </button>
-              <WhatsAppButton message="Hola Anyi ✨ Tu página me mostró un error y quiero agendar una cita." variant="text">
+              <WhatsAppButton message={`${whatsappGreeting} Tu página me mostró un error y quiero agendar una cita.`} variant="text">
                 Escribir por WhatsApp
               </WhatsAppButton>
             </>

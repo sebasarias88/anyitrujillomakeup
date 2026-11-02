@@ -12,7 +12,7 @@ export function Reviews() {
     <section aria-labelledby="reviews-title" className="bg-blush">
       <div className="container-page grid min-h-svh grid-rows-[auto_1fr_auto] gap-y-16 py-24 md:py-28">
         <Reveal className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
-          <h2 id="reviews-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+          <h2 id="reviews-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
             {business.google.rating.toFixed(1)} en Google, {business.google.reviews} reseñas
           </h2>
           <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer" className="min-h-11 py-2 underline underline-offset-4">
@@ -21,7 +21,7 @@ export function Reviews() {
         </Reveal>
 
         <Reveal as="figure" delay={80} className="self-center md:mx-auto md:max-w-[62%] md:text-center">
-          <blockquote className="font-display text-[1.6rem] leading-[1.22] md:text-[2.1rem]">“{lead.text}”</blockquote>
+          <blockquote className="font-display text-[1.6rem] leading-[1.22] md:text-[1.75rem] lg:text-[2.1rem]">“{lead.text}”</blockquote>
           <figcaption className="mt-6 text-[0.95rem]">
             <span className="font-semibold">{lead.author}</span> · {lead.context} · Reseña de Google
           </figcaption>

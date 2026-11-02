@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { Reveal } from "@/components/ui/reveal";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { images } from "@/lib/images";
+import { whatsappGreeting } from "@/lib/site";
 
 type Occasion = "boda" | "quince" | "social" | "fotos";
 type Style = "natural" | "soft" | "glam";
@@ -95,7 +96,7 @@ function buildResult({ occasion, style, priority, place }: Required<Answers>) {
   return {
     ...look,
     recommendation,
-    message: `Hola Anyi ✨ Hice el test en tu página y mi look ideal es "${look.name}". ${recommendation} Me gustaría arreglarme ${where}. ¿Me ayudas a agendar?`,
+    message: `${whatsappGreeting} Hice el test en tu página y mi look ideal es "${look.name}". ${recommendation} Me gustaría arreglarme ${where}. ¿Me ayudas a agendar?`,
   };
 }
 
@@ -145,7 +146,7 @@ export function LookQuiz() {
     <section aria-labelledby="quiz-title" className="container-page py-28 md:py-44">
       <div className="grid gap-12 md:grid-cols-12 md:gap-6">
         <Reveal className="md:col-span-4">
-          <h2 id="quiz-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+          <h2 id="quiz-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
             ¿Qué look va contigo?
           </h2>
           <p className="mt-5 max-w-[34ch] text-[1.05rem] leading-relaxed">

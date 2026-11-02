@@ -19,7 +19,7 @@ export function ServiceMenu() {
   return (
     <section aria-labelledby="menu-title" className="container-page py-28 md:py-40">
       <Reveal>
-        <h2 id="menu-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+        <h2 id="menu-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
           Para cada ocasión
         </h2>
       </Reveal>
@@ -39,8 +39,8 @@ export function ServiceMenu() {
                 />
               </Reveal>
               <Reveal className={`md:col-span-5 ${flip ? "md:col-start-2 md:row-start-1" : "md:col-start-7"}`}>
-                <h3 className="font-display text-[2.6rem] leading-none tracking-[-0.02em] md:text-[4rem]">{service.title}</h3>
-                <p className="mt-5 max-w-[40ch] text-[1.1rem] leading-relaxed">{service.text}</p>
+                <h3 className="font-display text-[2.6rem] leading-none tracking-[-0.02em] md:text-[3rem] lg:text-[4rem]">{service.title}</h3>
+                <p className="mt-5 max-w-[40ch] text-[1.05rem] leading-relaxed">{service.text}</p>
                 <p className="mt-4 text-[0.95rem] text-ink-soft">Precio de ejemplo · por confirmar</p>
                 <WhatsAppButton message={service.whatsapp} variant="text" className="mt-4">
                   Preguntar por WhatsApp

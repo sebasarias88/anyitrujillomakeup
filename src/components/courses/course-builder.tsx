@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { Reveal } from "@/components/ui/reveal";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
-import { courses } from "@/lib/site";
+import { images } from "@/lib/images";
+import { courses, whatsappGreeting } from "@/lib/site";
 
 type FormatId = (typeof courses.formats)[number]["id"];
 type LevelId = (typeof courses.levels)[number]["id"];
@@ -25,7 +27,7 @@ export function CourseBuilder() {
   const ready = Boolean(format && level);
 
   const message = [
-    "Hola Anyi ✨ Quiero información sobre tus cursos de maquillaje:",
+    `${whatsappGreeting} Quiero información sobre tus cursos de maquillaje:`,
     "",
     `• Modalidad: ${formatLabel}`,
     `• Nivel: ${levelLabel}`,
@@ -38,7 +40,7 @@ export function CourseBuilder() {
     <section id="arma-tu-curso" aria-labelledby="builder-title" className="scroll-mt-24 bg-marble py-28 md:py-40">
       <div className="container-page grid gap-14 md:grid-cols-12 md:gap-6">
         <Reveal className="md:col-span-5">
-          <h2 id="builder-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+          <h2 id="builder-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
             Arma tu curso
           </h2>
           <p className="mt-5 max-w-[40ch] text-[1.05rem] leading-relaxed">
@@ -46,6 +48,15 @@ export function CourseBuilder() {
             valores.
           </p>
           <p className="mt-3 text-[0.95rem] text-ink-soft">Formatos y temario de ejemplo, por confirmar.</p>
+          {/* Where the classes happen: the studio's own vanity and a finished look. */}
+          <div className="mt-10 grid grid-cols-[3fr_2fr] items-end gap-3">
+            <div className="relative aspect-[3/4]">
+              <Image src={images.studioVanity} alt="Tocador del estudio con espejo de luces, donde se dan las clases" fill placeholder="blur" sizes="(min-width: 768px) 25vw, 60vw" className="object-cover" />
+            </div>
+            <div className="relative aspect-[3/4]">
+              <Image src={images.glamFront} alt="Maquillaje glam suave en tonos rosa con piel luminosa" fill placeholder="blur" sizes="(min-width: 768px) 16vw, 40vw" className="object-cover" />
+            </div>
+          </div>
         </Reveal>
 
         <div className="space-y-10 md:col-span-7 md:col-start-6">

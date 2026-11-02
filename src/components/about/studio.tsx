@@ -10,7 +10,7 @@ export function Studio() {
       <section aria-labelledby="studio-title" className="bg-marble py-28 md:py-40">
         <div className="container-page">
           <Reveal className="grid gap-6 md:grid-cols-12 md:items-end">
-            <h2 id="studio-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:col-span-6 md:text-[2.75rem]">
+            <h2 id="studio-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:col-span-6 md:text-[2.2rem] lg:text-[2.75rem]">
               El estudio
             </h2>
             <div className="text-[1.05rem] leading-relaxed md:col-span-5 md:col-start-8">
@@ -53,7 +53,7 @@ export function Studio() {
       <section aria-labelledby="partners-title" className="container-page py-28 md:py-40">
         <div className="grid gap-12 md:grid-cols-12 md:gap-6">
           <Reveal className="md:col-span-4">
-            <h2 id="partners-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+            <h2 id="partners-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
               Con quién trabajo
             </h2>
             <p className="mt-5 max-w-[34ch] text-[1.05rem] leading-relaxed">

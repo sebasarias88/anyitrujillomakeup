@@ -3,13 +3,12 @@ import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { business, pages, pageWhatsappMessage } from "@/lib/site";
 
 /**
- * The close of every page: a nude field that the last section lifts off
- * (sticky footer under the main content), four short columns, and the name
- * returning as a monument from margin to margin.
+ * The close of every page: a nude field with four short columns and the
+ * name returning as a monument from margin to margin.
  */
 export function SiteFooter() {
   return (
-    <footer id="site-footer" className="sticky bottom-0 z-0 bg-nude-field text-ink">
+    <footer id="site-footer" className="bg-nude-field text-ink">
       <div className="container-page flex min-h-[100svh] flex-col pt-14 pb-6 md:pt-20">
         <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -83,7 +82,7 @@ export function SiteFooter() {
               Anyi Trujillo
             </text>
           </svg>
-          <p className="mt-4 text-sm">
+          <p className="mt-4 text-[0.95rem]">
             {business.name} · Maquilladora profesional en {business.address.city}, {business.address.region}
           </p>
         </div>

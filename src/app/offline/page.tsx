@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SystemScreen } from "@/components/layout/system-screen";
-import { business, whatsappUrl } from "@/lib/site";
+import { business, whatsappUrl, whatsappGreeting } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Sin conexión",
@@ -15,7 +15,7 @@ export default function OfflinePage() {
       title="Parece que no tienes conexión"
       actions={
         <a
-          href={whatsappUrl("Hola Anyi ✨ Quiero agendar una cita.")}
+          href={whatsappUrl(`${whatsappGreeting} Quiero agendar una cita.`)}
           className="pressable inline-flex min-h-12 items-center bg-gold px-6 font-semibold text-ink hover:bg-gold-deep"
         >
           Escribir por WhatsApp

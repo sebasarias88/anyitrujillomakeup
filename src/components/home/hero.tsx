@@ -97,11 +97,11 @@ export function Hero() {
           </div>
 
           <div className="relative z-10 pt-5 pb-6 md:col-span-4 md:col-start-1 md:row-start-1 md:self-end md:pb-10">
-            <h1 id="home-title" className="max-w-[16ch] font-display text-[1.9rem] leading-[1.02] tracking-[-0.01em] md:text-[2.4rem]">
-              Maquilladora profesional en Armenia, Quindío
+            <h1 id="home-title" className="max-w-[20ch] font-display text-[1.9rem] leading-[1.02] tracking-[-0.01em] md:text-[1.6rem] lg:text-[2.4rem]">
+              Maquilladora en Armenia, Quindío
             </h1>
             <p className="mt-3 max-w-[30ch] text-[1.05rem] leading-relaxed md:mt-4">
-              Novias, quinceañeras y eventos, con aerógrafo. {business.yearsOfExperience} años de experiencia y 5.0 en Google.
+              Maquillaje profesional para novias, quinceañeras y eventos, con aerógrafo. {business.yearsOfExperience} años de experiencia y 5.0 en Google.
             </p>
             <ButtonLink href="/novias#cotizador" className="mt-4 md:hidden">
               Cotizar mi boda

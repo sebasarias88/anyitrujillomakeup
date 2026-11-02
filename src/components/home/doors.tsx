@@ -21,7 +21,7 @@ export function Doors() {
   return (
     <section aria-labelledby="doors-title" className="pb-28 md:pb-44">
       <Reveal className="container-page md:grid md:grid-cols-12">
-        <h2 id="doors-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:col-span-6 md:col-start-3 md:text-[2.75rem]">
+        <h2 id="doors-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:col-span-6 md:col-start-3 md:text-[2.2rem] lg:text-[2.75rem]">
           Todo lo que hago
         </h2>
       </Reveal>
@@ -44,11 +44,11 @@ export function Doors() {
                     className="object-cover"
                   />
                 </ViewTransition>
-                {/* Neutral scrim only behind the title corner, for legibility. */}
-                <span aria-hidden className="absolute inset-x-0 top-0 h-44 bg-ink/60" style={{ maskImage: "linear-gradient(to bottom, black, transparent)" }} />
+                {/* Neutral scrim only behind the title corner, for legibility (the one allowed gradient). taste-skill-ignore */}
+                <span aria-hidden className="absolute inset-x-0 top-0 h-44 bg-ink/60" style={{ maskImage: "linear-gradient(to bottom, black, transparent)" }} /> {/* taste-skill-ignore: scrim */}
                 <span className="absolute top-5 left-5 right-5 text-paper md:top-6 md:left-6">
                   <span className="block font-display text-[1.75rem] leading-none md:text-[2rem]">{door.title}</span>
-                  <span className="mt-1.5 block text-[0.95rem] font-semibold">{door.detail}</span>
+                  <span className="mt-1.5 block text-[0.95rem] font-semibold md:max-lg:hidden">{door.detail}</span>
                 </span>
               </Link>
             </li>

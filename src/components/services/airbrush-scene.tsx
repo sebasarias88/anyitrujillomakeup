@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { images } from "@/lib/images";
+import { whatsappGreeting } from "@/lib/site";
 
 const statements = [
   { title: "Dura toda la celebración", text: "Resiste el calor, las lágrimas de emoción y las horas de baile sin perder el acabado." },
@@ -51,7 +52,7 @@ export function AirbrushScene() {
                 </li>
               ))}
             </ul>
-            <WhatsAppButton message="Hola Anyi ✨ Quiero saber más sobre el maquillaje con aerógrafo." className="mt-8">
+            <WhatsAppButton message={`${whatsappGreeting} Quiero saber más sobre el maquillaje con aerógrafo.`} className="mt-8">
               Quiero probar el aerógrafo
             </WhatsAppButton>
           </div>
@@ -83,8 +84,8 @@ export function AirbrushScene() {
                 <div
                   key={item.title}
                   aria-hidden={index !== active}
-                  className={`absolute inset-x-0 top-0 transition-[opacity,transform,filter] duration-500 ease-[var(--ease-out)] ${
-                    index === active ? "opacity-100 blur-0" : "pointer-events-none translate-y-3 opacity-0 blur-[3px]"
+                  className={`absolute inset-x-0 top-0 transition-[opacity,transform,filter,visibility] duration-500 ease-[var(--ease-out)] ${
+                    index === active ? "opacity-100 blur-0" : "invisible translate-y-3 opacity-0 blur-[3px]"
                   }`}
                 >
                   <h3 className="text-[1.3rem] font-semibold md:text-[1.5rem]">{item.title}</h3>
@@ -97,7 +98,7 @@ export function AirbrushScene() {
                 <span key={item.title} className={`h-1 w-10 transition-colors duration-300 ${index <= active ? "bg-gold" : "bg-marble-deep"}`} />
               ))}
             </div>
-            <WhatsAppButton message="Hola Anyi ✨ Quiero saber más sobre el maquillaje con aerógrafo." className="mt-8">
+            <WhatsAppButton message={`${whatsappGreeting} Quiero saber más sobre el maquillaje con aerógrafo.`} className="mt-8">
               Quiero probar el aerógrafo
             </WhatsAppButton>
           </div>

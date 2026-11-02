@@ -3,8 +3,8 @@
 @theme {
   /* Brand palette — light theme. Black is for text and accents only. */
   --color-paper: #ffffff;
-  --color-marble: #f4f2ef;
-  --color-marble-deep: #e8e4df;
+  --color-marble: #f2f2f1;
+  --color-marble-deep: #e6e5e3;
   --color-ink: #040606;
   --color-ink-soft: #4b4744;
   --color-nude: #d09a73;
@@ -33,7 +33,7 @@
 :root {
   color-scheme: light;
   /* Hand-drawn cool marble: soft veins from fractal noise, tinted with the palette. */
-  --marble-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'><filter id='m' x='0' y='0'><feTurbulence type='fractalNoise' baseFrequency='.002 .0065' numOctaves='5' seed='7'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .52  0 0 0 0 .5  0 0 0 -1.6 1.15'/></filter><rect width='100%' height='100%' fill='%23f4f2ef'/><rect width='100%' height='100%' filter='url(%23m)' opacity='.28'/></svg>");
+  --marble-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'><filter id='m' x='0' y='0'><feTurbulence type='fractalNoise' baseFrequency='.002 .0065' numOctaves='5' seed='7'/><feColorMatrix values='0 0 0 0 .52  0 0 0 0 .52  0 0 0 0 .53  0 0 0 -1.6 1.15'/></filter><rect width='100%' height='100%' fill='%23f2f2f1'/><rect width='100%' height='100%' filter='url(%23m)' opacity='.28'/></svg>");
 }
 
 html {
@@ -231,6 +231,7 @@ body {
 .select-popover {
   inset: auto;
   border: 0;
+  box-shadow: 0 18px 50px -12px rgb(4 6 6 / 0.28); /* a real overlay floating over the page. taste-skill-ignore */
   opacity: 1;
   transform: none;
   transition:
@@ -434,4 +435,17 @@ body {
 
 ::view-transition-new(.gallery-in) {
   animation: mist-in 260ms var(--ease-out) both;
+}
+
+/* Rolling digits: the 0–9 column is generated content, invisible to text readers. */
+.digit-column::before {
+  content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9";
+  white-space: pre;
+  display: block;
+  line-height: 1.1em;
+}
+
+/* Page names set as monuments are decorative: drawn from data-monument, not page text. */
+.monument::before {
+  content: attr(data-monument);
 }

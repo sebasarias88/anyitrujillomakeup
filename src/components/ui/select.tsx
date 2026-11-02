@@ -230,7 +230,7 @@ export function Select({
       <div
         ref={popoverRef}
         popover="auto"
-        className="select-popover fixed m-0 max-h-80 overflow-auto bg-paper p-1.5 text-ink shadow-[0_18px_50px_-12px_rgb(4_6_6/0.28)]"
+        className="select-popover fixed m-0 max-h-80 overflow-auto bg-paper p-1.5 text-ink"
       >
         {searchable ? (
           <input
@@ -268,7 +268,7 @@ export function Select({
                 <CheckIcon className={`mt-1 size-4 shrink-0 ${isSelected ? "" : "invisible"}`} />
                 <span>
                   <span className="block">{option.label}</span>
-                  {option.hint ? <span className="block text-sm text-ink-soft">{option.hint}</span> : null}
+                  {option.hint ? <span className="block text-[0.95rem] text-ink-soft">{option.hint}</span> : null}
                 </span>
               </li>
             );

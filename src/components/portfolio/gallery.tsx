@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { startTransition, useCallback, useLayoutEffect, useRef, useState, ViewTransition } from "react";
 import { ChevronIcon } from "@/components/ui/icons";
+import { Reveal } from "@/components/ui/reveal";
 import { gallery, galleryCategories, type GalleryCategory } from "@/lib/images";
 import { business } from "@/lib/site";
 
@@ -51,19 +52,11 @@ export function Gallery() {
 
   return (
     <section aria-labelledby="gallery-title" className="container-page py-28 md:py-40">
-      <div className="flex flex-wrap items-end justify-between gap-6">
-        <h2 id="gallery-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
-          Mi trabajo
-        </h2>
-        <p className="text-[0.95rem]">
-          {items.length} fotos ·{" "}
-          <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">
-            más en {business.instagramHandle}
-          </a>
-        </p>
-      </div>
+      <h2 id="gallery-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
+        Mi trabajo
+      </h2>
 
-      <div role="group" aria-label="Filtrar el portafolio" className="no-scrollbar -mx-4 mt-8 flex gap-6 overflow-x-auto px-4 md:mx-0 md:gap-10 md:px-0">
+      <div role="group" aria-label="Filtrar el portafolio" className="mt-8 flex flex-wrap gap-x-6 gap-y-1 md:gap-x-10">
         {galleryCategories.map((category) => {
           const active = filter === category.id;
           return (
@@ -92,6 +85,7 @@ export function Gallery() {
                 aria-label={`Ampliar: ${item.alt}`}
                 className="pressable group block w-full text-left"
               >
+                <Reveal variant="photo" delay={(index % 2) * 80}>
                 <ViewTransition name={openIndex === index ? undefined : `photo-${item.id}`} share="morph" default="none">
                   <Image
                     src={item.src}
@@ -102,12 +96,20 @@ export function Gallery() {
                     className="h-auto w-full"
                   />
                 </ViewTransition>
+                </Reveal>
                 <span className="mt-2.5 block text-[0.95rem] group-hover:underline group-hover:underline-offset-4">{item.caption}</span>
               </button>
             </li>
           </ViewTransition>
         ))}
       </ul>
+
+      <p className="mt-14 text-[1.05rem]">
+        {items.length} fotos aquí y muchas más en{" "}
+        <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="font-semibold underline decoration-gold decoration-2 underline-offset-[6px]">
+          Instagram {business.instagramHandle}
+        </a>
+      </p>
 
       <dialog
         ref={dialogRef}

@@ -6,8 +6,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
   return (
     <>
       <SiteHeader />
-      {/* Paper background and z-index let the page lift off the sticky footer. */}
-      <main id="contenido" className="relative z-10 bg-paper pb-px">
+      <main id="contenido">
         {children}
       </main>
       <SiteFooter />

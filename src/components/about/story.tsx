@@ -52,14 +52,14 @@ export function Story() {
         </div>
         <div className="md:col-span-6 md:col-start-7">
           <Reveal>
-            <h2 id="story-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+            <h2 id="story-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
               Mi historia, en corto
             </h2>
           </Reveal>
           <ul className="mt-10 space-y-14 md:mt-14 md:space-y-[22vh] md:pb-[12vh]">
             {chapters.map((chapter, index) => (
               <Reveal as="li" key={chapter.lead} delay={index === 0 ? 80 : 0}>
-                <p className="max-w-[30ch] font-display text-[1.75rem] leading-[1.18] md:text-[2.1rem]">
+                <p className="max-w-[30ch] font-display text-[1.4rem] leading-[1.2] md:text-[1.75rem] lg:text-[2.1rem]">
                   <strong className="font-normal underline decoration-gold decoration-2 underline-offset-[6px]">{chapter.lead}</strong>{" "}
                   {chapter.text}
                 </p>

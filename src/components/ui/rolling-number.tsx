@@ -23,19 +23,14 @@ export function RollingNumber({ value, className = "" }: { value: string; classN
           if (digit === -1) return <span key={`s${key}`}>{char}</span>;
           return (
             <span key={`d${key}`} className="relative inline-block h-[1.1em] overflow-hidden leading-[1.1]">
+              {/* The 0–9 column is drawn by CSS (.digit-column::before), so it is not page text. */}
               <span
-                className="flex flex-col"
+                className="digit-column block"
                 style={{
                   transform: `translateY(-${digit * 10}%)`,
                   transition: reduceMotion ? "none" : "transform 200ms cubic-bezier(0.23, 1, 0.32, 1)",
                 }}
-              >
-                {DIGITS.map((item) => (
-                  <span key={item} className="h-[1.1em]">
-                    {item}
-                  </span>
-                ))}
-              </span>
+              />
             </span>
           );
         })}

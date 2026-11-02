@@ -22,7 +22,7 @@ type PackagesTableProps = {
 export function PackagesTable({ selectedId, onSelect }: PackagesTableProps) {
   return (
     <section aria-labelledby="packages-title" className="container-page py-28 md:py-40">
-      <h2 id="packages-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+      <h2 id="packages-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
         Tres formas de vivir tu día
       </h2>
       <p className="mt-4 max-w-[52ch] text-[1.05rem] leading-relaxed">

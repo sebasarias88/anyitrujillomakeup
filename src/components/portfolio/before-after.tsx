@@ -122,7 +122,7 @@ export function BeforeAfter() {
     <section aria-labelledby="before-after-title" className="bg-blush py-28 md:py-40">
       <div className="container-page grid gap-12 md:grid-cols-12 md:gap-6">
         <Reveal className="md:col-span-4">
-          <h2 id="before-after-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+          <h2 id="before-after-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
             Antes y después
           </h2>
           <p className={`mt-5 max-w-[34ch] leading-relaxed ${hasPhotos ? "text-[1.05rem]" : "font-display text-[1.6rem] leading-tight"}`}>

@@ -11,7 +11,7 @@ export function Intro() {
       <div className="grid gap-12 md:grid-cols-12 md:gap-6">
         <div className="md:col-span-5 md:col-start-2 lg:col-span-4 lg:col-start-2">
           <Reveal>
-            <h2 id="intro-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+            <h2 id="intro-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
               Hola, soy Anyi
             </h2>
           </Reveal>

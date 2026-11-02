@@ -7,7 +7,7 @@ export function AirbrushNote() {
     <section aria-labelledby="airbrush-note-title" className="bg-blush py-24 md:py-32">
       <Reveal className="container-page grid gap-8 md:grid-cols-12 md:items-end md:gap-6">
         <h2 id="airbrush-note-title" className="font-display text-[2.4rem] leading-[1] tracking-[-0.02em] md:col-span-7 md:text-[4.4vw]">
-          Con aerógrafo, para que dure hasta el último baile
+          Con aerógrafo, hasta el último baile
         </h2>
         <div className="md:col-span-4 md:col-start-9">
           <p className="text-[1.05rem] leading-relaxed">

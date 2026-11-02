@@ -10,7 +10,7 @@ export function Authority() {
       <div className="grid gap-12 md:grid-cols-12 md:gap-6">
         <div className="md:col-span-6">
           <Reveal>
-            <h2 id="authority-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.75rem]">
+            <h2 id="authority-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
               Aprende con una maquilladora certificada
             </h2>
           </Reveal>
@@ -19,7 +19,7 @@ export function Authority() {
               const [name, place] = certification.split(" · ");
               return (
                 <Reveal as="li" key={certification} delay={80 + index * 80}>
-                  <span className="block font-display text-[2.4rem] leading-none tracking-[-0.02em] md:text-[3.6rem]">{name}</span>
+                  <span className="block font-display text-[2.4rem] leading-none tracking-[-0.02em] md:text-[2.6rem] lg:text-[3.6rem]">{name}</span>
                   <span className="mt-2 block text-[1.05rem]">{place}</span>
                 </Reveal>
               );

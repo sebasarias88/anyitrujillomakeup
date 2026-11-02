@@ -1,5 +1,6 @@
 import { Booking } from "@/components/contact/booking";
 import { PhoneDisplay } from "@/components/contact/phone-display";
+import { StudioStrip } from "@/components/contact/studio-strip";
 import { PageHero } from "@/components/layout/page-hero";
 import { PageTransition } from "@/components/layout/page-transition";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -30,6 +31,7 @@ export default function ContactPage() {
         actions={<ButtonLink href="#agenda">Reservar ahora</ButtonLink>}
       />
       <Booking />
+      <StudioStrip />
       <PhoneDisplay />
       <Faq title="Antes de reservar" items={faqs} />
     </PageTransition>

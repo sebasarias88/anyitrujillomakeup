@@ -12,14 +12,14 @@ export function PageSkeleton({ block, label }: { block: Block; label: string }) 
   return (
     <ViewTransition exit="skeleton-out" default="none">
       <SkeletonRegion label={`Cargando ${label}…`} className="pt-24 md:pt-28">
-        <div className="container-page grid items-end gap-8 md:grid-cols-12 md:gap-6">
-          <div className="space-y-4 md:col-span-5 md:pb-10">
+        <div className="container-page grid items-end gap-8 lg:grid-cols-12 lg:gap-6">
+          <div className="space-y-4 lg:col-span-5 lg:pb-10">
             <Skeleton className="h-12 w-4/5" />
             <Skeleton className="h-12 w-3/5" />
             <Skeleton className="mt-6 h-5 w-full max-w-sm" />
             <Skeleton className="h-5 w-2/3 max-w-xs" />
           </div>
-          <Skeleton className="aspect-[4/5] md:col-span-6 md:col-start-7 md:aspect-auto md:h-[min(68svh,44rem)]" />
+          <Skeleton className="aspect-[4/5] md:aspect-[16/10] lg:col-span-6 lg:col-start-7 lg:aspect-auto lg:h-[min(68svh,44rem)]" />
         </div>
         <div className="container-page mt-4">
           <Skeleton className="h-[13vw] w-3/4" />

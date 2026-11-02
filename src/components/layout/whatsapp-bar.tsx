@@ -7,19 +7,24 @@ import { isSitePath, pageWhatsappMessage } from "@/lib/site";
 
 /**
  * Phone-only bar that keeps WhatsApp one tap away without covering content:
- * it appears once the visitor is past the first screen and steps aside when
+ * past the first screen it appears whenever the visitor scrolls up (together
+ * with the header) and slides away while reading down. It also steps aside when
  * the footer, or a section with its own WhatsApp action, comes into view.
  */
 export function WhatsAppBar() {
   const pathname = usePathname();
   const [pastHero, setPastHero] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
+  const [scrollingUp, setScrollingUp] = useState(false);
 
   useEffect(() => {
-    // The footer is sticky under <main>, so it is always "in view" behind the page.
-    // What matters is whether <main> has scrolled far enough to uncover it.
+    // Hide once the end of <main> (where the footer starts) enters the screen.
     const main = document.getElementById("contenido");
+    let lastY = window.scrollY;
     const onScroll = () => {
+      const y = window.scrollY;
+      if (Math.abs(y - lastY) > 4) setScrollingUp(y < lastY);
+      lastY = y;
       setPastHero(window.scrollY > window.innerHeight * 0.7);
       const footerUncovered = main ? main.getBoundingClientRect().bottom < window.innerHeight * 0.9 : false;
       // Sections with their own WhatsApp action (the bridal quote) ask the bar to step aside.
@@ -38,7 +43,8 @@ export function WhatsAppBar() {
     };
   }, [pathname]);
 
-  const visible = pastHero && !footerVisible;
+  // Shown while scrolling up (like the header), so it never sits over what is being read.
+  const visible = pastHero && !footerVisible && scrollingUp;
   const message = isSitePath(pathname) ? pageWhatsappMessage[pathname] : pageWhatsappMessage["/"];
 
   return (

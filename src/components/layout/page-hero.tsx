@@ -45,6 +45,7 @@ export function PageHero({ monument, title, intro, image, imageAlt, actions, ima
               placeholder="blur"
               sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover"
+              style={imagePosition ? { objectPosition: imagePosition } : undefined}
             />
           </ViewTransition>
         </div>

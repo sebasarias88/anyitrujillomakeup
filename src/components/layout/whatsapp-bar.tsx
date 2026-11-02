@@ -8,7 +8,7 @@ import { isSitePath, pageWhatsappMessage } from "@/lib/site";
 /**
  * Phone-only bar that keeps WhatsApp one tap away without covering content:
  * it appears once the visitor is past the first screen and steps aside when
- * the footer (which has its own WhatsApp action) comes into view.
+ * the footer, or a section with its own WhatsApp action, comes into view.
  */
 export function WhatsAppBar() {
   const pathname = usePathname();
@@ -21,7 +21,13 @@ export function WhatsAppBar() {
     const main = document.getElementById("contenido");
     const onScroll = () => {
       setPastHero(window.scrollY > window.innerHeight * 0.7);
-      setFooterVisible(main ? main.getBoundingClientRect().bottom < window.innerHeight * 0.9 : false);
+      const footerUncovered = main ? main.getBoundingClientRect().bottom < window.innerHeight * 0.9 : false;
+      // Sections with their own WhatsApp action (the bridal quote) ask the bar to step aside.
+      const ownAction = [...document.querySelectorAll("[data-hide-whatsapp-bar]")].some((element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.top < window.innerHeight && rect.bottom > 0;
+      });
+      setFooterVisible(footerUncovered || ownAction);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });

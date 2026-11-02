@@ -148,6 +148,31 @@ export const companionServices = [
 
 export type CompanionServiceId = (typeof companionServices)[number]["id"];
 
+/**
+ * Municipalities of Quindío for home visits. SAMPLE: Anyi has not confirmed
+ * which ones she covers; the page labels them "por confirmar". The cost is
+ * always quoted per place.
+ */
+export const homeVisitZones = {
+  sample: true,
+  municipalities: [
+    "Armenia",
+    "Calarcá",
+    "Circasia",
+    "Córdoba",
+    "Filandia",
+    "Génova",
+    "La Tebaida",
+    "Montenegro",
+    "Pijao",
+    "Quimbaya",
+    "Salento",
+    "Buenavista",
+  ],
+} as const;
+
+export type Municipality = (typeof homeVisitZones.municipalities)[number];
+
 export const bookingServices = [
   "Maquillaje de novia",
   "Prueba de novia",

@@ -1,6 +1,9 @@
-import { PageTransition } from "@/components/layout/page-transition";
-import { BridalQuote } from "@/components/bridal/bridal-quote";
+import { AirbrushNote } from "@/components/bridal/airbrush-note";
+import { BridalPlanner } from "@/components/bridal/bridal-planner";
+import { Process } from "@/components/bridal/process";
 import { PageHero } from "@/components/layout/page-hero";
+import { PageTransition } from "@/components/layout/page-transition";
+import { ButtonLink } from "@/components/ui/button-link";
 import { Faq } from "@/components/ui/faq";
 import { JsonLd } from "@/components/ui/json-ld";
 import { images } from "@/lib/images";
@@ -41,8 +44,11 @@ export default function BridalPage() {
         intro={<p>Tu prueba en el estudio, tu look el gran día y, si quieres, te acompaño durante las fotos.</p>}
         image={images.brideDressWindow}
         imageAlt="Novia con bata de encaje contemplando su vestido antes de la ceremonia"
+        actions={<ButtonLink href="#cotizador">Cotizar mi boda</ButtonLink>}
       />
-      <BridalQuote />
+      <BridalPlanner />
+      <Process />
+      <AirbrushNote />
       <Faq title="Lo que me preguntan las novias" items={faqs} />
     </PageTransition>
   );

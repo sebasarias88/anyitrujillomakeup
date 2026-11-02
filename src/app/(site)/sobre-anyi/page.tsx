@@ -1,10 +1,12 @@
-import { PageTransition } from "@/components/layout/page-transition";
-import { About } from "@/components/about/about";
+import { Story } from "@/components/about/story";
+import { Studio } from "@/components/about/studio";
 import { PageHero } from "@/components/layout/page-hero";
+import { PageTransition } from "@/components/layout/page-transition";
+import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { JsonLd } from "@/components/ui/json-ld";
 import { images } from "@/lib/images";
 import { breadcrumbJsonLd, businessRef, pageMetadata } from "@/lib/seo";
-import { business } from "@/lib/site";
+import { business, pageWhatsappMessage } from "@/lib/site";
 
 export const metadata = pageMetadata({
   path: "/sobre-anyi",
@@ -28,11 +30,19 @@ export default function AboutPage() {
       <PageHero
         monument="Anyi"
         title="Soy Anyi Trujillo"
-        intro={<p>Maquilladora profesional en Armenia desde hace {business.yearsOfExperience} años, especialista en novias y aerógrafo.</p>}
+        intro={
+          <p>
+            Maquilladora profesional en Armenia desde hace {business.yearsOfExperience} años, especialista en novias y
+            aerógrafo.
+          </p>
+        }
         image={images.anyiPortrait}
         imageAlt="Retrato de Anyi Trujillo sonriendo, con blusa blanca"
+        imagePosition="50% 12%"
+        actions={<WhatsAppButton message={pageWhatsappMessage["/sobre-anyi"]}>Escríbeme</WhatsAppButton>}
       />
-      <About />
+      <Story />
+      <Studio />
     </PageTransition>
   );
 }

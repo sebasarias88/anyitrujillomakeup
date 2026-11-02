@@ -11,6 +11,8 @@ type PageHeroProps = {
   image: StaticImageData;
   imageAlt: string;
   actions?: ReactNode;
+  /** CSS object-position for the photograph crop, e.g. "50% 15%" to keep a face in frame. */
+  imagePosition?: string;
   /** Matches a home "door" so its photograph morphs into this hero. */
   transitionName?: string;
   children?: ReactNode;
@@ -21,7 +23,7 @@ type PageHeroProps = {
  * a large photograph on the right, and the page name as a monument along the
  * bottom edge. The photograph is the page's LCP image, so it is preloaded.
  */
-export function PageHero({ monument, title, intro, image, imageAlt, actions, transitionName, children }: PageHeroProps) {
+export function PageHero({ monument, title, intro, image, imageAlt, actions, imagePosition, transitionName, children }: PageHeroProps) {
   return (
     <section aria-labelledby="page-title" className="overflow-hidden pt-24 md:pt-28">
       <div className="container-page grid items-end gap-8 md:grid-cols-12 md:gap-6">

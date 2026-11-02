@@ -1,6 +1,8 @@
-import { PageTransition } from "@/components/layout/page-transition";
-import { Courses } from "@/components/courses/courses";
+import { Authority } from "@/components/courses/authority";
+import { CourseBuilder } from "@/components/courses/course-builder";
 import { PageHero } from "@/components/layout/page-hero";
+import { PageTransition } from "@/components/layout/page-transition";
+import { ButtonLink } from "@/components/ui/button-link";
 import { JsonLd } from "@/components/ui/json-ld";
 import { images } from "@/lib/images";
 import { breadcrumbJsonLd, businessRef, pageMetadata } from "@/lib/seo";
@@ -32,8 +34,10 @@ export default function CoursesPage() {
         intro={<p>Aprende conmigo en el estudio, en grupo o uno a uno, con las técnicas que uso con mis novias.</p>}
         image={images.workshop}
         imageAlt="Anyi Trujillo ajustando el tocado de una novia en el Workshop Internacional de Novias de Cristina Cuéllar"
+        actions={<ButtonLink href="#arma-tu-curso">Arma tu curso</ButtonLink>}
       />
-      <Courses />
+      <Authority />
+      <CourseBuilder />
     </PageTransition>
   );
 }

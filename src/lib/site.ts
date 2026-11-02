@@ -207,6 +207,39 @@ export const occasionServices = [
 
 export type OccasionServiceId = (typeof occasionServices)[number]["id"];
 
+/**
+ * Courses. Confirmed: Anyi teaches in-person and personalised courses.
+ * SAMPLE: the descriptions and topics below are examples to confirm with her;
+ * there are no dates or prices yet, and the page must not invent them.
+ */
+export const courses = {
+  sample: true,
+  formats: [
+    {
+      id: "presencial",
+      title: "Curso presencial",
+      text: "Clases prácticas en el estudio, en grupo, con acompañamiento paso a paso.",
+    },
+    {
+      id: "personalizado",
+      title: "Curso personalizado",
+      text: "Uno a uno, a tu ritmo y enfocado en lo que tú quieres dominar.",
+    },
+  ],
+  levels: [
+    { id: "self", label: "Automaquillaje", hint: "Para maquillarte tú misma" },
+    { id: "pro", label: "Profesional", hint: "Para trabajar como maquilladora" },
+  ],
+  topics: [
+    "Preparación y cuidado de la piel",
+    "Ojos, delineado y pestañas",
+    "Maquillaje social y de novia",
+    "Ondas y peinados",
+    "Productos y kit profesional",
+    "Cómo empezar a trabajar como maquilladora",
+  ],
+} as const;
+
 export const bookingServices = [
   "Maquillaje de novia",
   "Prueba de novia",

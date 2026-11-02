@@ -56,7 +56,7 @@ function Comparison({ before, after, label }: { before: ReactNode; after: ReactN
   return (
     <div
       ref={frameRef}
-      className="relative aspect-[4/5] touch-pan-y overflow-hidden select-none"
+      className="relative aspect-[4/5] touch-pan-y overflow-hidden rounded-[1.25rem] shadow-soft select-none"
       onPointerDown={(event) => {
         dragging.current = true;
         event.currentTarget.setPointerCapture(event.pointerId);
@@ -103,9 +103,9 @@ function Comparison({ before, after, label }: { before: ReactNode; after: ReactN
 
 function ComingSoonSide({ side }: { side: "Antes" | "Después" }) {
   return (
-    <div className={`flex h-full w-full flex-col justify-between p-6 ${side === "Antes" ? "bg-marble" : "bg-nude-field"}`}>
-      <span className={`font-display text-[1.6rem] ${side === "Antes" ? "" : "self-end"}`}>{side}</span>
-      <Logo className="mx-auto h-24 text-ink/15" />
+    <div className={`flex h-full w-full flex-col justify-between p-5 ${side === "Antes" ? "bg-marble-deep" : "bg-nude-field"}`}>
+      <span className={`rounded-full bg-white/90 px-3.5 py-1.5 text-[0.75rem] tracking-[0.14em] uppercase ${side === "Antes" ? "self-start" : "self-end"}`}>{side}</span>
+      <Logo className="mx-auto h-20 text-ink/15" />
       <span />
     </div>
   );
@@ -119,20 +119,19 @@ export function BeforeAfter() {
   const hasPhotos = beforeAfter.length > 0;
 
   return (
-    <section aria-labelledby="before-after-title" className="bg-blush py-28 md:py-40">
-      <div className="container-page grid gap-12 md:grid-cols-12 md:gap-6">
-        <Reveal className="md:col-span-4">
-          <h2 id="before-after-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
-            Antes y después
+    <section aria-labelledby="before-after-title" className="bg-marble py-24 md:py-28">
+      <div className="container-page">
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <p className="eyebrow">Transformaciones</p>
+          <h2 id="before-after-title" className="mt-4 font-display text-[2.2rem] leading-[1.1] md:text-[3rem]">
+            Antes y <em className="text-nude-deep">después</em>
           </h2>
-          <p className={`mt-5 max-w-[34ch] leading-relaxed ${hasPhotos ? "text-[1.05rem]" : "font-display text-[1.6rem] leading-tight"}`}>
-            {hasPhotos
-              ? "Desliza para comparar. Clientas reales, sin filtros."
-              : "Próximamente: transformaciones reales de Anyi."}
+          <p className="mx-auto mt-4 max-w-[46ch] text-[1.05rem] leading-relaxed font-light text-ink-soft">
+            {hasPhotos ? "Desliza para comparar. Clientas reales, sin filtros." : "Muy pronto: transformaciones reales de clientas. Mientras tanto, desliza para ver cómo funciona."}
           </p>
         </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 md:col-span-8">
+        <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
           {hasPhotos
             ? beforeAfter.map((pair) => (
                 <Comparison

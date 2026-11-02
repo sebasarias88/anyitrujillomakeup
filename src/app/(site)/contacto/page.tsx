@@ -1,4 +1,5 @@
 import { Booking } from "@/components/contact/booking";
+import { ContactCards } from "@/components/contact/contact-cards";
 import { StudioStrip } from "@/components/contact/studio-strip";
 import { PageHero } from "@/components/layout/page-hero";
 import { PageTransition } from "@/components/layout/page-transition";
@@ -30,6 +31,7 @@ export default function ContactPage() {
         imageAlt="Fachada de Anyi Trujillo Beauty Studio con su letrero dorado"
         actions={<ButtonLink href="#agenda">Reservar ahora</ButtonLink>}
       />
+      <ContactCards />
       <Booking />
       <StudioStrip />
       <Faq title="Antes de reservar" items={faqs} />

@@ -139,7 +139,7 @@ export default function AboutPage() {
                 Un espacio pensado <em className="text-nude-deep">para ti</em>
               </>
             }
-            intro={`${business.address.street}, ${business.address.city}. ${business.hours[0].days}, ${business.hours[0].time}.`}
+            intro={`${business.address.street}, ${business.address.city}. ${business.hours[0].days}, de ${business.hours[0].time}`}
           />
           <ul className="mt-12 grid gap-4 sm:grid-cols-3">
             {[

@@ -11,8 +11,8 @@ const followers = [images.brideTerrace, images.quinceRubyPortrait, images.brideD
 export function Hero() {
   return (
     <section aria-labelledby="home-title" className="bg-gradient-to-b from-blush to-nude-field">
-      <div className="container-page grid items-center gap-12 pt-28 pb-16 md:pt-40 md:pb-24 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-        <div className="order-2 lg:order-1">
+      <div className="container-page grid items-center gap-12 pt-28 pb-16 md:pt-32 md:pb-24 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div>
           <Reveal as="p" className="eyebrow flex items-center gap-3">
             <span aria-hidden className="h-px w-9 bg-nude-deep" />
             Novias · Quinceañeras · Eventos
@@ -48,7 +48,7 @@ export function Hero() {
           </Reveal>
         </div>
 
-        <div className="relative order-1 aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-lift sm:aspect-[5/4] lg:order-2 lg:aspect-[4/5] lg:max-h-[40rem]">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-lift sm:aspect-[5/4] lg:aspect-[4/5] lg:max-h-[40rem]">
           <Image
             src={images.glamRoseHero}
             alt="Maquillaje glam rosé con piel luminosa, hecho por Anyi Trujillo"

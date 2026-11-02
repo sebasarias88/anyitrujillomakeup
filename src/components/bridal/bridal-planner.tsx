@@ -6,6 +6,7 @@ import { MinusIcon, PlusIcon } from "@/components/ui/icons";
 import { Logo } from "@/components/ui/logo";
 import { Reveal } from "@/components/ui/reveal";
 import { RollingNumber } from "@/components/ui/rolling-number";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Select } from "@/components/ui/select";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { bridalPackages, companionServices, extraHourPrice, formatCOP, homeVisitZones, type CompanionServiceId, whatsappGreeting } from "@/lib/site";
@@ -71,7 +72,6 @@ function Stepper({ label, hint, value, onChange, max = 20 }: { label: string; hi
  */
 export function BridalPlanner() {
   const reduceMotion = useReducedMotion();
-  const dateId = useId();
   const nameId = useId();
   const [packageId, setPackageId] = useState(bridalPackages[2].id);
   const [companions, setCompanions] = useState(emptyCompanions);
@@ -213,19 +213,7 @@ export function BridalPlanner() {
             </fieldset>
 
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
-              <div>
-                <label htmlFor={dateId} className="mb-2 block font-medium">
-                  Fecha de la boda
-                </label>
-                <input
-                  id={dateId}
-                  type="date"
-                  value={date}
-                  min={minDate}
-                  onChange={(event) => setDate(event.target.value)}
-                  className="min-h-12 w-full rounded-xl border border-line-strong bg-blush px-4 text-base"
-                />
-              </div>
+              <DatePicker label="Fecha de la boda" value={date} min={minDate} onChange={setDate} placeholder="Elige la fecha de tu boda" />
               <div>
                 <label htmlFor={nameId} className="mb-2 block font-medium">
                   Tu nombre <span className="font-normal text-ink-soft">(opcional)</span>

@@ -3,19 +3,10 @@
 import Image from "next/image";
 import { startTransition, useCallback, useLayoutEffect, useRef, useState, ViewTransition } from "react";
 import { ChevronIcon } from "@/components/ui/icons";
-import { Reveal } from "@/components/ui/reveal";
 import { gallery, galleryCategories, type GalleryCategory } from "@/lib/images";
 import { business } from "@/lib/site";
 
-// Uneven placement on the 12-column grid, repeated every six photographs.
-const layout = [
-  "md:col-span-5 md:col-start-1",
-  "md:col-span-4 md:col-start-7 md:mt-28",
-  "md:col-span-3 md:col-start-2",
-  "md:col-span-6 md:col-start-6 md:mt-16",
-  "md:col-span-4 md:col-start-1 md:mt-12",
-  "md:col-span-5 md:col-start-7",
-];
+const categoryLabel = Object.fromEntries(galleryCategories.map((category) => [category.id, category.label]));
 
 const SWIPE_DISTANCE = 80;
 const SWIPE_VELOCITY = 0.11; // px per ms: a quick flick is enough
@@ -51,65 +42,83 @@ export function Gallery() {
   }, [openIndex]);
 
   return (
-    <section aria-labelledby="gallery-title" className="container-page py-28 md:py-40">
-      <h2 id="gallery-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
-        Mi trabajo
-      </h2>
+    <section aria-labelledby="gallery-title" className="bg-white py-24 md:py-28">
+      <div className="container-page">
+      <div className="mx-auto max-w-2xl text-center">
+        <p className="eyebrow">Galería</p>
+        <h2 id="gallery-title" className="mt-4 font-display text-[2.2rem] leading-[1.1] md:text-[3rem]">
+          Clientas reales, <em className="text-nude-deep">looks reales</em>
+        </h2>
+        <p className="mx-auto mt-4 max-w-[46ch] text-[1.05rem] leading-relaxed font-light text-ink-soft">Toca una foto para verla en grande.</p>
+      </div>
 
-      <div role="group" aria-label="Filtrar el portafolio" className="mt-8 flex flex-wrap gap-x-6 gap-y-1 md:gap-x-10">
+      <div role="group" aria-label="Filtrar el portafolio" className="no-scrollbar -mx-4 mt-10 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:justify-center sm:px-0">
         {galleryCategories.map((category) => {
           const active = filter === category.id;
+          const count = category.id === "todas" ? gallery.length : gallery.filter((item) => item.category === category.id).length;
           return (
             <button
               key={category.id}
               type="button"
               aria-pressed={active}
               onClick={() => startTransition(() => setFilter(category.id))}
-              className={`pressable min-h-11 shrink-0 font-display text-[1.6rem] leading-none whitespace-nowrap md:text-[2.2rem] ${
-                active ? "underline decoration-nude decoration-[3px] underline-offset-8" : "text-ink-soft hover:text-ink"
+              className={`pressable inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full px-5 text-[0.85rem] tracking-[0.04em] whitespace-nowrap transition-colors ${
+                active ? "bg-ink text-paper" : "border border-line-strong bg-white text-ink hover:border-ink"
               }`}
             >
               {category.label}
+              <span className={`text-[0.75rem] tabular-nums ${active ? "text-paper/60" : "text-ink-soft"}`}>{count}</span>
             </button>
           );
         })}
       </div>
 
-      <ul className="mt-12 grid grid-cols-2 gap-x-3 gap-y-8 md:mt-16 md:grid-cols-12 md:gap-x-6 md:gap-y-14">
+      <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
         {items.map((item, index) => (
           <ViewTransition key={item.id} enter="gallery-in" exit="gallery-out" default="none">
-            <li className={`${index % 3 === 0 ? "max-md:col-span-2" : ""} ${layout[index % layout.length]}`}>
+            <li>
               <button
                 type="button"
                 onClick={() => open(index)}
                 aria-label={`Ampliar: ${item.alt}`}
-                className="pressable group block w-full text-left"
+                className="pressable group relative block aspect-[4/5] w-full overflow-hidden rounded-[1rem] bg-marble text-left shadow-soft sm:rounded-[1.25rem]"
               >
-                <Reveal variant="photo" delay={(index % 2) * 80}>
                 <ViewTransition name={openIndex === index ? undefined : `photo-${item.id}`} share="morph" default="none">
                   <Image
                     src={item.src}
                     alt={item.alt}
+                    fill
                     placeholder="blur"
-                    // Real rendered widths: up to 6 of 12 columns on desktop; full or half width on phones.
-                    sizes={index % 3 === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 42vw, 50vw"}
-                    className="h-auto w-full"
+                    sizes="(min-width: 1024px) 24rem, 50vw"
+                    className="object-cover transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.04]"
                   />
                 </ViewTransition>
-                </Reveal>
-                <span className="mt-2.5 block text-[0.95rem] group-hover:underline group-hover:underline-offset-4">{item.caption}</span>
+                <span aria-hidden className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/55 to-transparent" />
+                <span className="absolute inset-x-3 bottom-3 text-paper sm:inset-x-4 sm:bottom-4">
+                  <span className="block text-[0.65rem] tracking-[0.16em] uppercase opacity-80 sm:text-[0.7rem]">{categoryLabel[item.category]}</span>
+                  <span className="block font-display text-[1.05rem] leading-tight sm:text-[1.3rem]">{item.caption}</span>
+                </span>
               </button>
             </li>
           </ViewTransition>
         ))}
       </ul>
 
-      <p className="mt-14 text-[1.05rem]">
-        {items.length} fotos aquí y muchas más en{" "}
-        <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="font-medium underline decoration-nude decoration-2 underline-offset-[6px]">
-          Instagram {business.instagramHandle}
+      <div className="mt-12 flex flex-col items-center gap-4 rounded-[1.5rem] bg-marble px-6 py-8 text-center sm:flex-row sm:justify-between sm:text-left md:px-10">
+        <p className="text-[1.05rem]">
+          <span className="block font-display text-[1.4rem]">Hay mucho más en Instagram</span>
+          <span className="text-ink-soft">Trabajos nuevos cada semana en {business.instagramHandle}</span>
+        </p>
+        <a
+          href={business.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="pressable inline-flex min-h-12 shrink-0 items-center rounded-full bg-ink px-7 text-[0.82rem] font-medium tracking-[0.1em] text-paper uppercase hover:bg-ink-soft"
+        >
+          Ver Instagram
         </a>
-      </p>
+      </div>
+      </div>
 
       <dialog
         ref={dialogRef}
@@ -120,7 +129,7 @@ export function Gallery() {
           if (event.key === "ArrowLeft") go(-1);
         }}
         aria-label={current ? `Foto ampliada: ${current.caption}` : "Foto ampliada"}
-        className="m-0 h-dvh max-h-none w-screen max-w-none bg-paper p-0 text-ink backdrop:bg-paper"
+        className="m-0 h-dvh max-h-none w-screen max-w-none bg-blush p-0 text-ink backdrop:bg-paper"
       >
         {current ? (
           <div className="flex h-full flex-col">
@@ -128,7 +137,7 @@ export function Gallery() {
               <p className="text-[0.95rem]">
                 {current.caption} · {(openIndex ?? 0) + 1} de {items.length}
               </p>
-              <button type="button" onClick={close} className="pressable min-h-11 px-1 font-medium underline decoration-nude decoration-2 underline-offset-[6px]">
+              <button type="button" onClick={close} className="pressable min-h-11 rounded-full border border-ink px-5 text-[0.82rem] tracking-[0.1em] uppercase">
                 Cerrar
               </button>
             </div>
@@ -156,7 +165,7 @@ export function Gallery() {
                   alt={current.alt}
                   placeholder="blur"
                   sizes="100vw"
-                  className="h-auto max-h-full w-auto max-w-full object-contain select-none"
+                  className="h-auto max-h-full w-auto max-w-full rounded-[1.25rem] object-contain shadow-lift select-none"
                   draggable={false}
                 />
               </ViewTransition>
@@ -164,7 +173,7 @@ export function Gallery() {
                 type="button"
                 onClick={() => go(-1)}
                 aria-label="Foto anterior"
-                className="pressable absolute left-4 hidden size-12 items-center justify-center bg-paper md:flex"
+                className="pressable absolute left-4 hidden size-12 items-center justify-center rounded-full bg-white shadow-lift md:flex"
               >
                 <ChevronIcon className="size-5 rotate-180" />
               </button>
@@ -172,7 +181,7 @@ export function Gallery() {
                 type="button"
                 onClick={() => go(1)}
                 aria-label="Foto siguiente"
-                className="pressable absolute right-4 hidden size-12 items-center justify-center bg-paper md:flex"
+                className="pressable absolute right-4 hidden size-12 items-center justify-center rounded-full bg-white shadow-lift md:flex"
               >
                 <ChevronIcon className="size-5" />
               </button>

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/ui/logo";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
-import { business, isSitePath, navLinks, pageWhatsappMessage, services } from "@/lib/site";
+import { isSitePath, navLinks, pageWhatsappMessage, services } from "@/lib/site";
 import { MobileMenu } from "./mobile-menu";
 
 /**
@@ -58,16 +58,6 @@ export function SiteHeader() {
       >
         Saltar al contenido
       </a>
-      <div className="hidden bg-nude-field text-[0.8rem] text-ink-soft lg:block">
-        <div className="container-page flex h-9 items-center justify-between gap-6">
-          <span>
-            {business.address.street} · {business.address.city}, {business.address.region}
-          </span>
-          <span>
-            {business.hours[0].days} · {business.hours[0].time} · WhatsApp {business.phoneDisplay}
-          </span>
-        </div>
-      </div>
       <div className="container-page flex h-[4.5rem] items-center justify-between gap-6">
         <Link href="/" aria-label="Anyi Trujillo Beauty Studio, ir al inicio" className="shrink-0">
           <Logo className="h-11 text-ink md:h-12" />

@@ -2,7 +2,7 @@
  * Pages: network first, cached copy when offline, /offline as last resort.
  * Hashed static assets and images: cache first.
  * Bump VERSION on every change to this file. */
-const VERSION = "v4";
+const VERSION = "v5";
 const PAGE_CACHE = `pages-${VERSION}`;
 const ASSET_CACHE = `assets-${VERSION}`;
 const OFFLINE_URL = "/offline";

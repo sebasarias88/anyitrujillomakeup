@@ -5,11 +5,15 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: business.name,
     short_name: business.shortName,
-    description: "Maquillaje y peinado profesional en Armenia, Quindío.",
+    description: "Maquillaje y peinado profesional en Armenia, Quindío. Novias, aerógrafo, quinceañeras y cursos.",
+    id: "/",
+    scope: "/",
+    orientation: "portrait",
+    categories: ["beauty", "lifestyle"],
     start_url: "/",
     display: "standalone",
-    background_color: "#0d0a09",
-    theme_color: "#0d0a09",
+    background_color: "#ffffff",
+    theme_color: "#ffffff",
     lang: "es-CO",
     icons: [
       { src: "/icon-192.png", sizes: "192x192", type: "image/png" },

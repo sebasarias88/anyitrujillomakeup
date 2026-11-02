@@ -1,103 +1,106 @@
 "use client";
 
 import { useState } from "react";
+import { PinIcon } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/reveal";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { business, homeVisitZones, whatsappGreeting } from "@/lib/site";
 
-const towns = homeVisitZones.municipalities;
-const lats = towns.map((town) => town.lat);
-const lngs = towns.map((town) => town.lng);
-const bounds = { north: Math.max(...lats), south: Math.min(...lats), west: Math.min(...lngs), east: Math.max(...lngs) };
+const studio = homeVisitZones.municipalities.find((town) => town.name === business.address.city) ?? homeVisitZones.municipalities[0];
 
-// Towns whose label would run into a neighbour sit on the left of their dot.
-const labelLeft = new Set(["Armenia", "Quimbaya", "La Tebaida", "Génova", "Buenavista", "Montenegro"]);
-
-/** Position in % inside the map box, with a margin so labels never touch the edge. */
-function place(lat: number, lng: number) {
-  const x = 24 + ((lng - bounds.west) / (bounds.east - bounds.west)) * 50;
-  const y = 6 + ((bounds.north - lat) / (bounds.north - bounds.south)) * 88;
-  return { left: `${x}%`, top: `${y}%` };
+/** Straight-line distance in km between two coordinates (haversine). */
+function distanceKm(a: { lat: number; lng: number }, b: { lat: number; lng: number }) {
+  const rad = Math.PI / 180;
+  const dLat = (b.lat - a.lat) * rad;
+  const dLng = (b.lng - a.lng) * rad;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLng / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(h));
 }
 
+const towns = homeVisitZones.municipalities
+  .map((town) => ({ name: town.name, km: Math.round(distanceKm(studio, town)), isStudio: town.name === studio.name }))
+  .sort((a, b) => a.km - b.km);
+
+const points = [
+  { title: "En tu casa, hotel o salón", text: "Llego con todo el equipo y la iluminación." },
+  { title: "Puntual, siempre", text: "Calculo el viaje para llegar con tiempo de sobra." },
+  { title: "Domicilio según el lugar", text: "Elige tu municipio y te lo cotizo por WhatsApp." },
+];
+
 /**
- * Home visits as a map that can be touched: every town of Quindío placed by
- * its real coordinates, the studio marked in Armenia. Choosing a town writes
- * the WhatsApp message with it. The towns are buttons, so the map is also a
- * keyboard- and screen-reader-friendly list.
+ * Home visits: every town of Quindío as a chip with its approximate distance
+ * from the studio. Choosing one writes the WhatsApp message with it.
  */
 export function HomeVisitMap() {
   const [selected, setSelected] = useState<string | null>(null);
+  const town = towns.find((item) => item.name === selected);
 
   return (
-    <section id="domicilio" aria-labelledby="home-visit-title" className="container-page scroll-mt-24 py-28 md:py-40">
-      <div className="grid gap-12 md:grid-cols-12 md:gap-6">
-        <div className="md:col-span-5">
-          <Reveal>
-            <h2 id="home-visit-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
-              Voy hasta donde te arregles
-            </h2>
-            <p className="mt-5 max-w-[40ch] text-[1.05rem] leading-relaxed">
-              Te atiendo en tu casa, hotel o lugar del evento en Armenia y el Quindío. El valor del domicilio depende del
-              lugar: elige tu municipio y te lo cotizo por WhatsApp.
+    <section id="domicilio" aria-labelledby="home-visit-title" className="scroll-mt-24 bg-white py-24 md:py-28">
+      <div className="container-page grid items-center gap-12 lg:grid-cols-[5fr_7fr] lg:gap-16">
+        <Reveal>
+          <p className="eyebrow">A domicilio</p>
+          <h2 id="home-visit-title" className="mt-4 font-display text-[2.3rem] leading-[1.1] md:text-[3rem]">
+            Voy hasta <em className="text-nude-deep">donde te arregles</em>
+          </h2>
+          <p className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed font-light text-ink-soft">
+            Te atiendo en Armenia y en todo el Quindío, para que no tengas que moverte el día de tu evento.
+          </p>
+          <ul className="mt-8 space-y-5">
+            {points.map((point) => (
+              <li key={point.title} className="flex gap-4">
+                <span aria-hidden className="mt-1 flex size-10 shrink-0 items-center justify-center rounded-full bg-nude-field text-nude-deep">
+                  <PinIcon className="size-[1.1rem]" />
+                </span>
+                <span>
+                  <span className="block font-display text-[1.2rem] leading-snug">{point.title}</span>
+                  <span className="block text-[0.95rem] text-ink-soft">{point.text}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+
+        <Reveal delay={100} className="rounded-[1.75rem] border border-line bg-white p-5 shadow-lift sm:p-8">
+          <p className="font-display text-[1.4rem]">¿Dónde es tu evento?</p>
+          <p className="mt-1 text-[0.9rem] text-ink-soft">Distancias aproximadas desde el estudio en Armenia.</p>
+          <ul aria-label="Municipios del Quindío" className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {towns.map((item) => {
+              const active = selected === item.name;
+              return (
+                <li key={item.name}>
+                  <button
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => setSelected(item.name)}
+                    className={`pressable flex min-h-14 w-full flex-col items-start justify-center rounded-xl border px-4 py-2 text-left transition-colors ${
+                      active ? "border-ink bg-ink text-paper" : "border-line bg-blush hover:border-ink"
+                    }`}
+                  >
+                    <span className="text-[0.95rem] leading-tight">{item.name}</span>
+                    <span className={`text-[0.75rem] ${active ? "text-paper/70" : "text-ink-soft"}`}>{item.isStudio ? "Aquí está el estudio" : `a ~${item.km} km`}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+          <div aria-live="polite" className="mt-6 flex flex-col gap-4 rounded-2xl bg-marble px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="leading-snug">
+              <span className="block text-[0.72rem] tracking-[0.16em] text-ink-soft uppercase">Tu domicilio</span>
+              <span className="font-display text-[1.1rem]">
+                {town ? (town.isStudio ? "Armenia · también voy a tu casa" : `${town.name} · a ~${town.km} km`) : "Elige tu municipio"}
+              </span>
             </p>
-            <p className="mt-3 text-[0.95rem] text-ink-soft">Zonas de ejemplo, por confirmar.</p>
-          </Reveal>
-
-          <div aria-live="polite" className="mt-10 min-h-40 bg-marble px-6 py-6">
-            {selected ? (
-              <>
-                <p className="font-display text-[2rem] leading-none">{selected}</p>
-                <p className="mt-2 text-[1.05rem]">
-                  {selected === "Armenia" ? "Aquí está el estudio; también voy a domicilio." : "Costo del domicilio según el lugar."}
-                </p>
-                <WhatsAppButton
-                  message={`${whatsappGreeting} Quiero maquillaje a domicilio en ${selected}. ¿Cuánto cuesta el domicilio hasta allá?`}
-                  className="mt-5"
-                >
-                  Cotizar domicilio en {selected}
-                </WhatsAppButton>
-              </>
-            ) : (
-              <p className="text-[1.05rem]">Elige un municipio en el mapa.</p>
-            )}
+            <WhatsAppButton
+              message={town ? `${whatsappGreeting} Quiero maquillaje a domicilio en ${town.name}. ¿Cuánto cuesta el domicilio hasta allá?` : ""}
+              disabled={!town}
+              disabledLabel="Elige un municipio"
+              className="shrink-0"
+            >
+              Cotizar domicilio
+            </WhatsAppButton>
           </div>
-        </div>
-
-        <Reveal className="md:col-span-6 md:col-start-7">
-          <div className="bg-marble relative mx-auto aspect-[1/1.6] w-full max-w-[26rem]">
-            <ul aria-label="Municipios del Quindío">
-              {towns.map((town) => {
-                const isStudio = town.name === business.address.city;
-                const isSelected = selected === town.name;
-                return (
-                  <li key={town.name} className="absolute" style={place(town.lat, town.lng)}>
-                    <button
-                      type="button"
-                      aria-pressed={isSelected}
-                      onClick={() => setSelected(town.name)}
-                      className={`pressable group absolute top-0 left-0 flex min-h-11 -translate-y-1/2 items-center gap-2 whitespace-nowrap ${
-                        labelLeft.has(town.name) ? "-translate-x-[calc(100%-0.5rem)] flex-row-reverse" : "-translate-x-2"
-                      }`}
-                    >
-                      <span
-                        aria-hidden
-                        className={`block shrink-0 transition-transform duration-200 ${
-                          isStudio ? "size-4 rounded-full bg-nude" : "size-3 bg-ink"
-                        } ${isSelected ? "scale-150" : "group-hover:scale-125"}`}
-                      />
-                      <span
-                        className={`text-[0.95rem] ${isSelected ? "font-medium underline decoration-nude decoration-2 underline-offset-4" : ""}`}
-                      >
-                        {town.name}
-                        {isStudio ? <span className="text-ink-soft"> · estudio</span> : null}
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          <p className="mt-3 text-[0.8rem] text-ink-soft">Valores de domicilio por confirmar con Anyi.</p>
         </Reveal>
       </div>
     </section>

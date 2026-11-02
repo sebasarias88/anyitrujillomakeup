@@ -19,40 +19,6 @@ export function WhatsAppIcon(props: IconProps) {
   );
 }
 
-export function InstagramIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base} {...props}>
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
-    </svg>
-  );
-}
-
-export function ArrowIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base} {...props}>
-      <path d="M5 12h14M13 6l6 6-6 6" />
-    </svg>
-  );
-}
-
-export function SparkleIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
-      <path d="M12 2c.4 4.6 2.4 7.6 8 10-5.6 2.4-7.6 5.4-8 10-.4-4.6-2.4-7.6-8-10 5.6-2.4 7.6-5.4 8-10Z" />
-    </svg>
-  );
-}
-
-export function StarIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
-      <path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8L12 2.8Z" />
-    </svg>
-  );
-}
-
 export function CheckIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" {...base} strokeWidth={2} {...props}>
@@ -85,46 +51,3 @@ export function ChevronIcon(props: IconProps) {
   );
 }
 
-export function CloseIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base} {...props}>
-      <path d="M6 6l12 12M18 6 6 18" />
-    </svg>
-  );
-}
-
-export function PinIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base} {...props}>
-      <path d="M12 21s-7-6.1-7-11.5a7 7 0 1 1 14 0C19 14.9 12 21 12 21Z" />
-      <circle cx="12" cy="9.5" r="2.5" />
-    </svg>
-  );
-}
-
-export function ClockIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base} {...props}>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </svg>
-  );
-}
-
-export function MenuIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base} {...props}>
-      <path d="M4 8h16M4 16h16" />
-    </svg>
-  );
-}
-
-export function AirbrushIcon(props: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...base} {...props}>
-      <path d="M3 14h9l3-3h2v6h-2l-3-3" />
-      <path d="M12 14v5h-3" />
-      <path d="M17 8.5c1.3-1 2.7-1 4 0M18 5.5c1-.7 2-.7 3 0" />
-    </svg>
-  );
-}

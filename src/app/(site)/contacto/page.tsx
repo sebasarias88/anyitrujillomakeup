@@ -1,7 +1,8 @@
-import { PageTransition } from "@/components/layout/page-transition";
 import { Booking } from "@/components/contact/booking";
-import { Location } from "@/components/contact/location";
+import { PhoneDisplay } from "@/components/contact/phone-display";
 import { PageHero } from "@/components/layout/page-hero";
+import { PageTransition } from "@/components/layout/page-transition";
+import { ButtonLink } from "@/components/ui/button-link";
 import { Faq } from "@/components/ui/faq";
 import { JsonLd } from "@/components/ui/json-ld";
 import { images } from "@/lib/images";
@@ -26,9 +27,10 @@ export default function ContactPage() {
         intro={<p>Elige el servicio, el día y la hora. Te llevo a WhatsApp con tu solicitud lista.</p>}
         image={images.studioSign}
         imageAlt="Fachada de Anyi Trujillo Beauty Studio con su letrero dorado"
+        actions={<ButtonLink href="#agenda">Reservar ahora</ButtonLink>}
       />
       <Booking />
-      <Location />
+      <PhoneDisplay />
       <Faq title="Antes de reservar" items={faqs} />
     </PageTransition>
   );

@@ -33,7 +33,7 @@
 :root {
   color-scheme: light;
   /* Hand-drawn cool marble: soft veins from fractal noise, tinted with the palette. */
-  --marble-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><filter id='m' x='0' y='0'><feTurbulence type='fractalNoise' baseFrequency='.0035 .011' numOctaves='5' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .52  0 0 0 0 .5  0 0 0 -1.6 1.15'/></filter><rect width='100%' height='100%' fill='%23f4f2ef'/><rect width='100%' height='100%' filter='url(%23m)' opacity='.28'/></svg>");
+  --marble-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'><filter id='m' x='0' y='0'><feTurbulence type='fractalNoise' baseFrequency='.002 .0065' numOctaves='5' seed='7'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .52  0 0 0 0 .5  0 0 0 -1.6 1.15'/></filter><rect width='100%' height='100%' fill='%23f4f2ef'/><rect width='100%' height='100%' filter='url(%23m)' opacity='.28'/></svg>");
 }
 
 html {
@@ -68,10 +68,13 @@ body {
   }
 }
 
+/* One texture stretched over the whole surface (cover): no repeating tiles, so no seams. */
 @utility bg-marble {
   background-color: var(--color-marble);
   background-image: var(--marble-texture);
-  background-size: 900px 900px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* The name as a monument: sized to the viewport, never wraps. */

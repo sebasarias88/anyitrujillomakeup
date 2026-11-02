@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 export default function OfflinePage() {
   return (
     <SystemScreen
-      monument="Sin red"
+      eyebrow="Sin conexión"
       title="Parece que no tienes conexión"
       actions={
         <a
           href={whatsappUrl(`${whatsappGreeting} Quiero agendar una cita.`)}
-          className="pressable inline-flex min-h-12 items-center bg-gold px-6 font-semibold text-ink hover:bg-gold-deep"
+          className="pressable inline-flex min-h-12 items-center rounded-full bg-ink px-7 text-[0.82rem] font-medium tracking-[0.1em] text-paper uppercase hover:bg-ink-soft"
         >
           Escribir por WhatsApp
         </a>

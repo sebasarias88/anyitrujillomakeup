@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <SystemScreen
-      monument="404"
+      eyebrow="Error 404"
       title="Esta página no existe"
       actions={
         <>

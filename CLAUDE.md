@@ -5,18 +5,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 @AGENTS.md
 
 ## Proyecto: Anyi Trujillo Beauty Studio
-Demo web para Anyi Trujillo, maquilladora profesional en Armenia, Quindío (@anyitrujillomakeup, ~15 mil seguidores). Especialista en novias y maquillaje con aerógrafo, 9 años de experiencia, certificada por Instituto Cristina Cuéllar (México) y Tempto (New York). Ofrece cursos presenciales y personalizados y tiene equipo para grupos. Google: 5.0 con 31 reseñas.
+Demo web para Anyi Trujillo, maquilladora profesional en Armenia, Quindío (@anyitrujillomakeup, ~15 mil seguidores). Especialista en novias y maquillaje con aerógrafo, 9 años de experiencia, certificada por Instituto Cristina Cuéllar (México) y Tempto (New York). Ofrece cursos presenciales y personalizados y tiene equipo para grupos. No mostrar la calificación de Google en la web (decisión del cliente).
 Dirección: Calle 23 #37-25, edificio Tesalónica local 5, Armenia. WhatsApp: 320 5299186.
 
 ## Dirección visual
-- TEMA CLARO, luminoso, elegante y femenino. Nada oscuro.
-- Marca: logo en letra script "Beauty Studio". Colores: dorado #FFD03A, negro #040606 (solo acentos y texto), blanco, nude/rose gold #D09A73, texturas de mármol.
+- TEMA CLARO casi blanco (#FDFCFA), luminoso, elegante y femenino. Nada oscuro.
+- Marca (de sus archivos de logo): negro #040606 para texto y botones, nude/rose gold #D09A73 para líneas y acentos, y el amarillo #FFD03A solo como toque mínimo (el subrayado del titular del inicio). Campos alternos en nude muy claro.
 - Diseño propio, innovador y de alto nivel, nada genérico. Debe impresionar porque ella puede recomendar más clientes.
 - Referencia que le gusta: https://valeriariosmakeup.com, SOLO como guía de contenido y estructura. Nunca copiar su diseño.
 
 ## Alcance del demo
-- Solo frontend, multipágina (7 rutas, ver "Architecture"). El agendamiento redirige a WhatsApp con mensaje prellenado.
-- Secciones aprobadas: cotizador de novia, antes/después, quiz de look, sección aerógrafo, cursos, reseñas de Google, detalles premium.
+- Solo frontend, multipágina (5 rutas, ver "Architecture"). El agendamiento redirige a WhatsApp con mensaje prellenado.
+- Secciones aprobadas: cotizador de novia, antes/después, quiz de look, sección aerógrafo, cursos, reseñas reales de clientas, detalles premium.
 - Fase 2 (si ella acepta): panel admin donde ella actualiza horarios y las clientas agendan desde la web.
 
 ## Precios
@@ -55,16 +55,16 @@ There is no test suite. Lighthouse runs from the browser console panel (Cmd+Opti
 
   | Route | Content |
   |---|---|
-  | `/` | Summary of everything plus the "doors" to each page, look quiz, reviews |
+  | `/` | Hero, work mosaic, bridal packages, reviews, more services, look quiz, about Anyi (`#sobre-mi`), closing CTA |
   | `/novias` | Packages, quote calculator, process, bridal FAQ |
-  | `/servicios` | Social, XV, companions, airbrush, home visits with zones |
+  | `/servicios` | Social, XV, companions, airbrush, home visits with zones, courses (`#cursos`) |
   | `/portafolio` | Gallery and before/after |
-  | `/cursos` | Courses |
-  | `/sobre-anyi` | About Anyi and the studio |
   | `/contacto` | Booking, studio, general FAQ |
 
+  `/cursos` and `/sobre-anyi` redirect (301, `next.config.ts`) to `/servicios#cursos` and `/#sobre-mi`.
+
   `offline/` sits outside the group (no shell). The route list lives in `pages` in `site.ts`; the header, sitemap and breadcrumbs read from it, so add a page there first.
-- **Components by page.** `src/components/<page>/` (`home`, `bridal`, `services`, `portfolio`, `courses`, `about`, `contact`), shared pieces in `layout/` (header, footer, `page-hero`) and `ui/`. Every inner page opens with `<PageHero>`, which holds its only `h1`.
+- **Components by page.** `src/components/<page>/` (`home`, `bridal`, `services`, `portfolio`, `courses`, `contact`), shared pieces in `layout/` (header, footer, `page-hero`) and `ui/`. Every inner page opens with `<PageHero>`, which holds its only `h1`.
 - **Content lives in data modules, not in components.**
   - `src/lib/site.ts`: business data, `SITE_URL`, `pages`, bridal packages and prices (COP, shown with `formatCOP`), booking services, reviews, FAQ (tagged per page, read with `faqsFor()`).
   - `src/lib/images.ts`: static imports of `src/assets/images/*.webp`, the gallery list and its categories, and `beforeAfter` (empty until Anyi sends real photos; the slider then shows "Próximamente").
@@ -73,20 +73,20 @@ There is no test suite. Lighthouse runs from the browser console panel (Cmd+Opti
 - **Static rendering with `cacheComponents: true`** (`next.config.ts`). Anything that depends on the browser, like the current date in `booking.tsx`, gets resolved in a `useEffect` after mount and shows a skeleton until then. That keeps every page prerenderable. Follow this pattern; don't read `new Date()` or `window` during render.
 - **SEO.**
   - Every page exports `metadata` from `pageMetadata()` (`src/lib/seo.ts`): title, description, canonical, Open Graph with `locale: es_CO` and the shared image. Always use the helper; a bare `openGraph` drops the image and site name.
-  - The root layout declares the `BeautySalon` JSON-LD (address, phone, hours, Google rating). Pages add `BreadcrumbList`, `FAQPage`, `Service` or `Course` through `<JsonLd>`.
+  - The root layout declares the `BeautySalon` JSON-LD (address, phone, hours). No rating markup: the rating is not shown on the site. Pages add `BreadcrumbList`, `FAQPage`, `Service` or `Course` through `<JsonLd>`.
   - `robots.ts` and `sitemap.ts` read `SITE_URL`.
 - **`SITE_URL`.** It comes from `NEXT_PUBLIC_SITE_URL`. Until the real domain exists it falls back to the Vercel URL of the deployment (`VERCEL_PROJECT_PRODUCTION_URL` in production, `VERCEL_BRANCH_URL` / `VERCEL_URL` in previews), then to localhost. Read it only on the server. Set `NEXT_PUBLIC_SITE_URL` in Vercel once the domain is live.
 - **Page transitions.** React's `<ViewTransition>` (React 19.3, no config needed) wraps the page in the `(site)` layout; the "mist" animation lives in `globals.css` (`.page-mist`, `.morph`). Read `node_modules/next/dist/docs/01-app/02-guides/view-transitions.md` before changing it.
 - **Offline / PWA.** `public/sw.js` is a hand-written service worker: network-first for pages (all routes are precached) with `/offline` as fallback, cache-first for `/_next/static` and `/_next/image`. It only registers in production. **Bump `VERSION` in `sw.js` whenever you change it.** `next.config.ts` serves it with no-cache headers.
-- **Fonts are self-hosted** through `next/font/local` (Cormorant Garamond for display, Manrope variable for body) from `src/assets/fonts`. Don't add Google Fonts requests.
+- **Fonts are self-hosted** through `next/font/local` (Bodoni Moda for display, Jost variable for body) from `src/assets/fonts`. Don't add Google Fonts requests.
 
 ## Styling implementation
 
-The "Dirección visual" section above is the target: light theme, direction "the name as a monument", with the airbrush mist as the motion language. `DESIGN.md` will document the finished system.
+The "Dirección visual" section above is the target: an almost-white, editorial look (inspired in tone by the reference site, never copied), arched photo frames like a vanity mirror, black pill buttons. `DESIGN.md` will document the finished system.
 
-- Design tokens live in the `@theme` block of `src/app/globals.css` (`paper`, `marble`, `ink`, `ink-soft`, `nude`, `nude-field`, `blush`, `gold`). Change colors there, not as hard-coded values in components. Gold is only for the main action and the price block, always with dark text. No black backgrounds.
-- Fonts: `font-display` (Cormorant Garamond) and `font-sans` (Manrope).
-- Custom utilities: `container-page` (page width and gutters), `text-monument` (the page name across the viewport), `bg-marble` (code-drawn marble), `pressable` (scale on press), `no-scrollbar`.
-- House rules: no gradients, eyebrows, pill badges, 1px outlined cards, shadows at rest, glass or 01/02/03 numbering. Square buttons and photos.
+- Design tokens live in the `@theme` block of `src/app/globals.css` (`paper`, `white`, `marble` = light nude field, `line`, `ink`, `ink-soft`, `nude`, `nude-deep`, `nude-field`, `blush`, `gold`). Change colors there, not as hard-coded values in components. No black backgrounds; gold/yellow only as tiny accents (`highlight` utility).
+- Fonts: `font-display` (Bodoni Moda) and `font-sans` (Jost).
+- Custom utilities: `container-page`, `bg-marble` (flat light nude field), `eyebrow` (small uppercase label), `highlight` (yellow underline for one or two words), `pressable`, `no-scrollbar`.
+- House rules: rounded photos (`rounded-3xl`, arched `rounded-t-full` for hero frames), pill buttons (`ButtonLink` primary = black, `ink` = outline), section titles with one word in italic `text-nude-deep`.
 - Motion: `--ease-out`, `--ease-in-out`, `--ease-drawer`. `<Reveal>` (variants `text` and `photo`) handles scroll-in; its hidden state only applies under `html.js`, so content stays visible without JS. UI animations stay under 300 ms. `motion/react` animations must check `useReducedMotion`, and the CSS honors `prefers-reduced-motion`.
 - UI kit in `src/components/ui/`: `WhatsAppButton` (loading state while WhatsApp opens), `Select` (custom combobox; never a native `<select>`), `Skeleton`, `Faq`, `JsonLd`.

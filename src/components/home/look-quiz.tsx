@@ -143,13 +143,14 @@ export function LookQuiz() {
       };
 
   return (
-    <section aria-labelledby="quiz-title" className="container-page py-28 md:py-44">
-      <div className="grid gap-12 md:grid-cols-12 md:gap-6">
+    <section aria-labelledby="quiz-title" className="container-page max-w-[78rem] pb-24 md:pb-32">
+      <div className="grid gap-12 rounded-[2rem] bg-marble p-6 sm:p-10 md:grid-cols-12 md:gap-6 lg:p-14">
         <Reveal className="md:col-span-4">
-          <h2 id="quiz-title" className="font-display text-[2.2rem] leading-[1.02] tracking-[-0.01em] md:text-[2.2rem] lg:text-[2.75rem]">
-            ¿Qué look va contigo?
+          <p className="eyebrow">En 30 segundos</p>
+          <h2 id="quiz-title" className="mt-3 font-display text-[2rem] leading-[1.1] lg:text-[2.6rem]">
+            ¿No sabes qué look elegir? <em className="text-nude-deep">Te ayudo.</em>
           </h2>
-          <p className="mt-5 max-w-[34ch] text-[1.05rem] leading-relaxed">
+          <p className="mt-5 max-w-[34ch] leading-relaxed text-ink-soft">
             Responde cuatro preguntas y te digo qué estilo y técnica te recomiendo. Me lo envías por WhatsApp y lo
             personalizamos juntas.
           </p>
@@ -164,12 +165,12 @@ export function LookQuiz() {
             {questions.map((question, index) => (
               <span
                 key={question.key}
-                className={`h-1 flex-1 transition-colors duration-300 ${index < step ? "bg-gold" : "bg-marble-deep"}`}
+                className={`h-1 flex-1 transition-colors duration-300 ${index < step ? "bg-nude" : "bg-marble-deep"}`}
               />
             ))}
           </div>
         </Reveal>
-        <Reveal variant="photo" delay={120} className="relative hidden aspect-[4/5] md:col-span-3 md:row-start-2 md:block">
+        <Reveal variant="photo" delay={120} className="relative hidden aspect-[4/5] overflow-hidden rounded-3xl md:col-span-3 md:row-start-2 md:block">
           <Image
             src={images.quinceRuby}
             alt="Quinceañera con bata roja junto a su vestido de gala"
@@ -200,7 +201,7 @@ export function LookQuiz() {
                         onClick={() => choose(questions[step].key, option.value)}
                         className="pressable group text-left"
                       >
-                        <span className="relative block aspect-[3/4] overflow-hidden">
+                        <span className="relative block aspect-[3/4] overflow-hidden rounded-2xl">
                           <Image
                             src={option.image}
                             alt={option.alt ?? ""}
@@ -218,9 +219,9 @@ export function LookQuiz() {
                         key={option.value}
                         type="button"
                         onClick={() => choose(questions[step].key, option.value)}
-                        className="pressable bg-marble px-6 py-6 text-left hover:bg-marble-deep md:min-h-32"
+                        className="pressable rounded-2xl border border-line bg-white px-6 py-6 text-left transition-colors hover:border-nude md:min-h-28"
                       >
-                        <span className="block text-[1.25rem] font-semibold">{option.label}</span>
+                        <span className="block font-display text-[1.3rem]">{option.label}</span>
                         <span className="mt-0.5 block text-[0.95rem] text-ink-soft">{option.hint}</span>
                       </button>
                     ),
@@ -238,7 +239,7 @@ export function LookQuiz() {
               </motion.fieldset>
             ) : result ? (
               <motion.div key="result" {...motionProps} className="grid gap-6 sm:grid-cols-[13rem_1fr] sm:gap-8">
-                <div className="relative aspect-[3/4] max-sm:w-2/3">
+                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl max-sm:w-2/3">
                   <Image src={result.image} alt={result.alt} fill placeholder="blur" sizes="13rem" className="object-cover" />
                 </div>
                 <div>

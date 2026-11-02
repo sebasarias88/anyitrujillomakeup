@@ -1,117 +1,83 @@
-"use client";
-
-import { useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import Image from "next/image";
-import { useRef, useState } from "react";
 import { ButtonLink } from "@/components/ui/button-link";
+import { Reveal } from "@/components/ui/reveal";
 import { images } from "@/lib/images";
-import { business, formatCOP } from "@/lib/site";
+import { business } from "@/lib/site";
 
-// Each portrait brings its own pale ground, sampled from the photograph.
-const portraits = [
-  {
-    src: images.brideTerrace,
-    alt: "Novia con recogido romántico y tiara en una terraza con vista al paisaje cafetero",
-    ground: "bg-tint-sky",
-    mobile: true,
-  },
-  {
-    src: images.quinceEmerald,
-    alt: "Quinceañera con vestido esmeralda, ondas definidas y maquillaje luminoso",
-    ground: "bg-tint-sage",
-    mobile: true,
-  },
-  {
-    src: images.glamFront,
-    alt: "Maquillaje glam suave en tonos rosa con piel luminosa",
-    ground: "bg-tint-rose",
-    mobile: true,
-  },
-  {
-    src: images.quinceRubyPortrait,
-    alt: "Quinceañera con corona roja y ondas largas definidas",
-    ground: "bg-tint-wine",
-    mobile: false,
-  },
-] as const;
+const facts = [
+  { value: `${business.yearsOfExperience} años`, label: "De experiencia" },
+  { value: "MX · NY", label: "Certificada" },
+  { value: "Domicilio", label: "En el Quindío" },
+];
 
 /**
- * Home hero, "the name as a monument": ANYI TRUJILLO stays pinned while her
- * portraits change beneath it, each one sharpening out of a mist and tinting
- * the ground. Desktop holds 4 portraits over 3 screens; phones hold 3 over
- * 2 screens, so visitors arriving from Instagram reach the content quickly.
- * With reduced motion it is a single, unpinned screen.
+ * Home opening: the promise of airbrush makeup on the left, the strongest
+ * close-up of Anyi's work on the right in an arched frame (a vanity mirror),
+ * with a smaller bridal photograph and a soft nude circle from the brand.
  */
 export function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
-  const [active, setActive] = useState(0);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    const count = window.matchMedia("(min-width: 768px)").matches
-      ? portraits.length
-      : portraits.filter((item) => item.mobile).length;
-    const next = Math.min(count - 1, Math.floor(progress * count));
-    setActive((current) => (current === next ? current : next));
-  });
-
-  const current = reduceMotion ? 0 : active;
-
   return (
-    <section
-      ref={ref}
-      aria-labelledby="home-title"
-      className={reduceMotion ? "relative" : "relative h-[200svh] md:h-[300svh]"}
-    >
-      <div
-        className={`sticky top-0 flex h-svh flex-col overflow-hidden pt-[4.5rem] transition-colors duration-700 ease-[var(--ease-out)] ${portraits[current].ground}`}
-      >
-        <p
-          aria-hidden
-          className="relative z-10 container-page mt-4 font-display leading-[0.8] font-light tracking-[-0.03em] whitespace-nowrap uppercase select-none md:mt-6 md:text-center"
-        >
-          <span className="block text-[18vw] md:inline md:text-[10.2vw]">Anyi </span>
-          <span className="block text-[18vw] md:inline md:text-[10.2vw]">Trujillo</span>
-        </p>
-
-        <div className="container-page relative flex min-h-0 flex-1 flex-col md:grid md:grid-cols-12 md:gap-6">
-          {/* Portrait stack: tucked under the name, centred on desktop. */}
-          <div className="relative -mt-[6vw] min-h-0 flex-1 md:col-span-4 md:col-start-5 md:-mt-[4.2vw]">
-            {portraits.map((portrait, index) => (
-              <Image
-                key={portrait.alt}
-                src={portrait.src}
-                alt={portrait.alt}
-                fill
-                // Only the first portrait is the LCP; the others wait their turn.
-                preload={index === 0}
-                fetchPriority={index === 0 ? undefined : "low"}
-                placeholder="blur"
-                sizes="(min-width: 768px) 34vw, 100vw"
-                aria-hidden={index !== current}
-                data-active={index === current}
-                className={`hero-portrait object-cover ${portrait.mobile ? "" : "max-md:hidden"}`}
-              />
-            ))}
-          </div>
-
-          <div className="relative z-10 pt-5 pb-6 md:col-span-4 md:col-start-1 md:row-start-1 md:self-end md:pb-10">
-            <h1 id="home-title" className="max-w-[20ch] font-display text-[1.9rem] leading-[1.02] tracking-[-0.01em] md:text-[1.6rem] lg:text-[2.4rem]">
-              Maquilladora en Armenia, Quindío
+    <section aria-labelledby="home-title" className="border-b border-line bg-gradient-to-b from-paper to-blush pt-24 pb-16 md:pt-32 md:pb-24">
+      <div className="container-page grid max-w-[78rem] items-center gap-14 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-7">
+          <Reveal as="p" className="eyebrow flex items-center gap-3">
+            <span aria-hidden className="h-px w-9 bg-nude" />
+            Maquilladora profesional · {business.address.city}, {business.address.region}
+          </Reveal>
+          <Reveal delay={60}>
+            <h1 id="home-title" className="mt-5 font-display text-[2.4rem] leading-[1.1] text-balance sm:text-[3.2rem] lg:text-[4rem]">
+              Luce perfecta en persona, <em className="highlight">en cada foto</em> y hasta el último
+              baile.
             </h1>
-            <p className="mt-3 max-w-[30ch] text-[1.05rem] leading-relaxed md:mt-4">
-              Maquillaje profesional para novias, quinceañeras y eventos, con aerógrafo. {business.yearsOfExperience} años de experiencia y 5.0 en Google.
-            </p>
-            <ButtonLink href="/novias#cotizador" className="mt-4 md:hidden">
-              Cotizar mi boda
-            </ButtonLink>
-          </div>
-
-          <div className="relative z-10 hidden md:col-span-3 md:col-start-10 md:row-start-1 md:flex md:flex-col md:items-end md:justify-end md:gap-3 md:pb-10">
+          </Reveal>
+          <Reveal as="p" delay={120} className="mt-6 max-w-[46ch] text-[1.1rem] leading-relaxed font-light text-ink-soft">
+            Maquillaje y peinado para novias, quinceañeras y eventos con la técnica de aerógrafo: un acabado natural,
+            ligero y que dura todo el día.
+          </Reveal>
+          <Reveal delay={180} className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/novias#cotizador">Cotizar mi boda</ButtonLink>
-            <p className="text-right text-[0.95rem]">Paquetes de novia desde {formatCOP(800_000)}</p>
+            <ButtonLink href="/portafolio" variant="ink">
+              Ver mi trabajo
+            </ButtonLink>
+          </Reveal>
+          <Reveal as="dl" delay={240} className="mt-10 grid max-w-xl grid-cols-3 border-t border-line pt-6">
+            {facts.map((fact, index) => (
+              <div key={fact.label} className={index > 0 ? "border-l border-line pl-4 sm:pl-6" : "pr-4"}>
+                <dt className="sr-only">{fact.label}</dt>
+                <dd className="font-display text-[1.1rem] leading-tight whitespace-nowrap sm:text-[1.6rem]">{fact.value}</dd>
+                <dd className="mt-1 text-[0.68rem] tracking-[0.14em] text-ink-soft uppercase sm:text-[0.72rem]">{fact.label}</dd>
+              </div>
+            ))}
+          </Reveal>
+        </div>
+
+        <div className="relative order-first mx-auto w-full max-w-[20rem] sm:max-w-[28rem] lg:order-none lg:col-span-5">
+          <span aria-hidden className="absolute -top-6 -right-4 size-56 rounded-full bg-nude/25 md:size-72" />
+          <div className="relative ml-auto aspect-[3/4] w-[86%] overflow-hidden rounded-t-full rounded-b-3xl">
+            <Image
+              src={images.glamFront}
+              alt="Maquillaje glam en tonos rosa con piel luminosa, hecho por Anyi Trujillo"
+              fill
+              preload
+              placeholder="blur"
+              sizes="(min-width: 1024px) 24rem, 80vw"
+              className="hero-zoom object-cover object-[50%_30%]"
+            />
           </div>
+          <div className="absolute bottom-0 left-0 aspect-[4/5] w-[38%] overflow-hidden rounded-2xl border-[6px] border-paper shadow-[0_18px_40px_-20px_rgb(80_50_30/0.45)]">
+            <Image
+              src={images.brideTerrace}
+              alt="Novia con recogido romántico en una terraza con vista al paisaje cafetero"
+              fill
+              placeholder="blur"
+              sizes="(min-width: 1024px) 11rem, 35vw"
+              className="object-cover"
+            />
+          </div>
+          <p className="absolute right-3 bottom-8 rounded-xl bg-white px-4 py-3 leading-snug shadow-[0_14px_30px_-18px_rgb(80_50_30/0.4)]">
+            <span className="block font-display text-[1rem] italic">Glam rosé · aerógrafo</span>
+            <span className="block text-[0.68rem] tracking-[0.12em] text-ink-soft uppercase">Hecho en mi estudio</span>
+          </p>
         </div>
       </div>
     </section>

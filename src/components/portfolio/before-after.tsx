@@ -91,8 +91,8 @@ function Comparison({ before, after, label }: { before: ReactNode; after: ReactN
         className="absolute inset-y-0 z-10 -ml-6 flex w-12 cursor-ew-resize justify-center outline-offset-[-4px]"
         style={{ left: `${position}%` }}
       >
-        <span aria-hidden className="h-full w-[3px] bg-gold" />
-        <span aria-hidden className="absolute top-1/2 flex size-11 -translate-y-1/2 items-center justify-center bg-gold">
+        <span aria-hidden className="h-full w-[2px] bg-paper" />
+        <span aria-hidden className="absolute top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-paper shadow-md">
           <ChevronIcon className="size-4 rotate-180" />
           <ChevronIcon className="-ml-1.5 size-4" />
         </span>

@@ -5,7 +5,7 @@ type Block = "rows" | "split" | "gallery" | "form";
 
 /**
  * Route-level loading state shaped like the page that is coming: the shared
- * hero (title, sentence, photograph, monument) plus the page's main block.
+ * hero (title, sentence, photograph) plus the page's main block.
  * On reveal it sinks away while the content rises in (Suspense + ViewTransition).
  */
 export function PageSkeleton({ block, label }: { block: Block; label: string }) {
@@ -19,10 +19,7 @@ export function PageSkeleton({ block, label }: { block: Block; label: string }) 
             <Skeleton className="mt-6 h-5 w-full max-w-sm" />
             <Skeleton className="h-5 w-2/3 max-w-xs" />
           </div>
-          <Skeleton className="aspect-[4/5] md:aspect-[16/10] lg:col-span-6 lg:col-start-7 lg:aspect-auto lg:h-[min(68svh,44rem)]" />
-        </div>
-        <div className="container-page mt-4">
-          <Skeleton className="h-[13vw] w-3/4" />
+          <Skeleton className="mx-auto aspect-[4/5] w-full max-w-[26rem] rounded-t-full rounded-b-3xl lg:col-span-5 lg:col-start-8" />
         </div>
         <div className="container-page py-24">
           {block === "rows" ? (

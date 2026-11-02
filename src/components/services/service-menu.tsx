@@ -27,7 +27,7 @@ export function ServiceMenu() {
         {occasionServices.map((service, index) => {
           const flip = index % 2 === 1;
           return (
-            <li key={service.id} className="grid items-center gap-8 md:grid-cols-12 md:gap-6">
+            <li key={service.id} id={service.id} className="grid scroll-mt-28 items-center gap-8 md:grid-cols-12 md:gap-6">
               <Reveal variant="photo" className={`relative aspect-[4/5] md:col-span-5 ${flip ? "md:col-start-8 md:row-start-1" : ""}`}>
                 <Image
                   src={photos[service.id].src}
@@ -35,11 +35,11 @@ export function ServiceMenu() {
                   fill
                   placeholder="blur"
                   sizes="(min-width: 768px) 40vw, 100vw"
-                  className="object-cover"
+                  className="rounded-3xl object-cover"
                 />
               </Reveal>
               <Reveal className={`md:col-span-5 ${flip ? "md:col-start-2 md:row-start-1" : "md:col-start-7"}`}>
-                <h3 className="font-display text-[2.6rem] leading-none tracking-[-0.02em] md:text-[3rem] lg:text-[4rem]">{service.title}</h3>
+                <h3 className="font-display text-[2.4rem] leading-[1.05] md:text-[3rem]">{service.title}</h3>
                 <p className="mt-5 max-w-[40ch] text-[1.05rem] leading-relaxed">{service.text}</p>
                 <p className="mt-4 text-[0.95rem] text-ink-soft">Precio de ejemplo · por confirmar</p>
                 <WhatsAppButton message={service.whatsapp} variant="text" className="mt-4">

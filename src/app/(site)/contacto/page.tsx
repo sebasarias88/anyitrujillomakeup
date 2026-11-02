@@ -23,8 +23,8 @@ export default function ContactPage() {
     <PageTransition>
       <JsonLd data={[breadcrumbJsonLd("/contacto"), faqJsonLd(faqs)]} />
       <PageHero
-        monument="Agenda"
-        title="Agenda tu cita"
+        eyebrow="Contacto · Agenda"
+        title={<>Agenda tu cita <em className="text-nude-deep">en minutos</em></>}
         intro={<p>Elige el servicio, el día y la hora. Te llevo a WhatsApp con tu solicitud lista.</p>}
         image={images.studioSign}
         imageAlt="Fachada de Anyi Trujillo Beauty Studio con su letrero dorado"

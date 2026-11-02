@@ -15,6 +15,13 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // Courses and "about" now live inside /servicios and the home page.
+  async redirects() {
+    return [
+      { source: "/cursos", destination: "/servicios#cursos", permanent: true },
+      { source: "/sobre-anyi", destination: "/#sobre-mi", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

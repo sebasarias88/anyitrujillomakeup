@@ -113,7 +113,7 @@ export function CourseBuilder() {
                   <label
                     key={topic}
                     className={`pressable cursor-pointer px-4 py-3 text-[0.95rem] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
-                      active ? "bg-gold font-semibold" : "bg-paper hover:bg-marble-deep"
+                      active ? "bg-ink text-paper" : "bg-paper hover:bg-marble-deep"
                     }`}
                   >
                     <input type="checkbox" checked={active} onChange={() => toggleTopic(topic)} className="sr-only" />

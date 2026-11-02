@@ -160,7 +160,7 @@ export function BridalPlanner() {
                         className="sr-only"
                       />
                       <span className="flex items-center gap-3">
-                        <span aria-hidden className={`size-3 shrink-0 ${active ? "bg-gold" : "bg-paper"}`} />
+                        <span aria-hidden className={`size-3 shrink-0 rounded-full border border-ink ${active ? "bg-ink" : "bg-paper"}`} />
                         <span>
                           <span className="block font-semibold">{pkg.name}</span>
                           <span className="block text-[0.95rem] text-ink-soft">{pkg.subtitle}</span>

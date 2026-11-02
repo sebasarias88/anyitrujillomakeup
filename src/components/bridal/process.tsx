@@ -8,7 +8,7 @@ import { images } from "@/lib/images";
  */
 export function Process() {
   return (
-    <section aria-labelledby="process-title" className="container-page py-28 md:py-44">
+    <section id="proceso" aria-labelledby="process-title" className="container-page scroll-mt-24 py-28 md:py-40">
       <div className="grid gap-14 md:grid-cols-12 md:gap-x-6 md:gap-y-0">
         <Reveal variant="photo" className="relative aspect-[3/4] md:col-span-4 md:row-start-1">
           <Image

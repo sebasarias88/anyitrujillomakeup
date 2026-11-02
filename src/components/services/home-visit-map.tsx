@@ -83,11 +83,11 @@ export function HomeVisitMap() {
                       <span
                         aria-hidden
                         className={`block shrink-0 transition-transform duration-200 ${
-                          isStudio ? "size-4 bg-gold" : "size-3 bg-ink"
+                          isStudio ? "size-4 rounded-full bg-nude" : "size-3 bg-ink"
                         } ${isSelected ? "scale-150" : "group-hover:scale-125"}`}
                       />
                       <span
-                        className={`text-[0.95rem] ${isSelected ? "font-semibold underline decoration-gold decoration-2 underline-offset-4" : ""}`}
+                        className={`text-[0.95rem] ${isSelected ? "font-semibold underline decoration-nude decoration-2 underline-offset-4" : ""}`}
                       >
                         {town.name}
                         {isStudio ? <span className="text-ink-soft"> · estudio</span> : null}

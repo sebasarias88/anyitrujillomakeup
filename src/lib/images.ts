@@ -37,8 +37,6 @@ export const pageCovers = {
   "/novias": brideDressWindow,
   "/servicios": studioVanity,
   "/portafolio": glamProfile,
-  "/cursos": workshop,
-  "/sobre-anyi": anyiPortrait,
   "/contacto": studioSign,
 } as const;
 

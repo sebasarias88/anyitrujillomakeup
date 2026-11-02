@@ -38,13 +38,13 @@ export default function BridalPage() {
     <PageTransition>
       <JsonLd data={[breadcrumbJsonLd("/novias"), bridalService, faqJsonLd(faqs)]} />
       <PageHero
-        monument="Novias"
+        eyebrow="Novias · Armenia, Quindío"
         transitionName="cover-novias"
-        title="Maquillaje de novia en Armenia"
+        title={<>Maquillaje de novia en Armenia, <em className="text-nude-deep">como lo soñaste</em></>}
         intro={<p>Tu prueba en el estudio, tu look el gran día y, si quieres, te acompaño durante las fotos.</p>}
         image={images.brideDressWindow}
         imageAlt="Novia con bata de encaje contemplando su vestido antes de la ceremonia"
-        actions={<ButtonLink href="#cotizador">Cotizar mi boda</ButtonLink>}
+        actions={<><ButtonLink href="#cotizador">Cotizar mi boda</ButtonLink><ButtonLink href="#proceso" variant="ink">Cómo trabajamos</ButtonLink></>}
       />
       <BridalPlanner />
       <Process />

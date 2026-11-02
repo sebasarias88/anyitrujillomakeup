@@ -7,24 +7,22 @@ import { SITE_URL, business } from "@/lib/site";
 import "./globals.css";
 
 // Self-hosted fonts: no request to Google Fonts at build time or in the browser.
-const cormorant = localFont({
-  variable: "--font-cormorant",
+const bodoni = localFont({
+  variable: "--font-bodoni",
   display: "swap",
   src: [
-    { path: "../assets/fonts/cormorant-garamond-latin-300-normal.woff2", weight: "300", style: "normal" },
-    { path: "../assets/fonts/cormorant-garamond-latin-300-italic.woff2", weight: "300", style: "italic" },
-    { path: "../assets/fonts/cormorant-garamond-latin-400-normal.woff2", weight: "400", style: "normal" },
-    { path: "../assets/fonts/cormorant-garamond-latin-400-italic.woff2", weight: "400", style: "italic" },
-    { path: "../assets/fonts/cormorant-garamond-latin-500-normal.woff2", weight: "500", style: "normal" },
-    { path: "../assets/fonts/cormorant-garamond-latin-500-italic.woff2", weight: "500", style: "italic" },
+    { path: "../assets/fonts/bodoni-moda-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "../assets/fonts/bodoni-moda-latin-400-italic.woff2", weight: "400", style: "italic" },
+    { path: "../assets/fonts/bodoni-moda-latin-500-normal.woff2", weight: "500", style: "normal" },
+    { path: "../assets/fonts/bodoni-moda-latin-500-italic.woff2", weight: "500", style: "italic" },
   ],
 });
 
-const manrope = localFont({
-  variable: "--font-manrope",
+const jost = localFont({
+  variable: "--font-jost",
   display: "swap",
-  weight: "200 800",
-  src: "../assets/fonts/manrope-latin-wght-normal.woff2",
+  weight: "100 900",
+  src: "../assets/fonts/jost-latin-wght-normal.woff2",
 });
 
 const title = "Anyi Trujillo | Maquilladora profesional en Armenia, Quindío";
@@ -58,7 +56,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#fdfcfa",
   colorScheme: "light",
 };
 
@@ -94,21 +92,13 @@ const jsonLd = {
     { "@type": "City", name: "Armenia" },
     { "@type": "AdministrativeArea", name: "Quindío" },
   ],
-  // Real Google rating (5.0 · 31 reviews), not reviews written on this site.
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: business.google.rating,
-    bestRating: 5,
-    worstRating: 1,
-    reviewCount: business.google.reviews,
-  },
   sameAs: [business.instagram],
   founder: { "@type": "Person", name: business.artist, jobTitle: business.role },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es-CO" className={`${cormorant.variable} ${manrope.variable} antialiased`} suppressHydrationWarning>
+    <html lang="es-CO" className={`${bodoni.variable} ${jost.variable} antialiased`} suppressHydrationWarning>
       <body className="min-h-dvh overflow-x-clip">
         {/* Marks JS as available so reveal animations may hide content until it scrolls in. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />

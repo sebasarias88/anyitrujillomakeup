@@ -1,9 +1,11 @@
-import { Doors } from "@/components/home/doors";
+import { About } from "@/components/home/about";
+import { BridalTeaser } from "@/components/home/bridal-teaser";
+import { ClosingCta } from "@/components/home/closing-cta";
 import { Hero } from "@/components/home/hero";
-import { Intro } from "@/components/home/intro";
 import { LookQuiz } from "@/components/home/look-quiz";
-import { PriceStatement } from "@/components/home/price-statement";
+import { MoreServices } from "@/components/home/more-services";
 import { Reviews } from "@/components/home/reviews";
+import { WorkMosaic } from "@/components/home/work-mosaic";
 import { PageTransition } from "@/components/layout/page-transition";
 import { pageMetadata } from "@/lib/seo";
 
@@ -18,11 +20,13 @@ export default function HomePage() {
   return (
     <PageTransition>
       <Hero />
-      <Intro />
-      <Doors />
-      <PriceStatement />
-      <LookQuiz />
+      <WorkMosaic />
+      <BridalTeaser />
       <Reviews />
+      <MoreServices />
+      <LookQuiz />
+      <About />
+      <ClosingCta />
     </PageTransition>
   );
 }

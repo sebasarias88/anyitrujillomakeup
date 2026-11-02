@@ -23,7 +23,7 @@ Sitio multipágina para Anyi Trujillo Beauty Studio: inicio, novias, servicios, 
 
 - Especialista en novias y en **maquillaje con aerógrafo**.
 - 9 años de experiencia, certificada por el Instituto Cristina Cuéllar (México) y Tempto (New York).
-- Calificación real en Google: 5.0 con 31 reseñas.
+- Tiene calificación 5.0 en Google, pero por decisión del cliente no se muestra en la web.
 - Atiende en estudio propio o a domicilio, con un **equipo formado por ella** para grupos (damas, familia de la quinceañera).
 - También da **cursos** presenciales y personalizados.
 
@@ -40,7 +40,7 @@ En el mercado local (ver `docs/reference-analysis.md`), la competencia se queda 
 ## Capabilities and Constraints
 
 - **Solo frontend.** No hay backend, base de datos ni pagos.
-- **Secciones aprobadas:** cotizador de novia, antes/después, quiz de look, aerógrafo, cursos, reseñas de Google y detalles premium.
+- **Secciones aprobadas:** cotizador de novia, antes/después, quiz de look, aerógrafo, cursos, reseñas reales de clientas y detalles premium.
 - **Precios confirmados** en `CLAUDE.md`, que es la fuente de verdad (`src/lib/site.ts` debe coincidir):
   - novia: tres paquetes de $800.000 a $1.300.000;
   - hora extra: $140.000;
@@ -61,8 +61,8 @@ En el mercado local (ver `docs/reference-analysis.md`), la competencia se queda 
 
 ## Evidence on Hand
 
-- **Reseñas:** 3 reseñas **reales y textuales de Google**, en `src/lib/site.ts` → `reviews`. Se pueden mostrar con nombre y atribuirlas a Google. No editar su texto.
-- **Calificación de Google:** 5.0 con 31 reseñas.
+- **Reseñas:** 3 reseñas **reales y textuales de Google**, en `src/lib/site.ts` → `reviews`. Se muestran con nombre, sin la calificación. No editar su texto.
+- **Calificación de Google:** no se muestra en la web (decisión del cliente).
 - **Fotos reales:** novias, quinceañeras, glam, el estudio, retratos de Anyi y el taller con Cristina Cuéllar, en `src/assets/images/`.
 - **Certificaciones:** Instituto Cristina Cuéllar (México) y Tempto (New York).
 - **Antes/después: no hay fotos todavía.** El usuario las conseguirá de Anyi. Mientras tanto la sección muestra marcos diseñados vacíos, con el slider funcionando y el texto "Próximamente: transformaciones reales de Anyi". No se usan fotos de bancos de imágenes. **Nunca simular un resultado** con fotos que no sean un antes y un después reales de la misma clienta.
@@ -72,7 +72,7 @@ En el mercado local (ver `docs/reference-analysis.md`), la competencia se queda 
 
 1. **WhatsApp llega completo.** Toda interacción termina en un mensaje con los datos que la clienta ya eligió. Nunca con textos de relleno para editar.
 2. **El precio a la vista resuelve dudas.** Donde hay precio confirmado se muestra, y con las combinaciones calculadas (paquete + acompañantes + horas).
-3. **La confianza se puede verificar.** Reseñas y calificación de Google reales, certificaciones con nombre y fotos propias, antes que frases de marketing.
+3. **La confianza se puede verificar.** Reseñas reales, certificaciones con nombre y fotos propias, antes que frases de marketing.
 4. **Primero el celular.** Tanto Anyi como sus clientas llegan desde el móvil, por un enlace de WhatsApp o de Instagram.
 5. **El demo debe convencer a Anyi.** Cada sección tiene que sentirse hecha para ella, no una plantilla de maquilladora.
 

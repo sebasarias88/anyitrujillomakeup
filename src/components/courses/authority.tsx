@@ -6,7 +6,7 @@ import { business } from "@/lib/site";
 /** Who teaches: the two certifications by name, set large beside a real photograph. */
 export function Authority() {
   return (
-    <section aria-labelledby="authority-title" className="container-page py-28 md:py-40">
+    <section id="cursos" aria-labelledby="authority-title" className="container-page scroll-mt-24 border-t border-line py-28 md:py-36">
       <div className="grid gap-12 md:grid-cols-12 md:gap-6">
         <div className="md:col-span-6">
           <Reveal>

@@ -1,26 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand palette — light theme. Black is for text and accents only. */
-  --color-paper: #ffffff;
-  --color-marble: #f2f2f1;
-  --color-marble-deep: #e6e5e3;
+  /* Brand palette from Anyi's logo files: black #040606, nude/rose gold #D09A73,
+     yellow #FFD03A (tiny accents only) on an almost-white ground. */
+  --color-paper: #fdfcfa;
+  --color-white: #ffffff;
+  --color-marble: #f7ede6;
+  --color-marble-deep: #efe2d8;
+  --color-line: #efe2d8;
   --color-ink: #040606;
-  --color-ink-soft: #4b4744;
+  --color-ink-soft: #5e5148;
   --color-nude: #d09a73;
-  --color-nude-field: #ecd3bf;
-  --color-blush: #f7e9e2;
+  --color-nude-deep: #9a6340;
+  --color-nude-field: #f2e2d6;
+  --color-blush: #fbf3ee;
   --color-gold: #ffd03a;
   --color-gold-deep: #f0bc12;
 
-  /* Pale grounds sampled from the hero portraits (one per photograph). */
-  --color-tint-sky: #edf1f4;
-  --color-tint-sage: #e8eee7;
-  --color-tint-rose: #f6e6e6;
-  --color-tint-wine: #f3e4e1;
+  /* Former per-photo grounds, now all one warm tint so every section matches. */
+  --color-tint-sky: #fbf3ee;
+  --color-tint-sage: #fbf3ee;
+  --color-tint-rose: #fbf3ee;
+  --color-tint-wine: #fbf3ee;
 
-  --font-display: var(--font-cormorant), "Times New Roman", serif;
-  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-display: var(--font-bodoni), "Didot", "Times New Roman", serif;
+  --font-sans: var(--font-jost), system-ui, sans-serif;
 
   /* Motion curves (emil-design-eng) */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -32,8 +36,6 @@
 
 :root {
   color-scheme: light;
-  /* Hand-drawn cool marble: soft veins from fractal noise, tinted with the palette. */
-  --marble-texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'><filter id='m' x='0' y='0'><feTurbulence type='fractalNoise' baseFrequency='.002 .0065' numOctaves='5' seed='7'/><feColorMatrix values='0 0 0 0 .52  0 0 0 0 .52  0 0 0 0 .53  0 0 0 -1.6 1.15'/></filter><rect width='100%' height='100%' fill='%23f2f2f1'/><rect width='100%' height='100%' filter='url(%23m)' opacity='.28'/></svg>");
 }
 
 html {
@@ -49,7 +51,7 @@ body {
 }
 
 ::selection {
-  background: var(--color-gold);
+  background: var(--color-nude-field);
   color: var(--color-ink);
 }
 
@@ -60,7 +62,7 @@ body {
 
 @utility container-page {
   width: 100%;
-  max-width: 90rem;
+  max-width: 82rem;
   margin-inline: auto;
   padding-inline: 1rem;
   @media (width >= 48rem) {
@@ -69,21 +71,22 @@ body {
 }
 
 /* One texture stretched over the whole surface (cover): no repeating tiles, so no seams. */
+/* Warm light field used to separate sections (no texture: cleaner, matches the brand nude). */
 @utility bg-marble {
   background-color: var(--color-marble);
-  background-image: var(--marble-texture);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
-/* The name as a monument: sized to the viewport, never wraps. */
-@utility text-monument {
-  font-family: var(--font-display);
-  font-weight: 300;
-  line-height: 0.82;
-  letter-spacing: -0.05em;
-  font-size: clamp(4rem, 16vw, 18rem);
+/* Small uppercase label above section titles. */
+@utility eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-nude-deep);
+}
+
+/* A soft highlight in the logo yellow, under one or two words of a headline. */
+@utility highlight {
+  background: linear-gradient(transparent 70%, rgb(255 208 58 / 0.5) 70%);
 }
 
 @utility no-scrollbar {
@@ -364,70 +367,6 @@ body {
   }
 }
 
-/* Home hero: portraits sharpen out of a mist as they take their turn. */
-.hero-portrait {
-  opacity: 0;
-  filter: blur(10px);
-  transform: scale(1.03);
-  transition:
-    opacity 700ms var(--ease-out),
-    filter 700ms var(--ease-out),
-    transform 900ms var(--ease-out);
-}
-
-.hero-portrait[data-active="true"] {
-  opacity: 1;
-  filter: none;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-portrait {
-    filter: none;
-    transform: none;
-    transition: opacity 300ms ease;
-  }
-}
-
-/* Gold block "painted" behind the price when its section scrolls in. */
-.price-paint {
-  clip-path: inset(0 0 0 0);
-}
-
-.js .reveal .price-paint {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 700ms var(--ease-in-out) 250ms;
-}
-
-.js .reveal[data-visible="true"] .price-paint {
-  clip-path: inset(0 0 0 0);
-}
-
-/* Home doors: the hovered panel widens, the others give way (desktop only). */
-@media (min-width: 768px) {
-  .door {
-    flex-grow: var(--grow);
-  }
-}
-
-@media (hover: hover) and (pointer: fine) and (min-width: 768px) {
-  .door {
-    transition: flex-grow 500ms var(--ease-in-out);
-  }
-
-  .door:hover,
-  .door:focus-within {
-    flex-grow: 6;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .js .reveal .price-paint {
-    clip-path: none;
-    transition: none;
-  }
-}
-
 /* Portfolio filter: photographs leave and arrive through a light mist. */
 ::view-transition-old(.gallery-out) {
   animation: fade-out-only 160ms var(--ease-out) both;
@@ -445,7 +384,17 @@ body {
   line-height: 1.1em;
 }
 
-/* Page names set as monuments are decorative: drawn from data-monument, not page text. */
-.monument::before {
-  content: attr(data-monument);
+
+
+/* Home hero: the close-up settles in with a slow zoom. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-zoom {
+    animation: hero-zoom 2.4s var(--ease-out) both;
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.08);
+  }
 }

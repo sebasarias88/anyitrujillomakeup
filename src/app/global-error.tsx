@@ -11,11 +11,11 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
     <html lang="es-CO">
       <body>
         <SystemScreen
-          monument="Ups"
+          eyebrow="Algo salió mal"
           title="Algo no cargó como esperaba"
           actions={
             <>
-              <button type="button" onClick={reset} className="pressable min-h-12 bg-gold px-6 font-semibold text-ink hover:bg-gold-deep">
+              <button type="button" onClick={reset} className="pressable min-h-12 rounded-full bg-ink px-7 text-[0.82rem] font-medium tracking-[0.1em] text-paper uppercase hover:bg-ink-soft">
                 Reintentar
               </button>
               <WhatsAppButton message={`${whatsappGreeting} Tu página me mostró un error y quiero agendar una cita.`} variant="text">

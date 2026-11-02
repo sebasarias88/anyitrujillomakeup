@@ -14,7 +14,7 @@ export function AirbrushNote() {
             Es mi especialidad: una bruma finísima de producto que resiste el calor, las lágrimas y las horas de fiesta, y
             se ve impecable en fotos y video.
           </p>
-          <Link href="/servicios#aerografo" className="mt-5 inline-block min-h-11 py-2 font-semibold underline decoration-gold decoration-2 underline-offset-[6px]">
+          <Link href="/servicios#aerografo" className="mt-5 inline-block min-h-11 py-2 font-semibold underline decoration-nude decoration-2 underline-offset-[6px]">
             Ver cómo funciona
           </Link>
         </div>

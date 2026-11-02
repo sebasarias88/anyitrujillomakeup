@@ -253,7 +253,7 @@ export function Booking() {
                         aria-label={`${longDateFormat.format(day)}${isSunday ? ", cerrado" : ""}${isToday ? ", hoy" : ""}`}
                         className={`pressable aspect-square text-[0.95rem] tabular-nums ${
                           selected
-                            ? "bg-gold font-semibold"
+                            ? "bg-ink text-paper"
                             : disabled
                               ? "text-ink-soft/50 line-through"
                               : "bg-paper hover:bg-marble-deep"
@@ -278,7 +278,7 @@ export function Booking() {
                     key={slot}
                     className={`pressable flex min-h-11 items-center justify-center text-[0.95rem] tabular-nums has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
                       !date ? "cursor-not-allowed opacity-40" : "cursor-pointer"
-                    } ${time === slot ? "bg-gold font-semibold" : "bg-paper hover:bg-marble-deep"}`}
+                    } ${time === slot ? "bg-ink text-paper" : "bg-paper hover:bg-marble-deep"}`}
                   >
                     <input
                       type="radio"

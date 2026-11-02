@@ -10,8 +10,8 @@ import { isSitePath, navLinks, pageWhatsappMessage } from "@/lib/site";
 import { MobileMenu } from "./mobile-menu";
 
 /**
- * Plain white bar: logo, page links, one gold action. The active page carries
- * a short gold stroke that glides between links. The bar slides away while
+ * Plain light bar: logo, page links, one black action. The active page carries
+ * a thin nude stroke that glides between links. The bar slides away while
  * reading down and returns as soon as the visitor scrolls up.
  */
 export function SiteHeader() {
@@ -48,23 +48,23 @@ export function SiteHeader() {
   return (
     <header
       style={{ viewTransitionName: "site-header" }}
-      className={`fixed inset-x-0 top-0 z-50 bg-paper transition-transform duration-200 ease-[var(--ease-out)] ${
+      className={`fixed inset-x-0 top-0 z-50 border-b border-line bg-paper/95 backdrop-blur-sm transition-transform duration-200 ease-[var(--ease-out)] ${
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >
       <a
         href="#contenido"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-10 focus:bg-gold focus:px-4 focus:py-2 focus:font-semibold"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-10 focus:bg-nude-field focus:px-4 focus:py-2 focus:font-semibold"
       >
         Saltar al contenido
       </a>
       <div className="container-page flex h-[4.5rem] items-center justify-between gap-6">
         <Link href="/" aria-label="Anyi Trujillo Beauty Studio, ir al inicio" className="shrink-0">
-          <Logo className="h-12 text-ink md:h-[3.25rem]" />
+          <Logo className="h-11 text-ink md:h-12" />
         </Link>
 
         <nav aria-label="Principal" className="hidden lg:block">
-          <ul className="flex items-center gap-8">
+          <ul className="flex items-center gap-9">
             {navLinks.map((link) => {
               const active = pathname === link.path;
               return (
@@ -72,8 +72,8 @@ export function SiteHeader() {
                   <Link
                     href={link.path}
                     aria-current={active ? "page" : undefined}
-                    className={`block py-2 text-[0.95rem] transition-colors duration-200 ${
-                      active ? "font-semibold text-ink" : "text-ink-soft hover:text-ink"
+                    className={`block py-2 text-[0.78rem] tracking-[0.16em] uppercase transition-colors duration-200 ${
+                      active ? "text-ink" : "text-ink-soft hover:text-ink"
                     }`}
                   >
                     {link.label}
@@ -83,7 +83,7 @@ export function SiteHeader() {
                       layoutId="nav-active"
                       aria-hidden
                       transition={reduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
-                      className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-gold"
+                      className="absolute inset-x-0 -bottom-0.5 h-px bg-nude"
                     />
                   ) : null}
                 </li>

@@ -41,7 +41,6 @@ export const business = {
   geo: { lat: 4.5430903, lng: -75.6886701 },
   mapsUrl:
     "https://www.google.com/maps/place/Anyi+Trujillo+Beauty+Studio/@4.5430903,-75.6886701,17z",
-  google: { rating: 5.0, reviews: 31 },
   hours: [
     { days: "Lunes a sábado", time: "8:00 a. m. – 7:00 p. m." },
     { days: "Domingo", time: "Cerrado" },
@@ -60,7 +59,7 @@ export function formatCOP(value: number) {
   return `$${value.toLocaleString("es-CO")}`;
 }
 
-export type SitePath = "/" | "/novias" | "/servicios" | "/cursos" | "/portafolio" | "/sobre-anyi" | "/contacto";
+export type SitePath = "/" | "/novias" | "/servicios" | "/portafolio" | "/contacto";
 
 /** Every public page: header/menu labels, sitemap and breadcrumbs read from here. */
 export const pages = [
@@ -68,8 +67,6 @@ export const pages = [
   { path: "/novias", label: "Novias", priority: 0.9 },
   { path: "/servicios", label: "Servicios", priority: 0.8 },
   { path: "/portafolio", label: "Portafolio", priority: 0.7 },
-  { path: "/cursos", label: "Cursos", priority: 0.7 },
-  { path: "/sobre-anyi", label: "Sobre Anyi", priority: 0.6 },
   { path: "/contacto", label: "Contacto", priority: 0.8 },
 ] as const satisfies readonly { path: SitePath; label: string; priority: number }[];
 
@@ -82,8 +79,6 @@ export const pageWhatsappMessage: Record<SitePath, string> = {
   "/novias": `${whatsappGreeting} Me voy a casar y quiero información de tus paquetes de novia.`,
   "/servicios": `${whatsappGreeting} Quiero información sobre tus servicios de maquillaje y peinado.`,
   "/portafolio": `${whatsappGreeting} Vi tu portafolio y quiero agendar un maquillaje.`,
-  "/cursos": `${whatsappGreeting} Quiero información sobre tus cursos de maquillaje.`,
-  "/sobre-anyi": `${whatsappGreeting} Quiero agendar una cita contigo.`,
   "/contacto": `${whatsappGreeting} Quiero agendar una cita. ¿Me ayudas con la disponibilidad?`,
 };
 

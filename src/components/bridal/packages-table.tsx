@@ -61,7 +61,7 @@ export function PackagesTable({ selectedId, onSelect }: PackagesTableProps) {
                 href="#cotizador"
                 onClick={() => onSelect(pkg.id)}
                 aria-current={selected ? "true" : undefined}
-                className="mt-4 inline-flex min-h-11 items-center font-semibold underline decoration-gold decoration-2 underline-offset-[6px]"
+                className="mt-4 inline-flex min-h-11 items-center font-semibold underline decoration-nude decoration-2 underline-offset-[6px]"
               >
                 {selected ? "Elegido en tu cotización" : "Cotizar este paquete"}
               </a>
@@ -143,7 +143,7 @@ export function PackagesTable({ selectedId, onSelect }: PackagesTableProps) {
                       onClick={() => onSelect(pkg.id)}
                       aria-current={selected ? "true" : undefined}
                       className={`pressable inline-flex min-h-11 items-center gap-2 font-semibold underline decoration-2 underline-offset-[6px] ${
-                        selected ? "decoration-gold" : "decoration-ink/30 hover:decoration-ink"
+                        selected ? "decoration-nude" : "decoration-ink/30 hover:decoration-ink"
                       }`}
                     >
                       {selected ? "Elegido en tu cotización" : "Cotizar este paquete"}

@@ -50,7 +50,7 @@ export function WhatsAppBar() {
   return (
     <div
       inert={!visible}
-      className={`fixed inset-x-0 bottom-0 z-40 bg-paper px-4 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] transition-[transform,opacity] duration-200 ease-[var(--ease-out)] sm:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper px-4 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] transition-[transform,opacity] duration-200 ease-[var(--ease-out)] sm:hidden ${
         visible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
       }`}
     >

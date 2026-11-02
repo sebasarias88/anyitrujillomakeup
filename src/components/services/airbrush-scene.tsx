@@ -95,7 +95,7 @@ export function AirbrushScene() {
             </div>
             <div className="mt-4 flex gap-1.5" aria-hidden>
               {statements.map((item, index) => (
-                <span key={item.title} className={`h-1 w-10 transition-colors duration-300 ${index <= active ? "bg-gold" : "bg-marble-deep"}`} />
+                <span key={item.title} className={`h-1 w-10 transition-colors duration-300 ${index <= active ? "bg-nude" : "bg-marble-deep"}`} />
               ))}
             </div>
             <WhatsAppButton message={`${whatsappGreeting} Quiero saber más sobre el maquillaje con aerógrafo.`} className="mt-8">

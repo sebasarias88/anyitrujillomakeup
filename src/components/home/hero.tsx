@@ -74,11 +74,11 @@ export function Hero() {
           </motion.p>
 
           <motion.div {...intro(0.72)} className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <ButtonLink href="#agenda">
+            <ButtonLink href="/contacto#agenda">
               Agenda tu cita
               <ArrowIcon className="size-4 transition group-hover:translate-x-1" />
             </ButtonLink>
-            <ButtonLink href="#cotizador" variant="text">
+            <ButtonLink href="/novias#cotizador" variant="text">
               Cotiza tu boda
             </ButtonLink>
           </motion.div>
@@ -149,7 +149,7 @@ export function Hero() {
       </div>
 
       <a
-        href="#servicios"
+        href="/servicios"
         aria-label="Ver servicios"
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-[0.65rem] tracking-[0.3em] text-mute uppercase md:flex"
       >

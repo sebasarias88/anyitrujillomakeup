@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { JsonLd } from "@/components/ui/json-ld";
 import { OfflineNotice } from "@/components/ui/offline-notice";
 import { ServiceWorkerRegister } from "@/components/ui/service-worker-register";
 import { SITE_URL, business } from "@/lib/site";
@@ -44,11 +45,10 @@ export const metadata: Metadata = {
     "cursos de maquillaje Armenia",
     "Anyi Trujillo",
   ],
-  alternates: { canonical: "/" },
+  // Each page sets its own canonical through pageMetadata(); none here, so no page inherits "/".
   openGraph: {
     type: "website",
     locale: "es_CO",
-    url: "/",
     siteName: business.name,
     title,
     description,
@@ -89,9 +89,17 @@ const jsonLd = {
       closes: "19:00",
     },
   ],
+  hasMap: business.mapsUrl,
+  areaServed: [
+    { "@type": "City", name: "Armenia" },
+    { "@type": "AdministrativeArea", name: "Quindío" },
+  ],
+  // Real Google rating (5.0 · 31 reviews), not reviews written on this site.
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: business.google.rating,
+    bestRating: 5,
+    worstRating: 1,
     reviewCount: business.google.reviews,
   },
   sameAs: [business.instagram],
@@ -104,10 +112,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-dvh overflow-x-clip">
         {/* Marks JS as available so reveal animations may hide content until it scrolls in. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={jsonLd} />
         <OfflineNotice />
         {children}
         <ServiceWorkerRegister />

@@ -1,0 +1,28 @@
+import { PageHero } from "@/components/layout/page-hero";
+import { Gallery } from "@/components/portfolio/gallery";
+import { JsonLd } from "@/components/ui/json-ld";
+import { images } from "@/lib/images";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  path: "/portafolio",
+  title: "Portafolio de maquillaje en Armenia, Quindío",
+  description:
+    "Fotos reales de novias, quinceañeras y maquillaje glam hechos por Anyi Trujillo en Armenia, Quindío. Conoce su estudio y su trabajo.",
+});
+
+export default function PortfolioPage() {
+  return (
+    <>
+      <JsonLd data={breadcrumbJsonLd("/portafolio")} />
+      <PageHero
+        monument="Portafolio"
+        title="Portafolio de novias, XV y glam"
+        intro={<p>Mi trabajo con clientas reales, sin filtros, y el estudio donde las recibo.</p>}
+        image={images.brideDressWindow}
+        imageAlt="Novia con bata de encaje contemplando su vestido antes de la ceremonia"
+      />
+      <Gallery />
+    </>
+  );
+}

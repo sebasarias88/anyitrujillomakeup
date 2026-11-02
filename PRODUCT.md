@@ -17,7 +17,7 @@ web
 
 ## Product Purpose
 
-Landing de una sola página para Anyi Trujillo Beauty Studio. Muestra su trabajo, explica servicios y precios, y convierte la visita en una conversación de WhatsApp con la información completa (servicio, fecha, hora, lugar, nombre, acompañantes), para que Anyi pueda responder sin preguntar de nuevo.
+Sitio multipágina para Anyi Trujillo Beauty Studio: inicio, novias, servicios, portafolio, cursos, sobre Anyi y contacto. Muestra su trabajo, explica servicios y precios, y convierte la visita en una conversación de WhatsApp con la información completa (servicio, fecha, hora, lugar, nombre, acompañantes), para que Anyi pueda responder sin preguntar de nuevo.
 
 ## Positioning
 
@@ -65,8 +65,8 @@ En el mercado local (ver `docs/reference-analysis.md`), la competencia se queda 
 - **Calificación de Google:** 5.0 con 31 reseñas.
 - **Fotos reales:** novias, quinceañeras, glam, el estudio, retratos de Anyi y el taller con Cristina Cuéllar, en `src/assets/images/`.
 - **Certificaciones:** Instituto Cristina Cuéllar (México) y Tempto (New York).
-- **Antes/después: no hay fotos todavía.** El usuario las conseguirá de Anyi. La sección se construye con un espacio claro para las fotos. **Nunca simular un resultado** con fotos que no sean un antes y un después reales de la misma clienta.
-- **No inventar:** testimonios, número de clientas atendidas, premios, prensa, precios de quinceañeras, social o cursos, ni fechas de cursos.
+- **Antes/después: no hay fotos todavía.** El usuario las conseguirá de Anyi. Mientras tanto la sección muestra marcos diseñados vacíos, con el slider funcionando y el texto "Próximamente: transformaciones reales de Anyi". No se usan fotos de bancos de imágenes. **Nunca simular un resultado** con fotos que no sean un antes y un después reales de la misma clienta.
+- **No inventar:** testimonios, número de clientas atendidas, premios, prensa, precios de quinceañeras, social o cursos, fechas de cursos, ni datos personales o del equipo que no estén en `site.ts`, `CLAUDE.md` o este archivo. Lo no confirmado se marca como ejemplo o se deja fuera.
 
 ## Product Principles
 

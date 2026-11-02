@@ -1,4 +1,22 @@
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://anyitrujillomakeup.com").replace(/\/$/, "");
+/**
+ * Public base URL for canonical links, sitemap, robots and Open Graph.
+ * There is no domain yet: set NEXT_PUBLIC_SITE_URL once it exists. Until then
+ * it falls back to the Vercel URL of the current deployment (production URL in
+ * production, branch URL in previews) and to localhost in development.
+ * Only read it on the server: in the browser the Vercel variables are not exposed.
+ */
+function resolveSiteUrl() {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
+  if (explicit) return explicit;
+  const vercelHost =
+    process.env.VERCEL_ENV === "production"
+      ? process.env.VERCEL_PROJECT_PRODUCTION_URL
+      : (process.env.VERCEL_BRANCH_URL ?? process.env.VERCEL_URL);
+  if (vercelHost) return `https://${vercelHost}`;
+  return `http://localhost:${process.env.PORT ?? 3000}`;
+}
+
+export const SITE_URL = resolveSiteUrl().replace(/\/$/, "");
 
 export const business = {
   name: "Anyi Trujillo Beauty Studio",
@@ -39,14 +57,21 @@ export function formatCOP(value: number) {
   return `$${value.toLocaleString("es-CO")}`;
 }
 
-export const navLinks = [
-  { href: "#servicios", label: "Servicios" },
-  { href: "#novias", label: "Novias" },
-  { href: "#aerografo", label: "Aerógrafo" },
-  { href: "#portafolio", label: "Portafolio" },
-  { href: "#cursos", label: "Cursos" },
-  { href: "#agenda", label: "Agenda" },
-] as const;
+export type SitePath = "/" | "/novias" | "/servicios" | "/cursos" | "/portafolio" | "/sobre-anyi" | "/contacto";
+
+/** Every public page: header/menu labels, sitemap and breadcrumbs read from here. */
+export const pages = [
+  { path: "/", label: "Inicio", priority: 1 },
+  { path: "/novias", label: "Novias", priority: 0.9 },
+  { path: "/servicios", label: "Servicios", priority: 0.8 },
+  { path: "/portafolio", label: "Portafolio", priority: 0.7 },
+  { path: "/cursos", label: "Cursos", priority: 0.7 },
+  { path: "/sobre-anyi", label: "Sobre Anyi", priority: 0.6 },
+  { path: "/contacto", label: "Contacto", priority: 0.8 },
+] as const satisfies readonly { path: SitePath; label: string; priority: number }[];
+
+/** Desktop header links; /contacto is the header action instead. */
+export const navLinks = pages.filter((page) => page.path !== "/" && page.path !== "/contacto");
 
 export type BridalPackage = {
   id: string;
@@ -147,29 +172,39 @@ export const photographers = [
 
 export const venues = ["Jardín Botánico del Quindío", "Hacienda Moraleja"] as const;
 
-export const faqs = [
+export type FaqPage = "novias" | "contacto";
+
+export const faqs: { q: string; a: string; pages: readonly FaqPage[] }[] = [
   {
     q: "¿Cómo separo mi fecha?",
     a: "Escríbeme por WhatsApp con la fecha, el servicio y la ciudad del evento. Te confirmo disponibilidad y las condiciones para dejar tu fecha reservada en la agenda.",
+    pages: ["novias", "contacto"],
   },
   {
     q: "¿Atienden a domicilio?",
     a: "Sí. Puedo ir a tu casa, hotel o lugar del evento en Armenia y el Quindío. El valor del domicilio depende de la ubicación, así que lo cotizamos según tu caso.",
+    pages: ["contacto"],
   },
   {
     q: "¿Qué es el maquillaje con aerógrafo?",
     a: "Es una técnica que aplica el producto como una bruma muy fina. El resultado es ligero, uniforme y de larga duración, ideal para fotografía, calor y jornadas largas como una boda.",
+    pages: ["novias", "contacto"],
   },
   {
     q: "¿La prueba de novia está incluida?",
     a: "Sí. Todos los paquetes de novia incluyen una prueba de maquillaje y peinado en el estudio, para definir juntas el look antes del gran día.",
+    pages: ["novias"],
   },
   {
     q: "¿Los paquetes incluyen accesorios?",
     a: "No. Los accesorios como tocados, coronas o aretes no están incluidos; si quieres, te asesoro para elegir los que mejor van con tu look.",
+    pages: ["novias"],
   },
   {
     q: "¿Pueden atender a mis damas e invitadas?",
     a: "Sí. Cuento con un equipo capacitado y entrenado por mí para atender grupos con puntualidad y la misma calidad. Puedes ver las tarifas de acompañantes en el cotizador.",
+    pages: ["novias", "contacto"],
   },
-] as const;
+];
+
+export const faqsFor = (page: FaqPage) => faqs.filter((faq) => faq.pages.includes(page));

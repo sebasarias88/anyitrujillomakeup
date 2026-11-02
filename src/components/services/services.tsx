@@ -23,7 +23,7 @@ const services: Service[] = [
     image: images.brideTerrace,
     alt: "Novia maquillada por Anyi Trujillo con vista al paisaje cafetero",
     badge: `Desde ${formatCOP(800_000)}`,
-    href: "#novias",
+    href: "/novias",
     span: "md:col-span-2 md:row-span-2",
   },
   {
@@ -58,7 +58,7 @@ const services: Service[] = [
     description: "Presenciales y personalizados. Convierte tu pasión en tu profesión.",
     image: images.workshop,
     alt: "Anyi Trujillo maquillando en el workshop internacional de novias de Cristina Cuéllar",
-    href: "#cursos",
+    href: "/cursos",
     span: "",
   },
 ];

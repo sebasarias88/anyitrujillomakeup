@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CloseIcon, MenuIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { Logo } from "@/components/ui/logo";
@@ -31,17 +32,17 @@ export function SiteHeader() {
       }`}
     >
       <div className="container-page flex h-18 items-center justify-between gap-6">
-        <a href="#inicio" aria-label="Ir al inicio" className="shrink-0 focus-visible:outline-2 focus-visible:outline-nude">
+        <Link href="/" aria-label="Ir al inicio" className="shrink-0 focus-visible:outline-2 focus-visible:outline-nude">
           <Logo className="h-12 text-nude md:h-14" />
-        </a>
+        </Link>
 
         <nav aria-label="Principal" className="hidden lg:block">
           <ul className="flex items-center gap-8 text-sm text-sand">
             {navLinks.map((link) => (
-              <li key={link.href}>
-                <a href={link.href} className="transition hover:text-ivory">
+              <li key={link.path}>
+                <Link href={link.path} className="transition hover:text-ivory">
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -77,15 +78,15 @@ export function SiteHeader() {
       >
         <nav aria-label="Menú móvil" className="container-page flex flex-col py-8">
           {navLinks.map((link, index) => (
-            <a
-              key={link.href}
-              href={link.href}
+            <Link
+              key={link.path}
+              href={link.path}
               onClick={() => setOpen(false)}
               className="flex items-baseline gap-4 border-b border-line py-5 font-display text-4xl font-light text-ivory"
             >
               <span className="font-sans text-xs text-nude">0{index + 1}</span>
               {link.label}
-            </a>
+            </Link>
           ))}
           <a
             href={whatsappUrl("Hola Anyi ✨ Quiero agendar una cita. ¿Me ayudas con la disponibilidad?")}

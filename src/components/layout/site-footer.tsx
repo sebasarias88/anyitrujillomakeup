@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ButtonLink } from "@/components/ui/button-link";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { Logo } from "@/components/ui/logo";
@@ -36,10 +37,10 @@ export function SiteFooter() {
           <nav aria-label="Pie de página">
             <ul className="grid grid-cols-2 gap-2 text-sm text-sand">
               {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href} className="transition hover:text-nude">
+                <li key={link.path}>
+                  <Link href={link.path} className="transition hover:text-nude">
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

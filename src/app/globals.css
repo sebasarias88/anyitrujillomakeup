@@ -239,3 +239,27 @@ body {
   opacity: 0;
   transform: scale(0.97);
 }
+
+/* FAQ: the answer eases open where the browser can animate to height:auto. */
+.faq-item {
+  interpolate-size: allow-keywords;
+  transition: background-color 200ms ease;
+}
+
+.faq-item::details-content {
+  height: 0;
+  overflow: clip;
+  transition:
+    height 220ms var(--ease-out),
+    content-visibility 220ms allow-discrete;
+}
+
+.faq-item[open]::details-content {
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item::details-content {
+    transition: none;
+  }
+}

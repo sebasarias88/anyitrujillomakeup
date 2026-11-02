@@ -2,13 +2,14 @@
  * Pages: network first, cached copy when offline, /offline as last resort.
  * Hashed static assets and images: cache first.
  * Bump VERSION on every change to this file. */
-const VERSION = "v1";
+const VERSION = "v2";
 const PAGE_CACHE = `pages-${VERSION}`;
 const ASSET_CACHE = `assets-${VERSION}`;
 const OFFLINE_URL = "/offline";
+const PAGES = ["/", "/novias", "/servicios", "/portafolio", "/cursos", "/sobre-anyi", "/contacto"];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(PAGE_CACHE).then((cache) => cache.addAll([OFFLINE_URL, "/"])));
+  event.waitUntil(caches.open(PAGE_CACHE).then((cache) => cache.addAll([OFFLINE_URL, ...PAGES])));
   self.skipWaiting();
 });
 
@@ -31,8 +32,10 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          const copy = response.clone();
-          caches.open(PAGE_CACHE).then((cache) => cache.put(request, copy));
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(PAGE_CACHE).then((cache) => cache.put(request, copy));
+          }
           return response;
         })
         .catch(async () => (await caches.match(request)) || (await caches.match(OFFLINE_URL))),
